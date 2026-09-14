@@ -51,6 +51,7 @@ variable it could not fix as a column rather than a footnote.
 | # | Project | Question | Status |
 |---|---|---|---|
 | **01** | [Embedding fair comparison](projects/01_embedding_fair_comparison) | Is a neural embedding's advantage the *method*, or the 100 billion words it was trained on? | 🟡 4 of 7 methods measured |
+| **02** | [Preprocessing ablation](projects/02_preprocessing_ablation) | Which parts of the standard NLP pipeline actually help - and do they compose? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -73,6 +74,32 @@ points of a pretrained neural embedding at recall@10, and within 3.4 at recall@2
 🔴 **word2vec and fastText trained on this corpus are still pending.** They are the point of
 the project: until a static embedding trained on *893,000 tokens* sits beside one trained on
 billions, this is a lexical-vs-pretrained result, not the full experiment.
+
+### 02 · Preprocessing ablation
+
+Every tutorial teaches lowercase → strip punctuation → remove stopwords → stem → drop
+short tokens as one step called "preprocessing". It is several independent decisions, and
+**they are not additive.**
+
+| Variant | recall@10 | Δ | p | Verdict |
+|---|---:|---:|---:|---|
+| baseline (lowercase only) | 0.865 | — | — | *baseline* |
+| **stopwords + stemming** | **0.888** | **+0.023** | **0.005** | ✅ **REAL** |
+| + Porter stemming | 0.887 | +0.022 | 0.012 | ✅ REAL |
+| + remove stopwords | 0.877 | +0.012 | 0.034 | ✅ REAL |
+| **the full tutorial pipeline** | 0.875 | +0.010 | **0.360** | ❌ **within noise** |
+| + drop tokens < 3 chars | 0.862 | −0.003 | 0.676 | ❌ within noise |
+
+**Stemming works. Stopword removal works. Add a third step that does nothing on its own,
+and the significant +2.3 point gain becomes indistinguishable from noise.**
+
+The mechanism: Porter stemming *produces* short stems (`aging` → `ag`), and the length
+filter then deletes exactly the tokens stemming just created. That interaction is invisible
+if "preprocessing" is evaluated as one block — which is how it is almost always taught.
+
+Significance is a **paired bootstrap over queries**, because a table of six numbers two
+points apart invites a ranking that the sample size may not support. Three of six
+differences here are real; the other three are reported as noise rather than ranked.
 
 ---
 

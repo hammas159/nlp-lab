@@ -14,8 +14,9 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from corpus import build, coverage
+from shared.benchmark import build, coverage
 from retrievers import (
     BGE,
     BM25,

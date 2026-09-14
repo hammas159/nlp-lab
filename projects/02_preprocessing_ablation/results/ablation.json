@@ -1,0 +1,95 @@
+{
+  "corpus": {
+    "documents": 2964,
+    "queries": 300,
+    "gold_per_query_min": 2,
+    "gold_per_query_max": 2,
+    "missing_gold_titles": 0
+  },
+  "rows": [
+    {
+      "recall@1": 0.355,
+      "recall@5": 0.665,
+      "recall@10": 0.865,
+      "recall@20": 0.9333333333333333,
+      "mrr": 0.7990161842514784,
+      "variant": "baseline (lowercase only)",
+      "vocabulary": 25295,
+      "total_tokens": 277259,
+      "empty_docs": 0,
+      "seconds": 3.0
+    },
+    {
+      "recall@1": 0.35333333333333333,
+      "recall@5": 0.665,
+      "recall@10": 0.8766666666666667,
+      "recall@20": 0.94,
+      "mrr": 0.7960394790394789,
+      "variant": "+ remove stopwords",
+      "vocabulary": 25153,
+      "total_tokens": 173073,
+      "empty_docs": 0,
+      "seconds": 0.3
+    },
+    {
+      "recall@1": 0.365,
+      "recall@5": 0.7033333333333334,
+      "recall@10": 0.8866666666666667,
+      "recall@20": 0.935,
+      "mrr": 0.8182116402116401,
+      "variant": "+ Porter stemming",
+      "vocabulary": 19858,
+      "total_tokens": 277259,
+      "empty_docs": 0,
+      "seconds": 4.1
+    },
+    {
+      "recall@1": 0.3566666666666667,
+      "recall@5": 0.6683333333333333,
+      "recall@10": 0.8616666666666667,
+      "recall@20": 0.93,
+      "mrr": 0.801790166183023,
+      "variant": "+ drop tokens < 3 chars",
+      "vocabulary": 24842,
+      "total_tokens": 220376,
+      "empty_docs": 0,
+      "seconds": 1.7
+    },
+    {
+      "recall@1": 0.365,
+      "recall@5": 0.685,
+      "recall@10": 0.8566666666666667,
+      "recall@20": 0.9266666666666666,
+      "mrr": 0.8149405964405964,
+      "variant": "no lowercasing",
+      "vocabulary": 28978,
+      "total_tokens": 277258,
+      "empty_docs": 0,
+      "seconds": 2.8
+    },
+    {
+      "recall@1": 0.37,
+      "recall@5": 0.6916666666666667,
+      "recall@10": 0.8883333333333333,
+      "recall@20": 0.9483333333333334,
+      "mrr": 0.8195119047619047,
+      "variant": "stopwords + stemming",
+      "vocabulary": 19752,
+      "total_tokens": 173073,
+      "empty_docs": 0,
+      "seconds": 1.2
+    },
+    {
+      "recall@1": 0.36666666666666664,
+      "recall@5": 0.69,
+      "recall@10": 0.875,
+      "recall@20": 0.94,
+      "mrr": 0.816279701812139,
+      "variant": "the full tutorial pipeline",
+      "vocabulary": 19289,
+      "total_tokens": 163526,
+      "empty_docs": 0,
+      "seconds": 1.2
+    }
+  ]
+}

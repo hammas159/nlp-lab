@@ -1,0 +1,67 @@
+{
+  "corpus": {
+    "documents": 2964,
+    "queries": 300,
+    "gold_per_query_min": 2,
+    "gold_per_query_max": 2,
+    "missing_gold_titles": 0
+  },
+  "baseline": "baseline (lowercase only)",
+  "bootstrap": 2000,
+  "rows": [
+    {
+      "variant": "+ remove stopwords",
+      "recall@10": 0.8766666650772095,
+      "mean_difference": 0.011666666716337204,
+      "ci_low": 0.0016666667070239782,
+      "ci_high": 0.023333333432674408,
+      "p_value": 0.034,
+      "significant": true
+    },
+    {
+      "variant": "+ Porter stemming",
+      "recall@10": 0.8866666555404663,
+      "mean_difference": 0.021666666492819786,
+      "ci_low": 0.006666666828095913,
+      "ci_high": 0.038333334028720856,
+      "p_value": 0.012,
+      "significant": true
+    },
+    {
+      "variant": "+ drop tokens < 3 chars",
+      "recall@10": 0.8616666793823242,
+      "mean_difference": -0.0033333334140479565,
+      "ci_low": -0.013333333656191826,
+      "ci_high": 0.006666666828095913,
+      "p_value": 0.676,
+      "significant": false
+    },
+    {
+      "variant": "no lowercasing",
+      "recall@10": 0.8566666841506958,
+      "mean_difference": -0.008333333767950535,
+      "ci_low": -0.023333333432674408,
+      "ci_high": 0.006666666828095913,
+      "p_value": 0.353,
+      "significant": false
+    },
+    {
+      "variant": "stopwords + stemming",
+      "recall@10": 0.8883333206176758,
+      "mean_difference": 0.023333333432674408,
+      "ci_low": 0.006666666828095913,
+      "ci_high": 0.03999999910593033,
+      "p_value": 0.005,
+      "significant": true
+    },
+    {
+      "variant": "the full tutorial pipeline",
+      "recall@10": 0.875,
+      "mean_difference": 0.009999999776482582,
+      "ci_low": -0.008333333767950535,
+      "ci_high": 0.028333334252238274,
+      "p_value": 0.36,
+      "significant": false
+    }
+  ]
+}

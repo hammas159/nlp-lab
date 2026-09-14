@@ -14,13 +14,17 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 import urllib.request
 from collections import Counter
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 
-from corpus import tokenize
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
+from shared.benchmark import tokenize
 
 DIM = 300
 

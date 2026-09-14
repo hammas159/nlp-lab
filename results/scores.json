@@ -1,0 +1,55 @@
+{
+  "corpus": {
+    "documents": 2964,
+    "queries": 300,
+    "gold_per_query_min": 2,
+    "gold_per_query_max": 2,
+    "missing_gold_titles": 0
+  },
+  "rows": [
+    {
+      "recall@1": 0.355,
+      "recall@5": 0.665,
+      "recall@10": 0.865,
+      "recall@20": 0.9333333333333333,
+      "mrr": 0.7990161842514784,
+      "method": "BM25",
+      "trained_on": "this corpus",
+      "fit_seconds": 0.1,
+      "query_seconds": 2.8
+    },
+    {
+      "recall@1": 0.28833333333333333,
+      "recall@5": 0.6233333333333333,
+      "recall@10": 0.8416666666666667,
+      "recall@20": 0.9233333333333333,
+      "mrr": 0.7104117198369346,
+      "method": "TF-IDF",
+      "trained_on": "this corpus",
+      "fit_seconds": 1.1,
+      "query_seconds": 0.3
+    },
+    {
+      "recall@1": 0.17333333333333334,
+      "recall@5": 0.4633333333333333,
+      "recall@10": 0.735,
+      "recall@20": 0.855,
+      "mrr": 0.5126108919932443,
+      "method": "LSA (SVD)",
+      "trained_on": "this corpus",
+      "fit_seconds": 3.3,
+      "query_seconds": 4.8
+    },
+    {
+      "recall@1": 0.43666666666666665,
+      "recall@5": 0.8683333333333333,
+      "recall@10": 0.9433333333333334,
+      "recall@20": 0.9666666666666667,
+      "mrr": 0.9229206349206348,
+      "method": "BGE-small (pretrained)",
+      "trained_on": "billions of words, elsewhere",
+      "fit_seconds": 27.8,
+      "query_seconds": 4.2
+    }
+  ]
+}

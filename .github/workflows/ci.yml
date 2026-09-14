@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          # No uv.lock is committed; setup-uv errors outright when its default
+          # **/uv.lock glob matches nothing. Key the cache on pyproject.toml.
+          cache-dependency-glob: "**/pyproject.toml"
+      - run: uv sync --all-groups
+      - name: Lint
+        run: |
+          uv run ruff check src tests ui
+          uv run ruff format --check src tests ui
+      - name: Test
+        # No dataset and no network: every test uses a hand-built five-document corpus.
+        run: uv run pytest -q

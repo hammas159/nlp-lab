@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from shared.benchmark import Query, coverage, tokenize
+
 from evaluate import metrics
 from retrievers import BM25, LSA, TfIdf, _unit
 

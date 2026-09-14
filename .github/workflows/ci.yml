@@ -8,9 +8,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      # Every project runs, and one failing does not hide the others.
+      fail-fast: false
+      matrix:
+        project:
+          - 01_embedding_fair_comparison
+          - 02_preprocessing_ablation
+          - 03_reranker_ceiling
+          - 04_near_duplicate_detection
     defaults:
       run:
-        working-directory: projects/01_embedding_fair_comparison
+        working-directory: projects/${{ matrix.project }}
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
@@ -22,8 +31,9 @@ jobs:
       - run: uv sync --all-groups
       - name: Lint
         run: |
-          uv run ruff check src tests ui
-          uv run ruff format --check src tests ui
+          uv run ruff check src tests
+          uv run ruff format --check src tests
       - name: Test
-        # No dataset and no network: every test uses a hand-built five-document corpus.
+        # No dataset and no network: every test in this lab uses constructed inputs,
+        # so a Hugging Face outage cannot redden the build.
         run: uv run pytest -q

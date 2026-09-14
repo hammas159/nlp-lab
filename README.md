@@ -52,6 +52,7 @@ variable it could not fix as a column rather than a footnote.
 |---|---|---|---|
 | **01** | [Embedding fair comparison](projects/01_embedding_fair_comparison) | Is a neural embedding's advantage the *method*, or the 100 billion words it was trained on? | 🟡 4 of 7 methods measured |
 | **02** | [Preprocessing ablation](projects/02_preprocessing_ablation) | Which parts of the standard NLP pipeline actually help - and do they compose? | ✅ complete |
+| **03** | [The reranker ceiling](projects/03_reranker_ceiling) | Does a reranker rescue a weak first stage, or only reorder it? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -101,6 +102,33 @@ Significance is a **paired bootstrap over queries**, because a table of six numb
 points apart invites a ranking that the sample size may not support. Three of six
 differences here are real; the other three are reported as noise rather than ranked.
 
+### 03 · The reranker ceiling
+
+A cross-encoder can only **reorder** what the first stage handed it, so the first stage's
+recall@50 is a hard ceiling on anything achievable at k ≤ 10.
+
+| First stage | r@10 before | r@10 after | Ceiling (r@50) | Converted |
+|---|---:|---:|---:|---:|
+| **BM25** | 0.865 | **0.922** | 0.967 | 95.3% |
+| TF-IDF | 0.842 | 0.918 | 0.955 | 96.1% |
+| BGE-small | 0.943 | 0.942 | 0.978 | 96.3% |
+| random (control) | 0.003 | 0.022 | 0.022 | 100% |
+
+**The spread between real retrievers collapses from 0.102 to 0.023.** BGE gains nothing
+(−0.001) because it was already ordering well; the cheap retrievers are the ones the
+reranker rescues.
+
+Every first stage converts **about 96% of its ceiling**, whichever one it is. So what
+separates retrievers is not how well they rank, but **what they fetch at all** — the first
+stage's job is recall@50, not precision@10.
+
+The **random control** is what makes the ceiling a measurement rather than an assertion: it
+converts 100% of its ceiling and still scores 0.022, because a reranker cannot retrieve a
+document that was never fetched.
+
+**This reframes project 01.** If a reranker is in the pipeline — and in any serious RAG
+system it is — BM25's 8-point deficit becomes 2, for 1/270th of the indexing cost.
+
 ---
 
 ## Planned
@@ -115,8 +143,8 @@ confounds something:
   that costs.
 - **Classical topic models** — LSA vs LDA vs NMF on the same corpus, scored on a task rather
   than on coherence
-- **Reranking** — how much a cross-encoder recovers on top of each first-stage retriever,
-  and whether the ordering of first stages survives it
+- **Retrieval depth** — project 03 fixes the reranker's window at 50. The whole finding
+  is a function of that number, and sweeping it is the obvious follow-up
 - **Low-resource morphology** — where subword methods earn their keep, using Urdu, which
   connects to [urdu-nlp-toolkit](https://github.com/hammas159/urdu-nlp-toolkit)
 

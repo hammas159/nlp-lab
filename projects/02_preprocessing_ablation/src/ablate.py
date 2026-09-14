@@ -8,10 +8,8 @@ preprocessing and nothing else.
 from __future__ import annotations
 
 import json
-import math
 import sys
 import time
-from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -20,52 +18,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from shared.benchmark import build, coverage
+from shared.bm25 import BM25
 
 from preprocess import VARIANTS, make_tokenizer
 
 RESULTS = Path(__file__).resolve().parent.parent / "results"
 KS = (1, 5, 10, 20)
-
-
-class BM25:
-    """Okapi BM25, parameterised by the tokenizer it is given."""
-
-    def __init__(self, tokenize, k1: float = 1.5, b: float = 0.75):
-        self.tokenize, self.k1, self.b = tokenize, k1, b
-
-    def fit(self, docs: list[str]) -> BM25:
-        tokens = [self.tokenize(d) for d in docs]
-        self.lengths = np.array([len(t) for t in tokens], dtype=np.float32)
-        # A document can be emptied by aggressive preprocessing; guard the mean.
-        self.avg_len = float(self.lengths.mean()) or 1.0
-        self.n_docs = len(docs)
-        self.empty_docs = int((self.lengths == 0).sum())
-
-        self.postings: dict[str, dict[int, int]] = {}
-        for i, toks in enumerate(tokens):
-            for term, count in Counter(toks).items():
-                self.postings.setdefault(term, {})[i] = count
-
-        self.idf = {}
-        for term, posting in self.postings.items():
-            df = len(posting)
-            self.idf[term] = max(0.0, math.log((self.n_docs - df + 0.5) / (df + 0.5) + 1.0))
-
-        self.vocabulary = len(self.postings)
-        self.total_tokens = int(self.lengths.sum())
-        return self
-
-    def score(self, query: str) -> np.ndarray:
-        scores = np.zeros(self.n_docs, dtype=np.float32)
-        for term in self.tokenize(query):
-            posting = self.postings.get(term)
-            if not posting:
-                continue
-            idf = self.idf[term]
-            for i, freq in posting.items():
-                norm = 1 - self.b + self.b * self.lengths[i] / self.avg_len
-                scores[i] += idf * (freq * (self.k1 + 1)) / (freq + self.k1 * norm)
-        return scores
 
 
 def metrics(order: np.ndarray, gold: set[int]) -> dict:

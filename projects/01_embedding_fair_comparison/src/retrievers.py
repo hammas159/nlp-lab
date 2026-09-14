@@ -25,6 +25,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from shared.benchmark import tokenize
+from shared.bm25 import BM25
 
 DIM = 300
 
@@ -38,53 +39,6 @@ class Ranking:
 
 
 # --- lexical -------------------------------------------------------------------------
-
-
-class BM25:
-    """Okapi BM25, implemented rather than imported.
-
-    It is forty lines, and it is the baseline almost no embedding comparison reports -
-    which is exactly why it is worth having in the repository rather than behind a
-    dependency.
-    """
-
-    name = "BM25"
-    trained_on = "this corpus"
-
-    def __init__(self, k1: float = 1.5, b: float = 0.75):
-        self.k1, self.b = k1, b
-
-    def fit(self, docs: list[str]) -> BM25:
-        self.tokens = [tokenize(d) for d in docs]
-        self.lengths = np.array([len(t) for t in self.tokens], dtype=np.float32)
-        self.avg_len = float(self.lengths.mean())
-        self.n_docs = len(docs)
-
-        # term -> {doc index: count}
-        self.postings: dict[str, dict[int, int]] = {}
-        for i, toks in enumerate(self.tokens):
-            for term, count in Counter(toks).items():
-                self.postings.setdefault(term, {})[i] = count
-
-        # Robertson/Sparck-Jones idf, floored at zero so a term in almost every document
-        # cannot contribute a negative score.
-        self.idf = {}
-        for term, posting in self.postings.items():
-            df = len(posting)
-            self.idf[term] = max(0.0, math.log((self.n_docs - df + 0.5) / (df + 0.5) + 1.0))
-        return self
-
-    def score(self, query: str) -> np.ndarray:
-        scores = np.zeros(self.n_docs, dtype=np.float32)
-        for term in tokenize(query):
-            posting = self.postings.get(term)
-            if not posting:
-                continue
-            idf = self.idf[term]
-            for i, freq in posting.items():
-                norm = 1 - self.b + self.b * self.lengths[i] / self.avg_len
-                scores[i] += idf * (freq * (self.k1 + 1)) / (freq + self.k1 * norm)
-        return scores
 
 
 class TfIdf:

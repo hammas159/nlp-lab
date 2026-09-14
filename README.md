@@ -53,6 +53,7 @@ variable it could not fix as a column rather than a footnote.
 | **01** | [Embedding fair comparison](projects/01_embedding_fair_comparison) | Is a neural embedding's advantage the *method*, or the 100 billion words it was trained on? | 🟡 4 of 7 methods measured |
 | **02** | [Preprocessing ablation](projects/02_preprocessing_ablation) | Which parts of the standard NLP pipeline actually help - and do they compose? | ✅ complete |
 | **03** | [The reranker ceiling](projects/03_reranker_ceiling) | Does a reranker rescue a weak first stage, or only reorder it? | ✅ complete |
+| **04** | [Near-duplicate detection](projects/04_near_duplicate_detection) | How much does exact-match-on-a-normal-form miss? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -128,6 +129,32 @@ document that was never fetched.
 
 **This reframes project 01.** If a reranker is in the pipeline — and in any serious RAG
 system it is — BM25's 8-point deficit becomes 2, for 1/270th of the indexing cost.
+
+### 04 · Near-duplicate detection
+
+[devign-leakage](https://github.com/hammas159/devign-leakage) found duplicates by hashing a
+normalised form, and stated that functions differing by one statement would be invisible to
+it. This measures how many that is.
+
+| Method | Pairs found |
+|---|---:|
+| exact hash | 2 |
+| structural hash | 22 |
+| **MinHash + LSH, verified ≥ 0.8** | **30** |
+
+| | Count |
+|---|---:|
+| Near-duplicates **hashing missed** | **26 of 30 (87%)** |
+| …of those, **conflicting labels** | **16** |
+
+**devign-leakage reported 4 conflicting pairs and called the ceiling "small". The real
+count is 20 — a five-fold increase, and the earlier number was an artefact of the detection
+method rather than a property of the dataset.**
+
+MinHash and LSH are implemented rather than imported, and the estimator is **validated
+against exact Jaccard**: 0.0199 MAE on similar pairs, which is what √(s(1−s)/n) predicts at
+s ≈ 0.9. The MAE on *random* pairs is 0.0011 and is reported only to explain why it is
+meaningless — random pairs are almost all disjoint, and MinHash returns exactly 0 for those.
 
 ---
 

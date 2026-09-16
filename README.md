@@ -183,11 +183,27 @@ confounds something:
 cd projects/01_embedding_fair_comparison
 python src/corpus.py 1000       # build and inspect the benchmark
 python src/evaluate.py 300      # score every available method
-streamlit run ui/app.py         # dashboard
 pytest -q                       # tests - no dataset, no network
 ```
 
-Each project is self-contained: its own `README.md`, `src/`, `tests/`, `ui/` and `results/`.
+Each project is self-contained: its own `README.md`, `src/`, `tests/` and `results/`.
+
+---
+
+## Input / Output
+
+Project 01, the comparison the rest of the lab is measured against.
+
+![input](docs/images/input.png)
+
+![output](docs/images/output.png)
+
+*The gap is 7.8 points of recall@10. The cost difference is 278x on indexing, and BGE-small
+brings knowledge from billions of words this corpus never contained.*
+
+*That is not an argument against neural retrieval. It is an argument for measuring the
+baseline first, because "we added embeddings and recall went up" is not evidence that the
+embeddings are what did it.*
 
 ### Requirements
 
@@ -198,8 +214,8 @@ pretrained and static-embedding methods.
 ## Stack
 
 `Python 3.11+` &middot; `scikit-learn` &middot; `NumPy` &middot; `pandas` &middot;
-`sentence-transformers` &middot; `gensim` &middot; `Ollama` &middot; `Streamlit` &middot;
-`Altair` &middot; `pytest` &middot; `ruff` &middot; `GitHub Actions`
+`sentence-transformers` &middot; `gensim` &middot; `Ollama` &middot;
+`pytest` &middot; `ruff` &middot; `GitHub Actions`
 
 ## Keywords
 

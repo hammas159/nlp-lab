@@ -3,6 +3,8 @@ __pycache__/
 .venv/
 .streamlit/
 results_*.log
-results/nomic_cache.json
-results/nomic_cache.json.part
+# A slash anywhere in the pattern anchors it to this directory, so `results/...` matched
+# only a top-level results/ and silently let the 46 MB cache under projects/ be staged.
+**/results/nomic_cache.json
+**/results/nomic_cache.json.part
 uv.lock

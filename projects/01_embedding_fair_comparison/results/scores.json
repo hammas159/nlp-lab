@@ -50,6 +50,39 @@
       "trained_on": "billions of words, elsewhere",
       "fit_seconds": 27.8,
       "query_seconds": 4.2
+    },
+    {
+      "recall@1": 0.03333333333333333,
+      "recall@5": 0.09166666666666666,
+      "recall@10": 0.14,
+      "recall@20": 0.19833333333333333,
+      "mrr": 0.12795264532435133,
+      "method": "word2vec (corpus)",
+      "trained_on": "this corpus",
+      "fit_seconds": 8.4,
+      "query_seconds": 0.3
+    },
+    {
+      "recall@1": 0.02666666666666667,
+      "recall@5": 0.085,
+      "recall@10": 0.135,
+      "recall@20": 0.19166666666666668,
+      "mrr": 0.11663816648449833,
+      "method": "fastText (corpus)",
+      "trained_on": "this corpus",
+      "fit_seconds": 22.0,
+      "query_seconds": 0.3
+    },
+    {
+      "recall@1": 0.43166666666666664,
+      "recall@5": 0.8683333333333333,
+      "recall@10": 0.935,
+      "recall@20": 0.965,
+      "mrr": 0.9152580567580567,
+      "method": "nomic-embed (pretrained)",
+      "trained_on": "billions of words, elsewhere",
+      "fit_seconds": 13883.6,
+      "query_seconds": 626.0
     }
   ]
 }

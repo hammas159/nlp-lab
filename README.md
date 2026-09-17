@@ -50,7 +50,7 @@ variable it could not fix as a column rather than a footnote.
 
 | # | Project | Question | Status |
 |---|---|---|---|
-| **01** | [Embedding fair comparison](projects/01_embedding_fair_comparison) | Is a neural embedding's advantage the *method*, or the 100 billion words it was trained on? | 🟡 4 of 7 methods measured |
+| **01** | [Embedding fair comparison](projects/01_embedding_fair_comparison) | Is a neural embedding's advantage the *method*, or the 100 billion words it was trained on? | ✅ complete |
 | **02** | [Preprocessing ablation](projects/02_preprocessing_ablation) | Which parts of the standard NLP pipeline actually help - and do they compose? | ✅ complete |
 | **03** | [The reranker ceiling](projects/03_reranker_ceiling) | Does a reranker rescue a weak first stage, or only reorder it? | ✅ complete |
 | **04** | [Near-duplicate detection](projects/04_near_duplicate_detection) | How much does exact-match-on-a-normal-form miss? | ✅ complete |
@@ -72,22 +72,40 @@ variable it could not fix as a column rather than a footnote.
 Seven retrievers over one corpus — BM25, TF-IDF, LSA, word2vec and fastText **trained on
 this corpus**, and BGE and nomic-embed **trained on billions of words elsewhere**.
 
-Measured so far on HotpotQA (2,964 documents, 300 queries, exactly 2 gold each):
+HotpotQA: 2,964 documents, **277,259 tokens**, 300 queries, exactly 2 gold each.
 
-| Method | Trained on | **recall@10** | Index time |
-|---|---|---:|---:|
-| BGE-small | billions of words | **0.943** | 27.8 s |
-| **BM25** | this corpus | **0.865** | **0.1 s** |
-| TF-IDF | this corpus | 0.842 | 1.1 s |
-| LSA (SVD) | this corpus | 0.735 | 3.3 s |
+| Method | Trained on | r@1 | **r@10** | r@20 | MRR |
+|---|---|---:|---:|---:|---:|
+| BGE-small | billions of words | **0.437** | **0.943** | **0.967** | **0.923** |
+| nomic-embed | billions of words | 0.432 | 0.935 | 0.965 | 0.915 |
+| **BM25** | this corpus | 0.355 | 0.865 | 0.933 | 0.799 |
+| TF-IDF | this corpus | 0.288 | 0.842 | 0.923 | 0.710 |
+| LSA (SVD) | this corpus | 0.173 | 0.735 | 0.855 | 0.513 |
+| word2vec | **this corpus** | 0.033 | **0.140** | 0.198 | 0.128 |
+| fastText | **this corpus** | 0.027 | **0.135** | 0.192 | 0.117 |
 
-**BM25 — zero parameters, zero training, a tenth of a second to index — lands within 8
-points of a pretrained neural embedding at recall@10, and within 3.4 at recall@20, for
-1/270th of the indexing cost.**
+Four of those rows are dense vectors compared by cosine — BGE, nomic-embed, word2vec,
+fastText. They span **0.808**, and the split falls exactly along *where the vectors came
+from*. The widest gap the method axis produces between two methods fitted on identical
+data, BM25 against LSA, is **0.130**.
 
-🔴 **word2vec and fastText trained on this corpus are still pending.** They are the point of
-the project: until a static embedding trained on *893,000 tokens* sits beside one trained on
-billions, this is a lexical-vs-pretrained result, not the full experiment.
+**So "embeddings beat TF-IDF" is a fact about a download, not an algorithm.** Run an
+embedding method on the corpus in front of you and it loses to TF-IDF by 0.702.
+
+The cleanest controlled comparison is the worst news for word2vec. LSA, word2vec and
+fastText are all **300-dimensional, all fitted on this corpus, scored identically** — and
+**a 1990s truncated SVD beats both neural objectives by about 0.6** (0.735 against 0.140
+and 0.135). Not a small-corpus excuse: LSA had the same small corpus. Whatever word2vec's
+advantage over LSA is, you cannot get it by running word2vec — only by downloading someone
+else's.
+
+Two more: the two pretrained models **agree to within 0.008** despite different groups,
+data, architectures and widths. And **BM25, with zero parameters, beats everything trained
+on this corpus**, landing 0.078 behind the best pretrained model at r@10 and 0.034 at r@20.
+
+(r@1 is capped at 0.500 by construction — two gold documents, one slot — so BGE's 0.437 is
+87% of the attainable maximum. The 300-dimension control covers only the corpus-trained
+methods; BGE is 384 and nomic-embed 768, which the project README flags as a confound.)
 
 ### 02 · Preprocessing ablation
 

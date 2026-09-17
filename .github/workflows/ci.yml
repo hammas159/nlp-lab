@@ -25,6 +25,7 @@ jobs:
           - 10_relevance_feedback
           - 11_text_clustering
           - 12_gazetteer_ner
+          - 15_sentence_boundaries
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

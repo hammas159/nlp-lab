@@ -62,6 +62,7 @@ variable it could not fix as a column rather than a footnote.
 | **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
 | **11** | [Text clustering](projects/11_text_clustering) | Does silhouette find the number of clusters the labels say is there? | ✅ complete |
 | **12** | [Gazetteer NER](projects/12_gazetteer_ner) | What bounds a dictionary tagger — its coverage, or its own ambiguity? | ✅ complete |
+| **15** | [Sentence boundaries](projects/15_sentence_boundaries) | Four splitters a methods section would describe identically. How far apart are they? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -407,6 +408,36 @@ is no score to threshold. **That ceiling is a property of the gazetteer, not the
 
 Aho-Corasick is implemented rather than imported — 6.8× faster than a naive per-pattern scan
 on 200 patterns, and the gazetteer is 322× larger than that subset.
+
+### 15 · Sentence boundaries
+
+HotpotQA ships its paragraphs pre-split, but that split came from a **tool, not a person** —
+so this measures **agreement with a reference segmentation, not accuracy**, and says so
+rather than reporting an F1 that looks like a gold-standard score.
+
+| Splitter | precision | recall | F1 |
+|---|---:|---:|---:|
+| naive — split on any `.` `!` `?` | 0.905 | 0.982 | 0.942 |
+| + supplied abbreviation list | 0.928 | 0.979 | 0.953 |
+| + list *learned* from the corpus | 0.913 | 0.979 | 0.945 |
+| + require a sentence-like next token | **0.940** | 0.974 | **0.957** |
+
+**The spread is 0.015** between four implementations a methods section would describe
+identically. And **learning the abbreviation list is worse than supplying one** — Punkt's
+idea needs a corpus with enough abbreviations to learn from, which is not the same as a
+large corpus.
+
+The errors are not spread out. **Single initials are 66.5% of them** — `J. R. R. Tolkien` is
+three invented boundaries — and every refinement fails on them: `J` is not in any
+abbreviation list, and requiring a capital next cannot help because the next token is `R.`
+The abbreviation list *completely* solves the construction it was built for (5,404 errors to
+zero); it is simply not the construction that dominates.
+
+Two bugs worth recording, in the project's own README: a boundary emitted at end-of-text gave
+a guaranteed false positive on every paragraph and cost **fifteen points of precision**, and
+it hid behind `following[:1] in "\"'(["` — which is `True` for the empty string, so those
+errors were filed under "quote follows". Neither raised an exception; printing six actual
+disputed spans exposed both.
 
 ---
 

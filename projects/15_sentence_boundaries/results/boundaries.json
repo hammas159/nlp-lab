@@ -1,0 +1,113 @@
+{
+  "paragraphs": 61775,
+  "reference_boundaries": 203021,
+  "learned_abbreviations": [
+    "boraginaceae",
+    "bros",
+    "calif",
+    "capt",
+    "cir",
+    "dr",
+    "etc",
+    "fasterlouder",
+    "garrido",
+    "geometridae",
+    "huds",
+    "inc",
+    "joh",
+    "jr",
+    "mrjims",
+    "mrs",
+    "o'herlihy",
+    "orig",
+    "pgs",
+    "ph",
+    "primulaceae",
+    "prosiebensat",
+    "sgt",
+    "sherdog",
+    "sncf",
+    "spp",
+    "ssp",
+    "stat",
+    "ste",
+    "subsp",
+    "syn",
+    "thymelaeaceae",
+    "translit",
+    "tsgt",
+    "u",
+    "urbanism",
+    "vol",
+    "vz",
+    "www",
+    "wz"
+  ],
+  "learned_count": 40,
+  "supplied_count": 35,
+  "agreement": [
+    {
+      "splitter": "naive",
+      "precision": 0.9051117093966649,
+      "recall": 0.9819624570857202,
+      "f1": 0.941972216972217,
+      "predicted": 220259
+    },
+    {
+      "splitter": "abbreviation",
+      "precision": 0.9276705781312721,
+      "recall": 0.9789430650031278,
+      "f1": 0.9526174139571446,
+      "predicted": 214242
+    },
+    {
+      "splitter": "trained",
+      "precision": 0.9129947396228149,
+      "recall": 0.9788494786253639,
+      "f1": 0.9447759136267905,
+      "predicted": 217665
+    },
+    {
+      "splitter": "conservative",
+      "precision": 0.9399586511727382,
+      "recall": 0.9741455317430217,
+      "f1": 0.9567467938639562,
+      "predicted": 210405
+    }
+  ],
+  "taxonomy": {
+    "naive": {
+      "single initial": 13892,
+      "known abbreviation": 5404,
+      "number before period": 59,
+      "other": 1088,
+      "lowercase follows": 118,
+      "quote or bracket follows": 297,
+      "exclamation or question": 42
+    },
+    "abbreviation": {
+      "single initial": 13892,
+      "number before period": 59,
+      "other": 1088,
+      "lowercase follows": 118,
+      "quote or bracket follows": 297,
+      "exclamation or question": 42
+    },
+    "trained": {
+      "single initial": 13849,
+      "number before period": 59,
+      "known abbreviation": 3571,
+      "other": 1004,
+      "lowercase follows": 118,
+      "quote or bracket follows": 295,
+      "exclamation or question": 42
+    },
+    "conservative": {
+      "single initial": 11208,
+      "number before period": 59,
+      "other": 1058,
+      "quote or bracket follows": 297,
+      "exclamation or question": 11
+    }
+  }
+}

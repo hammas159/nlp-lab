@@ -61,6 +61,7 @@ variable it could not fix as a column rather than a footnote.
 | **09** | [Collocations](projects/09_collocations) | Five association measures, one set of counts. Do they agree on anything? | ✅ complete |
 | **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
 | **11** | [Text clustering](projects/11_text_clustering) | Does silhouette find the number of clusters the labels say is there? | ✅ complete |
+| **12** | [Gazetteer NER](projects/12_gazetteer_ner) | What bounds a dictionary tagger — its coverage, or its own ambiguity? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -373,6 +374,39 @@ uneven split needs.)
 Finally, at k = 2 the ARI standard deviation across three seeds is **0.156 against a mean of
 0.325**, while the silhouette standard deviation is 0.0002. **The metric used to choose k is
 stable; the clustering it chooses is not** — which looks settled and is not.
+
+### 12 · Gazetteer NER
+
+Every HotpotQA paragraph is a Wikipedia article, so its 66,581 titles are an entity
+gazetteer nobody had to annotate — and the paragraph is about that entity, which gives a
+recall signal for free.
+
+Wikipedia disambiguates with a parenthetical (`Paris (film)`) that never appears in running
+text. **Stripping it is what makes an entry matchable and what makes two entities share one
+entry:** 1,372 surface forms now stand for more than one thing, covering **3,201 titles
+(4.8%)**. Those are unresolvable by any context-free matcher, before a document is read.
+
+6,309 entries are a single token, and **138 of them appear in over 1% of paragraphs**:
+
+| entry | share of corpus |
+|---|---:|
+| `A+` | **83.3%** |
+| `To` | 55.3% |
+| `It` | 37.4% |
+| `One` | 15.9% |
+
+(Qualified honestly in the project README: the shared tokenizer reduces `A+` to `a`, so that
+83.3% is the token's frequency. Which is the same finding one level down — **the
+normalisation that makes a gazetteer matchable destroys the distinctions that made some
+entries specific.**)
+
+Tagging 3,000 paragraphs with the full automaton: the paragraph's own title is found
+**71.3%** of the time, and **a median of 9 other entity names match as well**. A tagger with
+no disambiguation returns all of them and cannot rank them — every match is exact, so there
+is no score to threshold. **That ceiling is a property of the gazetteer, not the matcher.**
+
+Aho-Corasick is implemented rather than imported — 6.8× faster than a naive per-pattern scan
+on 200 patterns, and the gazetteer is 322× larger than that subset.
 
 ---
 

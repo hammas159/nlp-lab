@@ -1,0 +1,156 @@
+{
+  "gazetteer": {
+    "titles": 66581,
+    "unmatchable_titles": 370,
+    "distinct_surfaces": 64382,
+    "colliding_surfaces": 1372,
+    "titles_lost_to_collision": 3201,
+    "corpus_vocabulary": 160743,
+    "single_token_surfaces": 6309
+  },
+  "collision_rate": 0.04807677866057884,
+  "single_token_entries": 6309,
+  "single_token_entries_over_one_percent": 138,
+  "noisiest": [
+    {
+      "surface": "A+",
+      "documents": 55467,
+      "share": 0.8330755020200958
+    },
+    {
+      "surface": "To",
+      "documents": 36844,
+      "share": 0.5533710818401646
+    },
+    {
+      "surface": "It",
+      "documents": 24905,
+      "share": 0.3740556615250597
+    },
+    {
+      "surface": "One",
+      "documents": 10608,
+      "share": 0.15932473228098107
+    },
+    {
+      "surface": "After...",
+      "documents": 8086,
+      "share": 0.12144605818476742
+    },
+    {
+      "surface": "Two",
+      "documents": 7671,
+      "share": 0.11521304876766646
+    },
+    {
+      "surface": "Time",
+      "documents": 5197,
+      "share": 0.0780553010618645
+    },
+    {
+      "surface": "They",
+      "documents": 4765,
+      "share": 0.07156696354815939
+    },
+    {
+      "surface": "Her",
+      "documents": 4622,
+      "share": 0.06941920367672459
+    },
+    {
+      "surface": "2",
+      "documents": 4570,
+      "share": 0.06863820008711194
+    },
+    {
+      "surface": "State",
+      "documents": 4384,
+      "share": 0.06584461032426668
+    },
+    {
+      "surface": "She",
+      "documents": 4327,
+      "share": 0.06498851023565282
+    },
+    {
+      "surface": "Band",
+      "documents": 4135,
+      "share": 0.0621048046740061
+    },
+    {
+      "surface": "September",
+      "documents": 3790,
+      "share": 0.056923146242922155
+    },
+    {
+      "surface": "More",
+      "documents": 3775,
+      "share": 0.056697856745918505
+    },
+    {
+      "surface": "Group",
+      "documents": 3707,
+      "share": 0.05567654435950196
+    },
+    {
+      "surface": "March",
+      "documents": 3589,
+      "share": 0.05390426698307325
+    },
+    {
+      "surface": "I",
+      "documents": 3565,
+      "share": 0.05354380378786741
+    },
+    {
+      "surface": "November",
+      "documents": 3501,
+      "share": 0.05258256860065184
+    },
+    {
+      "surface": "Up",
+      "documents": 3490,
+      "share": 0.05241735630284916
+    },
+    {
+      "surface": "June",
+      "documents": 3444,
+      "share": 0.05172646851203797
+    },
+    {
+      "surface": "York",
+      "documents": 3439,
+      "share": 0.05165137201303675
+    },
+    {
+      "surface": "December",
+      "documents": 3351,
+      "share": 0.05032967363061534
+    },
+    {
+      "surface": "4",
+      "documents": 3277,
+      "share": 0.04921824544539734
+    },
+    {
+      "surface": "Single",
+      "documents": 3255,
+      "share": 0.048887820849791985
+    }
+  ],
+  "tagging": {
+    "paragraphs": 3000,
+    "seconds": 0.345660924911499,
+    "self_title_found_rate": 0.7133333333333334,
+    "other_entries_median": 9.0,
+    "other_entries_mean": 9.463,
+    "other_entries_max": 40,
+    "overlaps_discarded": 4400
+  },
+  "speed": {
+    "patterns": 200,
+    "paragraphs": 200,
+    "naive_seconds": 0.43121910095214844,
+    "automaton_seconds": 0.06298089027404785
+  }
+}

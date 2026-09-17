@@ -17,6 +17,7 @@ jobs:
           - 02_preprocessing_ablation
           - 03_reranker_ceiling
           - 04_near_duplicate_detection
+          - 05_zipf_and_heaps
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

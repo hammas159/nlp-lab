@@ -54,6 +54,7 @@ variable it could not fix as a column rather than a footnote.
 | **02** | [Preprocessing ablation](projects/02_preprocessing_ablation) | Which parts of the standard NLP pipeline actually help - and do they compose? | ✅ complete |
 | **03** | [The reranker ceiling](projects/03_reranker_ceiling) | Does a reranker rescue a weak first stage, or only reorder it? | ✅ complete |
 | **04** | [Near-duplicate detection](projects/04_near_duplicate_detection) | How much does exact-match-on-a-normal-form miss? | ✅ complete |
+| **05** | [Zipf and Heaps](projects/05_zipf_and_heaps) | Five estimators, one exponent — how far apart do they land, and is it a power law at all? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -156,6 +157,44 @@ against exact Jaccard**: 0.0199 MAE on similar pairs, which is what √(s(1−s)
 s ≈ 0.9. The MAE on *random* pairs is 0.0011 and is reported only to explain why it is
 meaningless — random pairs are almost all disjoint, and MinHash returns exactly 0 for those.
 
+### 05 · Zipf and Heaps
+
+Five estimators of "the Zipf exponent" on one million matched tokens of English prose:
+
+| Estimator | a |
+|---|---:|
+| OLS, top 1000 ranks | 0.858 |
+| OLS, log-binned | 1.032 |
+| split-half (Piantadosi) | 1.063 |
+| OLS over all ranks | 1.271 |
+| MLE (Clauset), converted | 1.418 |
+| **spread** | **0.560** |
+
+**The five numbers everyone calls the Zipf exponent span 0.56 on the same corpus** — wider
+than the gap between any two registers measured here. Two of them are not even estimating the
+same parameter: a rank-frequency slope and a Clauset power-law fit differ by `g = 1 + 1/a`,
+so every value is converted before it is tabulated.
+
+On synthetic text whose exponent is known, **Piantadosi's split-half correction is the most
+biased of the five** (−0.35). It removes the correlated-error problem it was designed for and
+introduces a larger censoring bias, because a type absent from the frequency half cannot be
+ranked and the types that go missing are exactly the rarest ones.
+
+**English word frequencies then fail Clauset's goodness-of-fit test outright** (p = 0.00,
+100 synthetic refits) while C identifier frequencies pass it (p = 0.62).
+
+For Heaps' law, the textbook relation `b = min(1, 1/a)` predicts 1.000 against a measured
+0.717; simulating a corpus of the same finite size predicts 0.839. And `b` is not a constant —
+it drifts from 0.784 to 0.631 within the same corpus, so **a Heaps exponent quoted without a
+token count names no quantity.**
+
+The bill: because `b < 1`, vocabulary never saturates, and **6.49% of held-out prose tokens
+are of types no vocabulary built from the training half could contain at any size** — 11.19%
+for C source. That plateau is a floor, not a diminishing return.
+
+The Hurwitz zeta is implemented rather than imported, and checked against π²/6, π⁴/90 and
+Apéry's constant rather than against another library.
+
 ---
 
 ## Planned
@@ -224,7 +263,10 @@ GloVe &middot; fastText &middot; BM25 &middot; TF-IDF &middot; LSA &middot; LSI 
 SVD &middot; sentence embeddings &middot; BGE &middot; nomic-embed &middot;
 lexical vs dense retrieval &middot; sparse retrieval &middot; recall@k &middot; MRR &middot;
 HotpotQA &middot; ablation &middot; fair comparison &middot; training data vs method &middot;
-reproducible evaluation &middot; tokenisation &middot; topic models &middot; reranking
+reproducible evaluation &middot; tokenisation &middot; topic models &middot; reranking &middot;
+Zipf's law &middot; Heaps' law &middot; power-law fitting &middot; maximum likelihood &middot;
+Kolmogorov-Smirnov &middot; goodness of fit &middot; vocabulary growth &middot;
+out-of-vocabulary rate &middot; estimator bias &middot; MinHash &middot; LSH
 
 ## Licence
 

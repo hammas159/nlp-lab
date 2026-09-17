@@ -4,3 +4,4 @@ __pycache__/
 .streamlit/
 results_*.log
 results/nomic_cache.json
+uv.lock

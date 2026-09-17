@@ -1,0 +1,825 @@
+{
+  "meta": {
+    "corpora": {
+      "prose": {
+        "name": "HotpotQA paragraphs",
+        "register": "English prose",
+        "tokens": 5929361,
+        "types": 160768,
+        "type_token_ratio": 0.027113882929374684
+      },
+      "c": {
+        "name": "Devign C functions",
+        "register": "C source",
+        "tokens": 1007287,
+        "types": 67001,
+        "type_token_ratio": 0.066516295752849
+      },
+      "python": {
+        "name": "MBPP + HumanEval",
+        "register": "Python source",
+        "tokens": 40637,
+        "types": 3003,
+        "type_token_ratio": 0.07389817161699928
+      }
+    },
+    "matched_n": 1000000
+  },
+  "validation": {
+    "rows": [
+      {
+        "true_a": 0.8,
+        "estimator": "OLS rank-frequency",
+        "mean_a": 0.7603472293867513,
+        "bias": -0.03965277061324879,
+        "std": 0.000919498598235038,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 0.8,
+        "estimator": "OLS, top 1000 ranks",
+        "mean_a": 0.7906006556776097,
+        "bias": -0.009399344322390313,
+        "std": 0.003282749937102321,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 0.8,
+        "estimator": "OLS, log-binned",
+        "mean_a": 0.7764688228964705,
+        "bias": -0.023531177103529588,
+        "std": 0.0007990872414545001,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 0.8,
+        "estimator": "MLE (Clauset)",
+        "mean_a": 0.7780172671883523,
+        "bias": -0.021982732811647754,
+        "std": 0.010884874399578168,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 0.8,
+        "estimator": "split-half (Piantadosi)",
+        "mean_a": 0.48762890111746515,
+        "bias": -0.3123710988825349,
+        "std": 0.0025748846403044682,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.0,
+        "estimator": "OLS rank-frequency",
+        "mean_a": 0.8310731403655292,
+        "bias": -0.16892685963447085,
+        "std": 0.001570499788842936,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.0,
+        "estimator": "OLS, top 1000 ranks",
+        "mean_a": 0.9920481410858784,
+        "bias": -0.007951858914121646,
+        "std": 0.0031840113063895887,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.0,
+        "estimator": "OLS, log-binned",
+        "mean_a": 0.9647394000982612,
+        "bias": -0.0352605999017388,
+        "std": 0.0004927365870398888,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.0,
+        "estimator": "MLE (Clauset)",
+        "mean_a": 0.9784580373937695,
+        "bias": -0.021541962606230536,
+        "std": 0.013254548572820678,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.0,
+        "estimator": "split-half (Piantadosi)",
+        "mean_a": 0.645441602014228,
+        "bias": -0.35455839798577204,
+        "std": 0.0024963730430510394,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.2,
+        "estimator": "OLS rank-frequency",
+        "mean_a": 0.9212706472035792,
+        "bias": -0.27872935279642075,
+        "std": 0.0035315282171873986,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.2,
+        "estimator": "OLS, top 1000 ranks",
+        "mean_a": 1.1913701971449875,
+        "bias": -0.00862980285501247,
+        "std": 0.006044335657214684,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.2,
+        "estimator": "OLS, log-binned",
+        "mean_a": 1.15074569169473,
+        "bias": -0.04925430830526989,
+        "std": 0.0009036622196179302,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.2,
+        "estimator": "MLE (Clauset)",
+        "mean_a": 1.1826151851830236,
+        "bias": -0.0173848148169764,
+        "std": 0.01203765644051443,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.2,
+        "estimator": "split-half (Piantadosi)",
+        "mean_a": 0.8207770778486301,
+        "bias": -0.3792229221513699,
+        "std": 0.004061914508701656,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.5,
+        "estimator": "OLS rank-frequency",
+        "mean_a": 1.1846874213437224,
+        "bias": -0.3153125786562776,
+        "std": 0.005806807245970308,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.5,
+        "estimator": "OLS, top 1000 ranks",
+        "mean_a": 1.4712021830044606,
+        "bias": -0.028797816995539405,
+        "std": 0.005532494594001659,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.5,
+        "estimator": "OLS, log-binned",
+        "mean_a": 1.4394528767687347,
+        "bias": -0.06054712323126532,
+        "std": 0.0022413397224886047,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.5,
+        "estimator": "MLE (Clauset)",
+        "mean_a": 1.4641785593081285,
+        "bias": -0.03582144069187154,
+        "std": 0.01656164885520935,
+        "n_tokens": 200000,
+        "repeats": 8
+      },
+      {
+        "true_a": 1.5,
+        "estimator": "split-half (Piantadosi)",
+        "mean_a": 1.147167087614384,
+        "bias": -0.352832912385616,
+        "std": 0.010035045299329626,
+        "n_tokens": 200000,
+        "repeats": 8
+      }
+    ],
+    "summary": [
+      {
+        "estimator": "OLS, top 1000 ranks",
+        "mean_abs_bias": 0.013694705771765958
+      },
+      {
+        "estimator": "MLE (Clauset)",
+        "mean_abs_bias": 0.02418273773168156
+      },
+      {
+        "estimator": "OLS, log-binned",
+        "mean_abs_bias": 0.0421483021354509
+      },
+      {
+        "estimator": "OLS rank-frequency",
+        "mean_abs_bias": 0.2006553904251045
+      },
+      {
+        "estimator": "split-half (Piantadosi)",
+        "mean_abs_bias": 0.3497463328513232
+      }
+    ],
+    "best_estimator": "OLS, top 1000 ranks"
+  },
+  "zipf": {
+    "prose": [
+      {
+        "estimator": "OLS rank-frequency",
+        "a": 1.2712105967111353,
+        "gamma": null,
+        "cutoff": 1.0,
+        "n_used": 55983,
+        "n_discarded": 0,
+        "note": "every type, including the singleton shelf"
+      },
+      {
+        "estimator": "OLS, top 1000 ranks",
+        "a": 0.8581651540764642,
+        "gamma": null,
+        "cutoff": 1000.0,
+        "n_used": 1000,
+        "n_discarded": 0,
+        "note": "tail discarded as noise"
+      },
+      {
+        "estimator": "OLS, log-binned",
+        "a": 1.0318547398383884,
+        "gamma": null,
+        "cutoff": null,
+        "n_used": 45,
+        "n_discarded": 55938,
+        "note": "45 bins stand in for 55,983 types"
+      },
+      {
+        "estimator": "MLE (Clauset)",
+        "a": 1.4180809770221952,
+        "gamma": 1.705178347501624,
+        "cutoff": 2.0,
+        "n_used": 29311,
+        "n_discarded": 26672,
+        "note": "x_min=2 by KS, KS=0.0118, se(g)=0.0041"
+      },
+      {
+        "estimator": "split-half (Piantadosi)",
+        "a": 1.0631067681641266,
+        "gamma": null,
+        "cutoff": null,
+        "n_used": 23495,
+        "n_discarded": 16416,
+        "note": "rank from half A, frequency from half B"
+      }
+    ],
+    "c": [
+      {
+        "estimator": "OLS rank-frequency",
+        "a": 1.1668814104130871,
+        "gamma": null,
+        "cutoff": 1.0,
+        "n_used": 66749,
+        "n_discarded": 0,
+        "note": "every type, including the singleton shelf"
+      },
+      {
+        "estimator": "OLS, top 1000 ranks",
+        "a": 1.005063750250628,
+        "gamma": null,
+        "cutoff": 1000.0,
+        "n_used": 1000,
+        "n_discarded": 0,
+        "note": "tail discarded as noise"
+      },
+      {
+        "estimator": "OLS, log-binned",
+        "a": 1.0129193174432467,
+        "gamma": null,
+        "cutoff": null,
+        "n_used": 46,
+        "n_discarded": 66703,
+        "note": "46 bins stand in for 66,749 types"
+      },
+      {
+        "estimator": "MLE (Clauset)",
+        "a": 1.063951842694302,
+        "gamma": 1.9398921641675497,
+        "cutoff": 14.0,
+        "n_used": 6419,
+        "n_discarded": 60330,
+        "note": "x_min=14 by KS, KS=0.0060, se(g)=0.0117"
+      },
+      {
+        "estimator": "split-half (Piantadosi)",
+        "a": 0.9238644256614472,
+        "gamma": null,
+        "cutoff": null,
+        "n_used": 31195,
+        "n_discarded": 17880,
+        "note": "rank from half A, frequency from half B"
+      }
+    ]
+  },
+  "goodness_of_fit": {
+    "prose": {
+      "x_min": 2,
+      "gamma": 1.705178347501624,
+      "ks": 0.011836659911231617,
+      "p_value": 0.0,
+      "n_synthetic": 100,
+      "power_law_plausible": false,
+      "seconds": 27.7
+    },
+    "c": {
+      "x_min": 14,
+      "gamma": 1.9398921641675497,
+      "ks": 0.006036776693359447,
+      "p_value": 0.62,
+      "n_synthetic": 100,
+      "power_law_plausible": true,
+      "seconds": 18.5
+    }
+  },
+  "heaps": {
+    "prose": {
+      "n_tokens": 1000000,
+      "measured": {
+        "beta": 0.7174786574572033,
+        "K": 3.3674738746688457,
+        "r_squared": 0.9974137492172743,
+        "n_points": 60,
+        "fitted_from": 100,
+        "fitted_to": 1000000
+      },
+      "a_used": 0.8581651540764642,
+      "beta_asymptotic": 1.0,
+      "beta_simulated": {
+        "beta": 0.8393724396749672,
+        "K": 2.3038892166953278,
+        "r_squared": 0.9944680046219793,
+        "n_points": 40,
+        "fitted_from": 50,
+        "fitted_to": 500000,
+        "support": 111966,
+        "final_types": 86067
+      },
+      "drift": [
+        {
+          "from_tokens": 100,
+          "to_tokens": 556,
+          "beta": 0.7840817202921392
+        },
+        {
+          "from_tokens": 186,
+          "to_tokens": 1039,
+          "beta": 0.798845510923674
+        },
+        {
+          "from_tokens": 348,
+          "to_tokens": 1941,
+          "beta": 0.7838314803236122
+        },
+        {
+          "from_tokens": 650,
+          "to_tokens": 3625,
+          "beta": 0.784529639034633
+        },
+        {
+          "from_tokens": 1215,
+          "to_tokens": 6768,
+          "beta": 0.7799653786264761
+        },
+        {
+          "from_tokens": 2269,
+          "to_tokens": 12638,
+          "beta": 0.7692312361964926
+        },
+        {
+          "from_tokens": 4237,
+          "to_tokens": 23598,
+          "beta": 0.7394367232657177
+        },
+        {
+          "from_tokens": 7912,
+          "to_tokens": 44062,
+          "beta": 0.688004692334467
+        },
+        {
+          "from_tokens": 14773,
+          "to_tokens": 82272,
+          "beta": 0.6593410346278421
+        },
+        {
+          "from_tokens": 27585,
+          "to_tokens": 153617,
+          "beta": 0.637708601346668
+        },
+        {
+          "from_tokens": 51506,
+          "to_tokens": 286831,
+          "beta": 0.6287305229211565
+        },
+        {
+          "from_tokens": 96172,
+          "to_tokens": 535566,
+          "beta": 0.634837804326924
+        },
+        {
+          "from_tokens": 179571,
+          "to_tokens": 1000000,
+          "beta": 0.6305529112980279
+        }
+      ]
+    },
+    "c": {
+      "n_tokens": 1000000,
+      "measured": {
+        "beta": 0.8169622742672158,
+        "K": 1.0666588772543177,
+        "r_squared": 0.9978549257140398,
+        "n_points": 60,
+        "fitted_from": 100,
+        "fitted_to": 1000000
+      },
+      "a_used": 1.005063750250628,
+      "beta_asymptotic": 0.9949617621276606,
+      "beta_simulated": {
+        "beta": 0.8124547919253554,
+        "K": 2.2174149578201785,
+        "r_squared": 0.997503265127583,
+        "n_points": 40,
+        "fitted_from": 50,
+        "fitted_to": 500000,
+        "support": 133498,
+        "final_types": 70076
+      },
+      "drift": [
+        {
+          "from_tokens": 100,
+          "to_tokens": 556,
+          "beta": 0.8293101047011419
+        },
+        {
+          "from_tokens": 186,
+          "to_tokens": 1039,
+          "beta": 0.8607735993581414
+        },
+        {
+          "from_tokens": 348,
+          "to_tokens": 1941,
+          "beta": 1.010903474372587
+        },
+        {
+          "from_tokens": 650,
+          "to_tokens": 3625,
+          "beta": 0.9639328546026433
+        },
+        {
+          "from_tokens": 1215,
+          "to_tokens": 6768,
+          "beta": 0.7624617660587452
+        },
+        {
+          "from_tokens": 2269,
+          "to_tokens": 12638,
+          "beta": 0.7700214699727185
+        },
+        {
+          "from_tokens": 4237,
+          "to_tokens": 23598,
+          "beta": 0.7377202566126059
+        },
+        {
+          "from_tokens": 7912,
+          "to_tokens": 44062,
+          "beta": 0.7750660416298325
+        },
+        {
+          "from_tokens": 14773,
+          "to_tokens": 82272,
+          "beta": 0.8506927229306142
+        },
+        {
+          "from_tokens": 27585,
+          "to_tokens": 153617,
+          "beta": 0.8286748803020232
+        },
+        {
+          "from_tokens": 51506,
+          "to_tokens": 286831,
+          "beta": 0.7814060012580755
+        },
+        {
+          "from_tokens": 96172,
+          "to_tokens": 535566,
+          "beta": 0.7315253822346629
+        },
+        {
+          "from_tokens": 179571,
+          "to_tokens": 1000000,
+          "beta": 0.6660177617379144
+        }
+      ]
+    },
+    "python": {
+      "n_tokens": 40637,
+      "measured": {
+        "beta": 0.7214490166451379,
+        "K": 1.2277994598541,
+        "r_squared": 0.987729117910996,
+        "n_points": 60,
+        "fitted_from": 10,
+        "fitted_to": 40637
+      },
+      "a_used": 1.1976865441406999,
+      "beta_asymptotic": 0.8349430031523537,
+      "beta_simulated": {
+        "beta": 0.7190057177528165,
+        "K": 1.9293762826754846,
+        "r_squared": 0.9953545163511999,
+        "n_points": 40,
+        "fitted_from": 10,
+        "fitted_to": 40637,
+        "support": 6006,
+        "final_types": 3163
+      },
+      "drift": [
+        {
+          "from_tokens": 10,
+          "to_tokens": 47,
+          "beta": 0.33525884231147696
+        },
+        {
+          "from_tokens": 17,
+          "to_tokens": 82,
+          "beta": 0.1772034273022234
+        },
+        {
+          "from_tokens": 30,
+          "to_tokens": 145,
+          "beta": 0.5180038309808539
+        },
+        {
+          "from_tokens": 54,
+          "to_tokens": 255,
+          "beta": 0.9464188896112299
+        },
+        {
+          "from_tokens": 95,
+          "to_tokens": 448,
+          "beta": 1.0176122724716763
+        },
+        {
+          "from_tokens": 167,
+          "to_tokens": 787,
+          "beta": 0.8884255878976556
+        },
+        {
+          "from_tokens": 293,
+          "to_tokens": 1383,
+          "beta": 0.7442645063466424
+        },
+        {
+          "from_tokens": 516,
+          "to_tokens": 2429,
+          "beta": 0.6568641260318709
+        },
+        {
+          "from_tokens": 906,
+          "to_tokens": 4268,
+          "beta": 0.740129742086682
+        },
+        {
+          "from_tokens": 1592,
+          "to_tokens": 7497,
+          "beta": 0.765127096848138
+        },
+        {
+          "from_tokens": 2797,
+          "to_tokens": 13169,
+          "beta": 0.7237065450809472
+        },
+        {
+          "from_tokens": 4913,
+          "to_tokens": 23133,
+          "beta": 0.7030858635121974
+        },
+        {
+          "from_tokens": 8631,
+          "to_tokens": 40637,
+          "beta": 0.8021709156880111
+        }
+      ]
+    }
+  },
+  "oov": {
+    "prose": {
+      "n_tokens": 1000000,
+      "rows": [
+        {
+          "vocab_size": 2000,
+          "train_types": 36764,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.256864,
+          "oov_type_rate": 0.946883512257651
+        },
+        {
+          "vocab_size": 8000,
+          "train_types": 36764,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.131152,
+          "oov_type_rate": 0.8019815200555467
+        },
+        {
+          "vocab_size": 16000,
+          "train_types": 36764,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.094042,
+          "oov_type_rate": 0.6714201783902153
+        },
+        {
+          "vocab_size": 32000,
+          "train_types": 36764,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.07037,
+          "oov_type_rate": 0.5448913101532874
+        },
+        {
+          "vocab_size": 50000,
+          "train_types": 36764,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.064884,
+          "oov_type_rate": 0.5132457405330343
+        },
+        {
+          "vocab_size": 100000,
+          "train_types": 36764,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.064884,
+          "oov_type_rate": 0.5132457405330343
+        }
+      ],
+      "irreducible": {
+        "train_types": 36764,
+        "oov_token_rate": 0.064884,
+        "oov_type_rate": 0.5132457405330343
+      },
+      "beta_used": 0.7174786574572033,
+      "tokens_for_100k_types": 1713593.2880416627
+    },
+    "c": {
+      "n_tokens": 1000000,
+      "rows": [
+        {
+          "vocab_size": 2000,
+          "train_types": 44540,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.291754,
+          "oov_type_rate": 0.9548540798094104
+        },
+        {
+          "vocab_size": 8000,
+          "train_types": 44540,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.194964,
+          "oov_type_rate": 0.8515783204288266
+        },
+        {
+          "vocab_size": 16000,
+          "train_types": 44540,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.156848,
+          "oov_type_rate": 0.7537581893984514
+        },
+        {
+          "vocab_size": 32000,
+          "train_types": 44540,
+          "capped_by_training_corpus": false,
+          "oov_token_rate": 0.12737,
+          "oov_type_rate": 0.6144848123883264
+        },
+        {
+          "vocab_size": 50000,
+          "train_types": 44540,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.111874,
+          "oov_type_rate": 0.5291006551518761
+        },
+        {
+          "vocab_size": 100000,
+          "train_types": 44540,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.111874,
+          "oov_type_rate": 0.5291006551518761
+        }
+      ],
+      "irreducible": {
+        "train_types": 44540,
+        "oov_token_rate": 0.111874,
+        "oov_type_rate": 0.5291006551518761
+      },
+      "beta_used": 0.8169622742672158,
+      "tokens_for_100k_types": 1218790.505703401
+    },
+    "python": {
+      "n_tokens": 40637,
+      "rows": [
+        {
+          "vocab_size": 2000,
+          "train_types": 1593,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.27634233968207095,
+          "oov_type_rate": 0.762987012987013
+        },
+        {
+          "vocab_size": 8000,
+          "train_types": 1593,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.27634233968207095,
+          "oov_type_rate": 0.762987012987013
+        },
+        {
+          "vocab_size": 16000,
+          "train_types": 1593,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.27634233968207095,
+          "oov_type_rate": 0.762987012987013
+        },
+        {
+          "vocab_size": 32000,
+          "train_types": 1593,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.27634233968207095,
+          "oov_type_rate": 0.762987012987013
+        },
+        {
+          "vocab_size": 50000,
+          "train_types": 1593,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.27634233968207095,
+          "oov_type_rate": 0.762987012987013
+        },
+        {
+          "vocab_size": 100000,
+          "train_types": 1593,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.27634233968207095,
+          "oov_type_rate": 0.762987012987013
+        }
+      ],
+      "irreducible": {
+        "train_types": 1593,
+        "oov_token_rate": 0.27634233968207095,
+        "oov_type_rate": 0.762987012987013
+      },
+      "beta_used": 0.7214490166451379,
+      "tokens_for_100k_types": 6411463.547889348
+    }
+  },
+  "tokenizer_sensitivity": {
+    "prose": {
+      "word": {
+        "tokens": 1000000,
+        "types": 55983,
+        "a": 0.8581651540764642
+      },
+      "code-aware": {
+        "tokens": 1000000,
+        "types": 57903,
+        "a": 0.9324518052119067
+      }
+    },
+    "c": {
+      "word": {
+        "tokens": 1000000,
+        "types": 66749,
+        "a": 1.005063750250628
+      },
+      "code-aware": {
+        "tokens": 1000000,
+        "types": 42340,
+        "a": 1.2355849594996637
+      }
+    },
+    "python": {
+      "word": {
+        "tokens": 40637,
+        "types": 3003,
+        "a": 1.1976865441406999
+      },
+      "code-aware": {
+        "tokens": 78646,
+        "types": 3221,
+        "a": 1.3409184996568386
+      }
+    }
+  }
+}

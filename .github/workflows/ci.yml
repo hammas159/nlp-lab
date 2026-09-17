@@ -21,6 +21,7 @@ jobs:
           - 06_ppmi_svd_vs_sgns
           - 07_smart_weighting_grid
           - 08_gzip_knn
+          - 09_collocations
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

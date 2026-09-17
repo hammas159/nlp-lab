@@ -518,6 +518,24 @@ confounds something:
 - **Low-resource morphology** — where subword methods earn their keep, using Urdu, which
   connects to [urdu-nlp-toolkit](https://github.com/hammas159/urdu-nlp-toolkit)
 
+### Blocked, and why
+
+Two projects were designed and then **not built**, because the data to do them honestly is
+not available offline on this machine. They are recorded here rather than quietly dropped,
+since "we tried and could not" is information and an empty slot is not.
+
+- **Sentiment lexicons** — the intended finding was that *negation and intensifier handling
+  outweighs the choice of lexicon*, which requires VADER, AFINN, SentiWordNet or the Opinion
+  Lexicon. None is present, and inventing a lexicon to compare against other lexicons would
+  measure the invention.
+- **Word sense disambiguation** — the intended finding was that the *most-frequent-sense
+  baseline beats every unsupervised method*, and that papers reporting against random are
+  choosing the flattering comparison. That needs WordNet for sense inventories and SemCor
+  for sense-tagged text. Neither is installed, and NLTK is not either.
+
+Both become buildable the moment those resources are downloaded; neither is blocked on
+design.
+
 ---
 
 ## Running a project

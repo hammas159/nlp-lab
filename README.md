@@ -483,9 +483,13 @@ rather than reporting an F1 that looks like a gold-standard score.
 | + require a sentence-like next token | **0.940** | 0.974 | **0.957** |
 
 **The spread is 0.015** between four implementations a methods section would describe
-identically. And **learning the abbreviation list is worse than supplying one** — Punkt's
-idea needs a corpus with enough abbreviations to learn from, which is not the same as a
-large corpus.
+identically. And **learning the abbreviation list is worse than supplying one** — not for
+lack of material: it learned 40 tokens against the supplied 35, but **different** ones. It
+misses 28 of the 35 commonest (`mr`, `prof`, `st`, `co`, `vs`) and instead learns Latin
+family names — `boraginaceae`, `geometridae`, `primulaceae` — which in this corpus appear
+almost only at the end of *"…is a species in the family X."* and are therefore bound to a
+period by exactly the evidence a real abbreviation is. The trained splitter still makes
+**3,571 known-abbreviation errors** where the supplied list makes zero.
 
 The errors are not spread out. **Single initials are 66.5% of them** — `J. R. R. Tolkien` is
 three invented boundaries — and every refinement fails on them: `J` is not in any

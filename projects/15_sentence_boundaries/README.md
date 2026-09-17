@@ -36,8 +36,9 @@ the choice of splitter is an unreported parameter of every downstream result.**
 
 ## The result
 
-66,581 paragraphs, 220,000-odd reference boundaries. Four splitters, each the previous one
-plus a restriction:
+61,775 paragraphs, 203,021 reference boundaries. (The corpus holds 66,581 paragraphs; the
+4,806 that HotpotQA splits into a single sentence contain no boundary to agree about and
+are excluded.) Four splitters, each the previous one plus a restriction:
 
 | Splitter | precision | recall | F1 |
 |---|---:|---:|---:|
@@ -51,10 +52,31 @@ identically as "sentences were split", and the distance between the crudest and 
 careful is a point and a half.
 
 **Learning the abbreviation list makes things worse than supplying one** (0.945 against
-0.953). Punkt's idea — that an abbreviation is a token bound to its trailing period — found
-only a handful of tokens on this corpus, because encyclopaedic prose uses few abbreviations
-and uses them rarely. The unsupervised method needs a corpus with enough abbreviations to
-learn from, which is not the same as a large corpus.
+0.953) — and not for lack of material. It learned **40 tokens against the supplied 35.** It
+learned *different* ones.
+
+Punkt's rule is that an abbreviation is a token bound to its trailing period. On this corpus
+that rule finds two populations:
+
+- **Real abbreviations the supplied list lacks** — `calif`, `capt`, `sgt`, `tsgt`, `spp`,
+  `subsp`, `translit`, `pgs`. A genuine win, and the reason the idea is attractive.
+- **Nouns that happen to end sentences** — `boraginaceae`, `geometridae`, `primulaceae`,
+  `thymelaeaceae`. Latin family names, which in this corpus appear almost exclusively at the
+  end of *"…is a species in the family Boraginaceae."* They are bound to a period by exactly
+  the evidence a real abbreviation is bound by, and the splitter then **refuses to split
+  after them**. Alongside them: `www`, `sherdog`, `fasterlouder`, `o'herlihy`, `mrjims`.
+
+And it **misses 28 of the 35 supplied abbreviations**, including the commonest ones —
+`mr`, `ms`, `prof`, `st`, `co`, `corp`, `vs`, `ie`, `eg`, `al`, `dept`. In encyclopaedic
+prose those appear too seldom, or too often without a period, to clear the threshold.
+
+The cost shows up directly in the taxonomy below: the trained splitter still makes **3,571
+known-abbreviation errors** where the supplied list makes **zero**.
+
+So the unsupervised method does not need "a bigger corpus" — this one is 61,775 paragraphs.
+It needs a corpus where the abbreviations that matter are both frequent *and* consistently
+bound, and where no ordinary noun is systematically sentence-final.
+`test_learning_over_fits_a_small_corpus` asserts the failure mode directly.
 
 ---
 

@@ -51,13 +51,13 @@ def metrics(order: np.ndarray, gold_idx: set[int]) -> dict:
     return out
 
 
-def run(method_cls, docs, queries, title_to_idx, nomic_cache=None) -> dict:
+def run(method_cls, docs, queries, title_to_idx, nomic_cache=None, checkpoint=None) -> dict:
     name = method_cls.name
     print(f"  fitting {name} ...", end=" ", flush=True)
     started = time.time()
     method = method_cls()
     if isinstance(method, NomicEmbed):
-        method.fit(docs, cache=nomic_cache)
+        method.fit(docs, cache=nomic_cache, checkpoint=checkpoint)
     else:
         method.fit(docs)
     fit_seconds = time.time() - started
@@ -105,15 +105,22 @@ def main(n_queries: int = 1000, only: list[str] | None = None) -> None:
     if only:
         classes = [c for c in classes if c.__name__ in only]
 
+    def checkpoint(cache: dict) -> None:
+        # Write beside the target and replace, so an interrupt mid-write cannot leave a
+        # truncated cache that the next run would fail to parse.
+        temporary = cache_path.with_suffix(".json.part")
+        temporary.write_text(json.dumps(cache))
+        temporary.replace(cache_path)
+
     rows = []
     for cls in classes:
         try:
-            rows.append(run(cls, docs, queries, title_to_idx, nomic_cache))
+            rows.append(run(cls, docs, queries, title_to_idx, nomic_cache, checkpoint))
         except Exception as exc:  # noqa: BLE001 - one missing library must not lose the run
             print(f"  SKIPPED {cls.name}: {type(exc).__name__}: {str(exc)[:90]}")
 
     if nomic_cache:
-        cache_path.write_text(json.dumps(nomic_cache))
+        checkpoint(nomic_cache)
 
     out = RESULTS / "scores.json"
     existing = json.loads(out.read_text()) if out.exists() else {"rows": []}

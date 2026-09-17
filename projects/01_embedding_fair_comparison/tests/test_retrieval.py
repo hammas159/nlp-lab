@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from shared.benchmark import Query, coverage, tokenize
 
 from evaluate import metrics
-from retrievers import BM25, LSA, TfIdf, _unit
+from retrievers import BM25, LSA, NomicEmbed, TfIdf, _unit
 
 DOCS = [
     "the cat sat on the mat",
@@ -159,3 +159,63 @@ def test_lsa_clamps_components_to_the_vocabulary_size():
     lsa = LSA().fit(tiny)
     assert lsa.n_components < 300
     assert lsa.score("cat").shape == (2,)
+
+
+# --- the pretrained arm's cache -------------------------------------------------------------
+#
+# nomic-embed is one HTTP round-trip per document, a few hundred milliseconds each, so a
+# 3,000-document corpus is a twenty-minute silence with nothing written until the end. These
+# pin the resume behaviour, with the network stubbed out.
+
+
+class _StubNomic(NomicEmbed):
+    """Counts calls instead of making them, so the cache logic is testable offline."""
+
+    def __init__(self):
+        self.calls = 0
+
+    def _embed(self, text: str) -> np.ndarray:
+        self.calls += 1
+        return np.full(4, float(len(text)), dtype=np.float32)
+
+
+def test_a_cached_document_is_not_embedded_again():
+    cache: dict = {}
+    _StubNomic().fit(DOCS, cache=cache)
+    resumed = _StubNomic()
+    resumed.fit(DOCS, cache=cache)
+    assert resumed.calls == 0
+
+
+def test_a_half_filled_cache_only_embeds_what_is_missing():
+    """The point of checkpointing: an interrupted run resumes rather than restarts."""
+    partial = {str(i): [float(len(d))] * 4 for i, d in enumerate(DOCS[:3])}
+    resumed = _StubNomic()
+    resumed.fit(DOCS, cache=partial)
+    assert resumed.calls == len(DOCS) - 3
+
+
+def test_the_cache_is_checkpointed_during_the_run():
+    """Not only at the end - a crash at document 2,900 must not throw away 2,899 of them."""
+    seen = []
+    stub = _StubNomic()
+    stub.CHECKPOINT_EVERY = 2
+    stub.fit(DOCS, cache={}, checkpoint=lambda c: seen.append(len(c)))
+    assert seen[0] == 2
+    assert seen[-1] == len(DOCS)
+
+
+def test_a_fully_cached_run_writes_no_checkpoint():
+    """Nothing was computed, so there is nothing to save."""
+    cache = {str(i): [float(len(d))] * 4 for i, d in enumerate(DOCS)}
+    seen = []
+    _StubNomic().fit(DOCS, cache=cache, checkpoint=lambda c: seen.append(len(c)))
+    assert seen == []
+
+
+def test_resuming_reproduces_the_uninterrupted_matrix():
+    """A resumed run and a clean one must give the same vectors, or the cache is a bug."""
+    clean = _StubNomic().fit(DOCS, cache={})
+    partial = {str(i): [float(len(d))] * 4 for i, d in enumerate(DOCS[:2])}
+    resumed = _StubNomic().fit(DOCS, cache=partial)
+    assert np.allclose(clean.matrix, resumed.matrix)

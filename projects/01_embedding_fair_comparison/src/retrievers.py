@@ -185,16 +185,28 @@ class NomicEmbed:
         with urllib.request.urlopen(request, timeout=120) as response:
             return np.asarray(json.loads(response.read())["embedding"], dtype=np.float32)
 
-    def fit(self, docs: list[str], cache: dict | None = None) -> NomicEmbed:
+    #: Embeddings arrive one HTTP round-trip at a time - a few hundred milliseconds each, so
+    #: a 3,000-document corpus is a twenty-minute silence. Checkpoint often enough that an
+    #: interrupted run resumes rather than restarts, and say where it is while it works.
+    CHECKPOINT_EVERY = 200
+
+    def fit(self, docs: list[str], cache: dict | None = None, checkpoint=None) -> NomicEmbed:
         rows = []
+        computed = 0
         for i, d in enumerate(docs):
             if cache is not None and str(i) in cache:
                 rows.append(np.asarray(cache[str(i)], dtype=np.float32))
-            else:
-                v = self._embed(d)
-                rows.append(v)
-                if cache is not None:
-                    cache[str(i)] = v.tolist()
+                continue
+            v = self._embed(d)
+            rows.append(v)
+            computed += 1
+            if cache is not None:
+                cache[str(i)] = v.tolist()
+                if checkpoint and computed % self.CHECKPOINT_EVERY == 0:
+                    checkpoint(cache)
+                    print(f"[{i + 1}/{len(docs)}]", end=" ", flush=True)
+        if cache is not None and checkpoint and computed:
+            checkpoint(cache)
         self.matrix = _unit(np.vstack(rows))
         return self
 

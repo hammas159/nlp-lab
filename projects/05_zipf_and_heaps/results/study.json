@@ -23,229 +23,229 @@
         "type_token_ratio": 0.07389817161699928
       }
     },
-    "matched_n": 1000000
+    "matched_n": 200000
   },
   "validation": {
     "rows": [
       {
         "true_a": 0.8,
         "estimator": "OLS rank-frequency",
-        "mean_a": 0.7603472293867513,
-        "bias": -0.03965277061324879,
-        "std": 0.000919498598235038,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.7660724293216142,
+        "bias": -0.03392757067838581,
+        "std": 0.0021571451669278926,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 0.8,
         "estimator": "OLS, top 1000 ranks",
-        "mean_a": 0.7906006556776097,
-        "bias": -0.009399344322390313,
-        "std": 0.003282749937102321,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.7640532755122221,
+        "bias": -0.035946724487777915,
+        "std": 0.01215509692633016,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 0.8,
         "estimator": "OLS, log-binned",
-        "mean_a": 0.7764688228964705,
-        "bias": -0.023531177103529588,
-        "std": 0.0007990872414545001,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.7720148840516886,
+        "bias": -0.027985115948311434,
+        "std": 0.002081463253477178,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 0.8,
         "estimator": "MLE (Clauset)",
-        "mean_a": 0.7780172671883523,
-        "bias": -0.021982732811647754,
-        "std": 0.010884874399578168,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.754486812472118,
+        "bias": -0.045513187527882026,
+        "std": 0.01715232502603049,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 0.8,
         "estimator": "split-half (Piantadosi)",
-        "mean_a": 0.48762890111746515,
-        "bias": -0.3123710988825349,
-        "std": 0.0025748846403044682,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.48849047901005926,
+        "bias": -0.3115095209899408,
+        "std": 0.0021370228988815956,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.0,
         "estimator": "OLS rank-frequency",
-        "mean_a": 0.8310731403655292,
-        "bias": -0.16892685963447085,
-        "std": 0.001570499788842936,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.8486728110913094,
+        "bias": -0.15132718890869057,
+        "std": 0.005197251435121947,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.0,
         "estimator": "OLS, top 1000 ranks",
-        "mean_a": 0.9920481410858784,
-        "bias": -0.007951858914121646,
-        "std": 0.0031840113063895887,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.9661991798891597,
+        "bias": -0.03380082011084029,
+        "std": 0.00589734255291407,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.0,
         "estimator": "OLS, log-binned",
-        "mean_a": 0.9647394000982612,
-        "bias": -0.0352605999017388,
-        "std": 0.0004927365870398888,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.9564006420839011,
+        "bias": -0.043599357916098924,
+        "std": 0.002740121700911864,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.0,
         "estimator": "MLE (Clauset)",
-        "mean_a": 0.9784580373937695,
-        "bias": -0.021541962606230536,
-        "std": 0.013254548572820678,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.9449273581514749,
+        "bias": -0.05507264184852512,
+        "std": 0.02250685203631665,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.0,
         "estimator": "split-half (Piantadosi)",
-        "mean_a": 0.645441602014228,
-        "bias": -0.35455839798577204,
-        "std": 0.0024963730430510394,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.650820745675844,
+        "bias": -0.349179254324156,
+        "std": 0.008116305485194347,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.2,
         "estimator": "OLS rank-frequency",
-        "mean_a": 0.9212706472035792,
-        "bias": -0.27872935279642075,
-        "std": 0.0035315282171873986,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.9464340059530739,
+        "bias": -0.25356599404692604,
+        "std": 0.012788122484113668,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.2,
         "estimator": "OLS, top 1000 ranks",
-        "mean_a": 1.1913701971449875,
-        "bias": -0.00862980285501247,
-        "std": 0.006044335657214684,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.1543051360567844,
+        "bias": -0.045694863943215536,
+        "std": 0.004707717921687674,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.2,
         "estimator": "OLS, log-binned",
-        "mean_a": 1.15074569169473,
-        "bias": -0.04925430830526989,
-        "std": 0.0009036622196179302,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.141918922987392,
+        "bias": -0.058081077012607896,
+        "std": 0.0011392582888672164,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.2,
         "estimator": "MLE (Clauset)",
-        "mean_a": 1.1826151851830236,
-        "bias": -0.0173848148169764,
-        "std": 0.01203765644051443,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.1511823313519605,
+        "bias": -0.04881766864803949,
+        "std": 0.013129874086707533,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.2,
         "estimator": "split-half (Piantadosi)",
-        "mean_a": 0.8207770778486301,
-        "bias": -0.3792229221513699,
-        "std": 0.004061914508701656,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 0.8376595048255816,
+        "bias": -0.36234049517441835,
+        "std": 0.00521370739403904,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.5,
         "estimator": "OLS rank-frequency",
-        "mean_a": 1.1846874213437224,
-        "bias": -0.3153125786562776,
-        "std": 0.005806807245970308,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.2099276490829631,
+        "bias": -0.29007235091703687,
+        "std": 0.017496935593348726,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.5,
         "estimator": "OLS, top 1000 ranks",
-        "mean_a": 1.4712021830044606,
-        "bias": -0.028797816995539405,
-        "std": 0.005532494594001659,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.3716778659599218,
+        "bias": -0.1283221340400782,
+        "std": 0.009552412565901489,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.5,
         "estimator": "OLS, log-binned",
-        "mean_a": 1.4394528767687347,
-        "bias": -0.06054712323126532,
-        "std": 0.0022413397224886047,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.4260562431888,
+        "bias": -0.07394375681120002,
+        "std": 0.005991963436297862,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.5,
         "estimator": "MLE (Clauset)",
-        "mean_a": 1.4641785593081285,
-        "bias": -0.03582144069187154,
-        "std": 0.01656164885520935,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.392713670470701,
+        "bias": -0.10728632952929895,
+        "std": 0.014421611049480532,
+        "n_tokens": 40000,
+        "repeats": 3
       },
       {
         "true_a": 1.5,
         "estimator": "split-half (Piantadosi)",
-        "mean_a": 1.147167087614384,
-        "bias": -0.352832912385616,
-        "std": 0.010035045299329626,
-        "n_tokens": 200000,
-        "repeats": 8
+        "mean_a": 1.1475017712466726,
+        "bias": -0.35249822875332737,
+        "std": 0.03205048751896679,
+        "n_tokens": 40000,
+        "repeats": 3
       }
     ],
     "summary": [
       {
+        "estimator": "OLS, log-binned",
+        "mean_abs_bias": 0.05090232692205457
+      },
+      {
         "estimator": "OLS, top 1000 ranks",
-        "mean_abs_bias": 0.013694705771765958
+        "mean_abs_bias": 0.060941135645477984
       },
       {
         "estimator": "MLE (Clauset)",
-        "mean_abs_bias": 0.02418273773168156
-      },
-      {
-        "estimator": "OLS, log-binned",
-        "mean_abs_bias": 0.0421483021354509
+        "mean_abs_bias": 0.0641724568884364
       },
       {
         "estimator": "OLS rank-frequency",
-        "mean_abs_bias": 0.2006553904251045
+        "mean_abs_bias": 0.18222327613775982
       },
       {
         "estimator": "split-half (Piantadosi)",
-        "mean_abs_bias": 0.3497463328513232
+        "mean_abs_bias": 0.3438818748104606
       }
     ],
-    "best_estimator": "OLS, top 1000 ranks"
+    "best_estimator": "OLS, log-binned"
   },
   "zipf": {
     "prose": [
       {
         "estimator": "OLS rank-frequency",
-        "a": 1.2712105967111353,
+        "a": 1.1309496148606506,
         "gamma": null,
         "cutoff": 1.0,
-        "n_used": 55983,
+        "n_used": 20371,
         "n_discarded": 0,
         "note": "every type, including the singleton shelf"
       },
       {
         "estimator": "OLS, top 1000 ranks",
-        "a": 0.8581651540764642,
+        "a": 0.8405935851539293,
         "gamma": null,
         "cutoff": 1000.0,
         "n_used": 1000,
@@ -254,45 +254,45 @@
       },
       {
         "estimator": "OLS, log-binned",
-        "a": 1.0318547398383884,
+        "a": 0.9741089268482128,
         "gamma": null,
         "cutoff": null,
-        "n_used": 45,
-        "n_discarded": 55938,
-        "note": "45 bins stand in for 55,983 types"
+        "n_used": 40,
+        "n_discarded": 20331,
+        "note": "40 bins stand in for 20,371 types"
       },
       {
         "estimator": "MLE (Clauset)",
-        "a": 1.4180809770221952,
-        "gamma": 1.705178347501624,
-        "cutoff": 2.0,
-        "n_used": 29311,
-        "n_discarded": 26672,
-        "note": "x_min=2 by KS, KS=0.0118, se(g)=0.0041"
+        "a": 1.1409009814706506,
+        "gamma": 1.876500253958038,
+        "cutoff": 4.0,
+        "n_used": 5682,
+        "n_discarded": 14689,
+        "note": "x_min=4 by KS, KS=0.0198, se(g)=0.0116"
       },
       {
         "estimator": "split-half (Piantadosi)",
-        "a": 1.0631067681641266,
+        "a": 0.8839335337229368,
         "gamma": null,
         "cutoff": null,
-        "n_used": 23495,
-        "n_discarded": 16416,
+        "n_used": 8261,
+        "n_discarded": 6153,
         "note": "rank from half A, frequency from half B"
       }
     ],
     "c": [
       {
         "estimator": "OLS rank-frequency",
-        "a": 1.1668814104130871,
+        "a": 1.0658257763309544,
         "gamma": null,
         "cutoff": 1.0,
-        "n_used": 66749,
+        "n_used": 23192,
         "n_discarded": 0,
         "note": "every type, including the singleton shelf"
       },
       {
         "estimator": "OLS, top 1000 ranks",
-        "a": 1.005063750250628,
+        "a": 0.9674157593454218,
         "gamma": null,
         "cutoff": 1000.0,
         "n_used": 1000,
@@ -301,231 +301,231 @@
       },
       {
         "estimator": "OLS, log-binned",
-        "a": 1.0129193174432467,
+        "a": 0.9666059058922759,
         "gamma": null,
         "cutoff": null,
-        "n_used": 46,
-        "n_discarded": 66703,
-        "note": "46 bins stand in for 66,749 types"
+        "n_used": 41,
+        "n_discarded": 23151,
+        "note": "41 bins stand in for 23,192 types"
       },
       {
         "estimator": "MLE (Clauset)",
-        "a": 1.063951842694302,
-        "gamma": 1.9398921641675497,
-        "cutoff": 14.0,
-        "n_used": 6419,
-        "n_discarded": 60330,
-        "note": "x_min=14 by KS, KS=0.0060, se(g)=0.0117"
+        "a": 1.0003177655295479,
+        "gamma": 1.9996823354133078,
+        "cutoff": 6.0,
+        "n_used": 4013,
+        "n_discarded": 19179,
+        "note": "x_min=6 by KS, KS=0.0129, se(g)=0.0158"
       },
       {
         "estimator": "split-half (Piantadosi)",
-        "a": 0.9238644256614472,
+        "a": 0.8241506755553277,
         "gamma": null,
         "cutoff": null,
-        "n_used": 31195,
-        "n_discarded": 17880,
+        "n_used": 9158,
+        "n_discarded": 7048,
         "note": "rank from half A, frequency from half B"
       }
     ]
   },
   "goodness_of_fit": {
     "prose": {
-      "x_min": 2,
-      "gamma": 1.705178347501624,
-      "ks": 0.011836659911231617,
+      "x_min": 4,
+      "gamma": 1.876500253958038,
+      "ks": 0.019819895226134587,
       "p_value": 0.0,
-      "n_synthetic": 100,
+      "n_synthetic": 20,
       "power_law_plausible": false,
-      "seconds": 27.7
+      "seconds": 3.3
     },
     "c": {
-      "x_min": 14,
-      "gamma": 1.9398921641675497,
-      "ks": 0.006036776693359447,
-      "p_value": 0.62,
-      "n_synthetic": 100,
-      "power_law_plausible": true,
-      "seconds": 18.5
+      "x_min": 6,
+      "gamma": 1.9996823354133078,
+      "ks": 0.012915663964412016,
+      "p_value": 0.05,
+      "n_synthetic": 20,
+      "power_law_plausible": false,
+      "seconds": 2.4
     }
   },
   "heaps": {
     "prose": {
-      "n_tokens": 1000000,
+      "n_tokens": 200000,
       "measured": {
-        "beta": 0.7174786574572033,
-        "K": 3.3674738746688457,
-        "r_squared": 0.9974137492172743,
+        "beta": 0.7647870372884039,
+        "K": 2.2636600382437484,
+        "r_squared": 0.997676945260581,
         "n_points": 60,
-        "fitted_from": 100,
-        "fitted_to": 1000000
+        "fitted_from": 20,
+        "fitted_to": 200000
       },
-      "a_used": 0.8581651540764642,
+      "a_used": 0.9741089268482128,
       "beta_asymptotic": 1.0,
       "beta_simulated": {
-        "beta": 0.8393724396749672,
-        "K": 2.3038892166953278,
-        "r_squared": 0.9944680046219793,
+        "beta": 0.8097868276543356,
+        "K": 2.069470851864995,
+        "r_squared": 0.9951960831534411,
         "n_points": 40,
-        "fitted_from": 50,
-        "fitted_to": 500000,
-        "support": 111966,
-        "final_types": 86067
+        "fitted_from": 20,
+        "fitted_to": 200000,
+        "support": 40742,
+        "final_types": 27204
       },
       "drift": [
         {
-          "from_tokens": 100,
-          "to_tokens": 556,
-          "beta": 0.7840817202921392
+          "from_tokens": 20,
+          "to_tokens": 111,
+          "beta": 0.8927483076505471
         },
         {
-          "from_tokens": 186,
-          "to_tokens": 1039,
-          "beta": 0.798845510923674
+          "from_tokens": 37,
+          "to_tokens": 207,
+          "beta": 0.8882637020540965
         },
         {
-          "from_tokens": 348,
-          "to_tokens": 1941,
-          "beta": 0.7838314803236122
+          "from_tokens": 69,
+          "to_tokens": 388,
+          "beta": 0.7875373701727849
         },
         {
-          "from_tokens": 650,
-          "to_tokens": 3625,
-          "beta": 0.784529639034633
+          "from_tokens": 130,
+          "to_tokens": 725,
+          "beta": 0.7740043408223423
         },
         {
-          "from_tokens": 1215,
-          "to_tokens": 6768,
-          "beta": 0.7799653786264761
+          "from_tokens": 243,
+          "to_tokens": 1353,
+          "beta": 0.8032529391563198
         },
         {
-          "from_tokens": 2269,
-          "to_tokens": 12638,
-          "beta": 0.7692312361964926
+          "from_tokens": 453,
+          "to_tokens": 2527,
+          "beta": 0.7840507383775749
         },
         {
-          "from_tokens": 4237,
-          "to_tokens": 23598,
-          "beta": 0.7394367232657177
+          "from_tokens": 847,
+          "to_tokens": 4719,
+          "beta": 0.7758772604746272
         },
         {
-          "from_tokens": 7912,
-          "to_tokens": 44062,
-          "beta": 0.688004692334467
+          "from_tokens": 1582,
+          "to_tokens": 8812,
+          "beta": 0.7798710603780799
         },
         {
-          "from_tokens": 14773,
-          "to_tokens": 82272,
-          "beta": 0.6593410346278421
+          "from_tokens": 2954,
+          "to_tokens": 16454,
+          "beta": 0.7559522038008919
         },
         {
-          "from_tokens": 27585,
-          "to_tokens": 153617,
-          "beta": 0.637708601346668
+          "from_tokens": 5517,
+          "to_tokens": 30723,
+          "beta": 0.7091398759976437
         },
         {
-          "from_tokens": 51506,
-          "to_tokens": 286831,
-          "beta": 0.6287305229211565
+          "from_tokens": 10301,
+          "to_tokens": 57366,
+          "beta": 0.6717675783882208
         },
         {
-          "from_tokens": 96172,
-          "to_tokens": 535566,
-          "beta": 0.634837804326924
+          "from_tokens": 19234,
+          "to_tokens": 107113,
+          "beta": 0.6559811320245521
         },
         {
-          "from_tokens": 179571,
-          "to_tokens": 1000000,
-          "beta": 0.6305529112980279
+          "from_tokens": 35914,
+          "to_tokens": 200000,
+          "beta": 0.6210008038812938
         }
       ]
     },
     "c": {
-      "n_tokens": 1000000,
+      "n_tokens": 200000,
       "measured": {
-        "beta": 0.8169622742672158,
-        "K": 1.0666588772543177,
-        "r_squared": 0.9978549257140398,
+        "beta": 0.8183596259850431,
+        "K": 1.0954094198626483,
+        "r_squared": 0.99784196264495,
         "n_points": 60,
-        "fitted_from": 100,
-        "fitted_to": 1000000
+        "fitted_from": 20,
+        "fitted_to": 200000
       },
-      "a_used": 1.005063750250628,
-      "beta_asymptotic": 0.9949617621276606,
+      "a_used": 0.9666059058922759,
+      "beta_asymptotic": 1.0,
       "beta_simulated": {
-        "beta": 0.8124547919253554,
-        "K": 2.2174149578201785,
-        "r_squared": 0.997503265127583,
+        "beta": 0.8185591099084488,
+        "K": 2.004414181402049,
+        "r_squared": 0.9954525859808082,
         "n_points": 40,
-        "fitted_from": 50,
-        "fitted_to": 500000,
-        "support": 133498,
-        "final_types": 70076
+        "fitted_from": 20,
+        "fitted_to": 200000,
+        "support": 46384,
+        "final_types": 29527
       },
       "drift": [
         {
-          "from_tokens": 100,
-          "to_tokens": 556,
-          "beta": 0.8293101047011419
+          "from_tokens": 20,
+          "to_tokens": 111,
+          "beta": 0.5741861918445084
         },
         {
-          "from_tokens": 186,
-          "to_tokens": 1039,
-          "beta": 0.8607735993581414
+          "from_tokens": 37,
+          "to_tokens": 207,
+          "beta": 0.6956786874887997
         },
         {
-          "from_tokens": 348,
-          "to_tokens": 1941,
-          "beta": 1.010903474372587
+          "from_tokens": 69,
+          "to_tokens": 388,
+          "beta": 0.8117246198703076
         },
         {
-          "from_tokens": 650,
-          "to_tokens": 3625,
-          "beta": 0.9639328546026433
+          "from_tokens": 130,
+          "to_tokens": 725,
+          "beta": 0.807281050911649
         },
         {
-          "from_tokens": 1215,
-          "to_tokens": 6768,
-          "beta": 0.7624617660587452
+          "from_tokens": 243,
+          "to_tokens": 1353,
+          "beta": 0.9503672701361092
         },
         {
-          "from_tokens": 2269,
-          "to_tokens": 12638,
-          "beta": 0.7700214699727185
+          "from_tokens": 453,
+          "to_tokens": 2527,
+          "beta": 1.0250028824447
         },
         {
-          "from_tokens": 4237,
-          "to_tokens": 23598,
-          "beta": 0.7377202566126059
+          "from_tokens": 847,
+          "to_tokens": 4719,
+          "beta": 0.8630646978529358
         },
         {
-          "from_tokens": 7912,
-          "to_tokens": 44062,
-          "beta": 0.7750660416298325
+          "from_tokens": 1582,
+          "to_tokens": 8812,
+          "beta": 0.7750358926504821
         },
         {
-          "from_tokens": 14773,
-          "to_tokens": 82272,
-          "beta": 0.8506927229306142
+          "from_tokens": 2954,
+          "to_tokens": 16454,
+          "beta": 0.7676186335134053
         },
         {
-          "from_tokens": 27585,
-          "to_tokens": 153617,
-          "beta": 0.8286748803020232
+          "from_tokens": 5517,
+          "to_tokens": 30723,
+          "beta": 0.7387070389423206
         },
         {
-          "from_tokens": 51506,
-          "to_tokens": 286831,
-          "beta": 0.7814060012580755
+          "from_tokens": 10301,
+          "to_tokens": 57366,
+          "beta": 0.8160997494845739
         },
         {
-          "from_tokens": 96172,
-          "to_tokens": 535566,
-          "beta": 0.7315253822346629
+          "from_tokens": 19234,
+          "to_tokens": 107113,
+          "beta": 0.8652732230427793
         },
         {
-          "from_tokens": 179571,
-          "to_tokens": 1000000,
-          "beta": 0.6660177617379144
+          "from_tokens": 35914,
+          "to_tokens": 200000,
+          "beta": 0.8092118869878477
         }
       ]
     },
@@ -539,17 +539,17 @@
         "fitted_from": 10,
         "fitted_to": 40637
       },
-      "a_used": 1.1976865441406999,
-      "beta_asymptotic": 0.8349430031523537,
+      "a_used": 1.0990505807374809,
+      "beta_asymptotic": 0.9098762309274098,
       "beta_simulated": {
-        "beta": 0.7190057177528165,
-        "K": 1.9293762826754846,
-        "r_squared": 0.9953545163511999,
+        "beta": 0.7392843002927764,
+        "K": 2.1143203069226653,
+        "r_squared": 0.9938811011681066,
         "n_points": 40,
         "fitted_from": 10,
         "fitted_to": 40637,
         "support": 6006,
-        "final_types": 3163
+        "final_types": 3916
       },
       "drift": [
         {
@@ -622,112 +622,112 @@
   },
   "oov": {
     "prose": {
-      "n_tokens": 1000000,
+      "n_tokens": 200000,
       "rows": [
         {
           "vocab_size": 2000,
-          "train_types": 36764,
+          "train_types": 13206,
           "capped_by_training_corpus": false,
-          "oov_token_rate": 0.256864,
-          "oov_type_rate": 0.946883512257651
+          "oov_token_rate": 0.27065,
+          "oov_type_rate": 0.8631792254578204
         },
         {
           "vocab_size": 8000,
-          "train_types": 36764,
+          "train_types": 13206,
           "capped_by_training_corpus": false,
-          "oov_token_rate": 0.131152,
-          "oov_type_rate": 0.8019815200555467
+          "oov_token_rate": 0.16018,
+          "oov_type_rate": 0.6367457220054038
         },
         {
           "vocab_size": 16000,
-          "train_types": 36764,
-          "capped_by_training_corpus": false,
-          "oov_token_rate": 0.094042,
-          "oov_type_rate": 0.6714201783902153
+          "train_types": 13206,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.12786,
+          "oov_type_rate": 0.5377514259981987
         },
         {
           "vocab_size": 32000,
-          "train_types": 36764,
-          "capped_by_training_corpus": false,
-          "oov_token_rate": 0.07037,
-          "oov_type_rate": 0.5448913101532874
+          "train_types": 13206,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.12786,
+          "oov_type_rate": 0.5377514259981987
         },
         {
           "vocab_size": 50000,
-          "train_types": 36764,
+          "train_types": 13206,
           "capped_by_training_corpus": true,
-          "oov_token_rate": 0.064884,
-          "oov_type_rate": 0.5132457405330343
+          "oov_token_rate": 0.12786,
+          "oov_type_rate": 0.5377514259981987
         },
         {
           "vocab_size": 100000,
-          "train_types": 36764,
+          "train_types": 13206,
           "capped_by_training_corpus": true,
-          "oov_token_rate": 0.064884,
-          "oov_type_rate": 0.5132457405330343
+          "oov_token_rate": 0.12786,
+          "oov_type_rate": 0.5377514259981987
         }
       ],
       "irreducible": {
-        "train_types": 36764,
-        "oov_token_rate": 0.064884,
-        "oov_type_rate": 0.5132457405330343
+        "train_types": 13206,
+        "oov_token_rate": 0.12786,
+        "oov_type_rate": 0.5377514259981987
       },
-      "beta_used": 0.7174786574572033,
-      "tokens_for_100k_types": 1713593.2880416627
+      "beta_used": 0.7647870372884039,
+      "tokens_for_100k_types": 1185313.0517570148
     },
     "c": {
-      "n_tokens": 1000000,
+      "n_tokens": 200000,
       "rows": [
         {
           "vocab_size": 2000,
-          "train_types": 44540,
+          "train_types": 13567,
           "capped_by_training_corpus": false,
-          "oov_token_rate": 0.291754,
-          "oov_type_rate": 0.9548540798094104
+          "oov_token_rate": 0.33934,
+          "oov_type_rate": 0.901010101010101
         },
         {
           "vocab_size": 8000,
-          "train_types": 44540,
+          "train_types": 13567,
           "capped_by_training_corpus": false,
-          "oov_token_rate": 0.194964,
-          "oov_type_rate": 0.8515783204288266
+          "oov_token_rate": 0.25725,
+          "oov_type_rate": 0.7681096681096681
         },
         {
           "vocab_size": 16000,
-          "train_types": 44540,
-          "capped_by_training_corpus": false,
-          "oov_token_rate": 0.156848,
-          "oov_type_rate": 0.7537581893984514
+          "train_types": 13567,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.23285,
+          "oov_type_rate": 0.6944444444444444
         },
         {
           "vocab_size": 32000,
-          "train_types": 44540,
-          "capped_by_training_corpus": false,
-          "oov_token_rate": 0.12737,
-          "oov_type_rate": 0.6144848123883264
+          "train_types": 13567,
+          "capped_by_training_corpus": true,
+          "oov_token_rate": 0.23285,
+          "oov_type_rate": 0.6944444444444444
         },
         {
           "vocab_size": 50000,
-          "train_types": 44540,
+          "train_types": 13567,
           "capped_by_training_corpus": true,
-          "oov_token_rate": 0.111874,
-          "oov_type_rate": 0.5291006551518761
+          "oov_token_rate": 0.23285,
+          "oov_type_rate": 0.6944444444444444
         },
         {
           "vocab_size": 100000,
-          "train_types": 44540,
+          "train_types": 13567,
           "capped_by_training_corpus": true,
-          "oov_token_rate": 0.111874,
-          "oov_type_rate": 0.5291006551518761
+          "oov_token_rate": 0.23285,
+          "oov_type_rate": 0.6944444444444444
         }
       ],
       "irreducible": {
-        "train_types": 44540,
-        "oov_token_rate": 0.111874,
-        "oov_type_rate": 0.5291006551518761
+        "train_types": 13567,
+        "oov_token_rate": 0.23285,
+        "oov_type_rate": 0.6944444444444444
       },
-      "beta_used": 0.8169622742672158,
-      "tokens_for_100k_types": 1218790.505703401
+      "beta_used": 0.8183596259850431,
+      "tokens_for_100k_types": 1151920.7358948793
     },
     "python": {
       "n_tokens": 40637,
@@ -787,38 +787,38 @@
   "tokenizer_sensitivity": {
     "prose": {
       "word": {
-        "tokens": 1000000,
-        "types": 55983,
-        "a": 0.8581651540764642
+        "tokens": 200000,
+        "types": 20371,
+        "a": 0.9741089268482128
       },
       "code-aware": {
-        "tokens": 1000000,
-        "types": 57903,
-        "a": 0.9324518052119067
+        "tokens": 200000,
+        "types": 20614,
+        "a": 1.0162344406933912
       }
     },
     "c": {
       "word": {
-        "tokens": 1000000,
-        "types": 66749,
-        "a": 1.005063750250628
+        "tokens": 200000,
+        "types": 23192,
+        "a": 0.9666059058922759
       },
       "code-aware": {
-        "tokens": 1000000,
-        "types": 42340,
-        "a": 1.2355849594996637
+        "tokens": 200000,
+        "types": 12356,
+        "a": 1.1875676334135146
       }
     },
     "python": {
       "word": {
         "tokens": 40637,
         "types": 3003,
-        "a": 1.1976865441406999
+        "a": 1.0990505807374809
       },
       "code-aware": {
         "tokens": 78646,
         "types": 3221,
-        "a": 1.3409184996568386
+        "a": 1.2561400337362771
       }
     }
   }

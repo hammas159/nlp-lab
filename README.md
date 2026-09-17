@@ -408,7 +408,7 @@ Tagging 3,000 paragraphs with the full automaton: the paragraph's own title is f
 no disambiguation returns all of them and cannot rank them — every match is exact, so there
 is no score to threshold. **That ceiling is a property of the gazetteer, not the matcher.**
 
-Aho-Corasick is implemented rather than imported — 6.8× faster than a naive per-pattern scan
+Aho-Corasick is implemented rather than imported — about 7× faster than a naive per-pattern scan
 on 200 patterns, and the gazetteer is 322× larger than that subset.
 
 ### 13 · Language identification

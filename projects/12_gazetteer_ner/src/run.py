@@ -128,12 +128,17 @@ def main() -> None:
 
     rule("4. Against a naive scan")
     naive_patterns = min(200, len(gazetteer))
-    step = time.time()
     subset = [gazetteer.patterns[i] for i in range(naive_patterns)]
     sample_tokens = [
         [gazetteer.vocabulary[t] for t in tokenize(docs[i]) if t in gazetteer.vocabulary]
         for i in range(min(200, sample_size))
     ]
+
+    # perf_counter, not time(): on Windows time() has a resolution of about 16 ms, and the
+    # automaton finishes a small subset inside one tick. That produced a measured 0.00s and
+    # a ZeroDivisionError computing the ratio - in --quick mode only, which is why the full
+    # run never showed it.
+    step = time.perf_counter()
     hits = 0
     for tokens in sample_tokens:
         for pattern in subset:
@@ -141,19 +146,21 @@ def main() -> None:
             for start in range(len(tokens) - n + 1):
                 if tokens[start : start + n] == pattern:
                     hits += 1
-    naive_time = time.time() - step
+    naive_time = time.perf_counter() - step
 
-    step = time.time()
+    step = time.perf_counter()
     small = AhoCorasick(subset)
     for tokens in sample_tokens:
         small.find(tokens)
-    automaton_time = time.time() - step
+    automaton_time = time.perf_counter() - step
 
+    ratio = (
+        f"{naive_time / automaton_time:.1f}x faster" if automaton_time > 0 else "too fast to time"
+    )
     print(
         f"  {naive_patterns} patterns over {len(sample_tokens)} paragraphs:\n"
-        f"    one pattern at a time   {naive_time:.2f}s\n"
-        f"    Aho-Corasick            {automaton_time:.2f}s   "
-        f"({naive_time / automaton_time:.1f}x faster)"
+        f"    one pattern at a time   {naive_time:.3f}s\n"
+        f"    Aho-Corasick            {automaton_time:.3f}s   ({ratio})"
     )
     print(
         f"  The full gazetteer is {len(gazetteer) / naive_patterns:.0f}x larger, and the naive\n"

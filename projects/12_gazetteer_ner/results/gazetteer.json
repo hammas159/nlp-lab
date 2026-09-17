@@ -140,7 +140,7 @@
   ],
   "tagging": {
     "paragraphs": 3000,
-    "seconds": 0.345660924911499,
+    "seconds": 0.29729342460632324,
     "self_title_found_rate": 0.7133333333333334,
     "other_entries_median": 9.0,
     "other_entries_mean": 9.463,
@@ -150,7 +150,7 @@
   "speed": {
     "patterns": 200,
     "paragraphs": 200,
-    "naive_seconds": 0.43121910095214844,
-    "automaton_seconds": 0.06298089027404785
+    "naive_seconds": 0.4373115000003054,
+    "automaton_seconds": 0.06074229999967429
   }
 }

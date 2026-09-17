@@ -117,9 +117,14 @@ contains.
 64,382 passes over the text. The automaton builds a trie of the patterns and adds failure
 links, so one pass finds everything.
 
-On 200 patterns it is **6.8× faster** than the naive per-pattern scan. The full gazetteer is
-322× larger than that subset, and the naive scan grows with the pattern count while the
-automaton does not — that ratio is a floor, not a result.
+On 200 patterns it is about **7× faster** than the naive per-pattern scan (0.423 s against
+0.060 s). The full gazetteer is 322× larger than that subset, and the naive scan grows with
+the pattern count while the automaton does not — so that ratio is a floor, not a result.
+
+The figure is deliberately not quoted to more precision. `--quick` reports ~134× on the same
+code, because it draws a *different* 200 patterns: a subset containing none of the very
+common single-token entries returns far fewer matches for the automaton to construct. The
+speed-up is real and its size depends on what is being matched.
 
 **Output links are the part that fails silently.** A node matching `york` must also report
 `new york` ending there. Get the merge wrong and the automaton returns only the shortest of

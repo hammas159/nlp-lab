@@ -28,6 +28,7 @@ jobs:
           - 13_language_id
           - 14_string_similarity
           - 15_sentence_boundaries
+          - 16_stylometry
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

@@ -1,0 +1,34 @@
+{
+  "documents": 4000,
+  "classes": {
+    "FFmpeg": 1412,
+    "qemu": 2588
+  },
+  "majority_floor": 0.6591666666666667,
+  "views": [
+    {
+      "view": "lexical",
+      "features": 16285,
+      "naive_bayes": 0.965,
+      "burrows_delta": 0.6591666666666667
+    },
+    {
+      "view": "masked",
+      "features": 60,
+      "naive_bayes": 0.76,
+      "burrows_delta": 0.7675
+    },
+    {
+      "view": "structural",
+      "features": 57,
+      "naive_bayes": 0.7558333333333334,
+      "burrows_delta": 0.7508333333333334
+    },
+    {
+      "view": "layout",
+      "features": 18,
+      "naive_bayes": 0.7675,
+      "burrows_delta": 0.7316666666666667
+    }
+  ]
+}

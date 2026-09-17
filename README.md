@@ -65,6 +65,7 @@ variable it could not fix as a column rather than a footnote.
 | **13** | [Language identification](projects/13_language_id) | It is reported on documents and used on queries. What happens at query length? | ✅ complete |
 | **14** | [String similarity](projects/14_string_similarity) | Seven fuzzy-matching measures. Does the ranking survive changing the noise? | ✅ complete |
 | **15** | [Sentence boundaries](projects/15_sentence_boundaries) | Four splitters a methods section would describe identically. How far apart are they? | ✅ complete |
+| **16** | [Stylometry](projects/16_stylometry) | Authorship attribution scores 0.965. How much of that is style, and how much is topic? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -504,6 +505,39 @@ a guaranteed false positive on every paragraph and cost **fifteen points of prec
 it hid behind `following[:1] in "\"'(["` — which is `True` for the empty string, so those
 errors were filed under "quote follows". Neither raised an exception; printing six actual
 disputed spans exposed both.
+
+### 16 · Stylometry
+
+Authorship attribution claims to identify a writer from *style*, independent of subject. On
+code, an identifier carries both at once: `av_frame_alloc` is a naming **convention** and
+also a **topic**. Four views strip topic progressively; the classifier never changes, so the
+drop between rows is the contribution of what was removed. 4,000 Devign C functions labelled
+by codebase — qemu 64%, FFmpeg 36%.
+
+| View | what survives | features | Naive Bayes | Burrows' Delta |
+|---|---|---:|---:|---:|
+| lexical | everything, identifiers included | 16,285 | **0.965** | 0.659 |
+| masked | shape only — `if ( ID ) { ID = ID ( ID , NUM ) ; }` | 60 | 0.760 | 0.767 |
+| structural | keywords, operators, punctuation | 57 | 0.756 | 0.751 |
+| layout | line lengths, indents, braces — **no tokens at all** | 18 | **0.767** | 0.732 |
+| *majority class* | — | — | *0.659* | *0.659* |
+
+**Removing identifiers costs 0.209. Of everything the lexical view had above the floor, the
+structural view keeps 32%** — so about two thirds of the "authorship" signal was topic. A
+0.965 on raw tokens has mostly measured that qemu is about virtualisation and FFmpeg is
+about codecs.
+
+The remaining third is real, and the sharpest form of it is `layout`: **eighteen features
+containing no source content at all — line lengths, indent widths, brace placement — score
+0.767, the best of the three style-only views**, ahead of 57 structural tokens. House style
+survives deletion of every word.
+
+**Burrows' Delta scores exactly the majority floor on the lexical view** — 0.659, answering
+"qemu" every time — while beating Naive Bayes on two of the three small views. Delta
+z-scores every feature, which is the point of the method when there are a few hundred
+curated function words and fatal when there are 16,285 sparse ones: every rare identifier
+gets full weight and the centroids become indistinguishable. It degenerates to the floor
+silently, with no error.
 
 ---
 

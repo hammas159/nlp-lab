@@ -62,7 +62,7 @@
         "11": 0.575
       },
       "best_k": 1,
-      "ms_per_pair": 0.23292694489161173
+      "ms_per_pair": 0.24033838510513306
     },
     {
       "compressor": "bz2",
@@ -74,7 +74,7 @@
         "11": 0.4625
       },
       "best_k": 5,
-      "ms_per_pair": 0.6343435446421305
+      "ms_per_pair": 0.5887263417243958
     },
     {
       "compressor": "lzma",
@@ -86,19 +86,19 @@
         "11": 0.4375
       },
       "best_k": 1,
-      "ms_per_pair": 20.171886920928955
+      "ms_per_pair": 16.297662436962128
     }
   ],
   "baselines": [
     {
       "name": "multinomial Naive Bayes",
       "accuracy": 0.56,
-      "seconds": 0.7636346817016602
+      "seconds": 0.5842330455780029
     },
     {
       "name": "nearest centroid (TF-IDF)",
       "accuracy": 0.566,
-      "seconds": 0.8952076435089111
+      "seconds": 0.7624452114105225
     }
   ]
 }

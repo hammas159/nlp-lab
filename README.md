@@ -220,11 +220,13 @@ transfer word2vec's hyperparameters to the counting model one at a time:
 | + shifted PMI (k = 5) | 0.311 | +0.193 |
 | **+ eigenvalue weighting p = 0.5** | **0.371** | **+0.253** |
 | + add context vectors (w + c) | 0.326 | −0.045 |
-| **SGNS, 25 epochs** | **0.371** | **−0.001, p = 0.969** |
+| **SGNS, 25 epochs** | **0.371 / 0.380** | **−0.001 / −0.009, p = 0.969 / 0.331** |
 
-**The counting model ends up statistically indistinguishable from the neural one.** The
-textbook version reaches 32% of SGNS; the same counting model with word2vec's
-hyperparameters reaches 100% of it, with no gradient computed anywhere.
+**The counting model ends up statistically indistinguishable from the neural one** — shown
+across two independent runs, because gensim's four worker threads make SGNS non-reproducible
+in the second decimal. Both runs put the confidence interval across zero. The textbook
+version reaches roughly a third of SGNS; the same counting model with word2vec's
+hyperparameters matches it, with no gradient computed anywhere.
 
 The negative-sampling shift alone is worth +0.193 — more than every other transfer
 combined, and it reads like an optimisation detail rather than a modelling choice. Two of

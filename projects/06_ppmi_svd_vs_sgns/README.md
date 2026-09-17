@@ -38,7 +38,7 @@ This project transfers those decisions one at a time and measures each.
 
 ## The result
 
-> ### After transferring word2vec's hyperparameters, a pure counting model scores 0.371 against SGNS's 0.371 — a difference of −0.001, p = 0.969. Nothing separates them but the hyperparameters.
+> ### After transferring word2vec's hyperparameters, a pure counting model is statistically indistinguishable from SGNS — across two independent runs, p = 0.969 and p = 0.331. Nothing separates them but the hyperparameters.
 
 5,929,439 tokens of HotpotQA paragraphs, 66,581 documents, 1,000 questions, 300 dimensions,
 one shared 20,000-word vocabulary. No gradient is computed anywhere on the counting side.
@@ -53,17 +53,30 @@ one shared 20,000-word vocabulary. No gradient is computed anywhere on the count
 | + eigenvalue weighting p = 0.5 | **0.371** | **+0.253** |
 | + add context vectors (w + c) | 0.326 | **−0.045** |
 
-| | recall@10 |
-|---|---:|
-| SGNS, 5 epochs | 0.088 |
-| **SGNS, 25 epochs** | **0.371** |
-| **best counting model** | **0.371** |
-| difference | **−0.001** [−0.019, +0.017], p = 0.969 — **within noise** |
+| | run A | run B |
+|---|---:|---:|
+| SGNS, 5 epochs | 0.088 | 0.081 |
+| **SGNS, 25 epochs** | **0.3715** | **0.380** |
+| **best counting model** | **0.371** | **0.371** |
+| difference | −0.001 [−0.019, +0.017] | −0.009 [−0.027, +0.009] |
+| p | 0.969 | 0.331 |
+| verdict | **within noise** | **within noise** |
 
-**The textbook counting model reaches 32% of what SGNS achieves. The same counting model
-with word2vec's hyperparameters reaches 100% of it.** Tripling the baseline took no change
-of objective, no neural network and no training — only decisions that were published
-alongside word2vec and never applied to the thing it was compared against.
+**Two independent runs are shown because SGNS is not reproducible here.** gensim trains with
+four worker threads whose updates interleave, so a rerun moves the result — and it moves it
+in the second decimal (0.3715 to 0.380), not the third. The counting side is deterministic
+and returns 0.371 both times.
+
+The conclusion survives the variation, which is the point of showing it: the confidence
+interval spans zero in both runs and the difference is not significant in either. What does
+*not* survive is quoting a single run's −0.001 as though it were the measurement. The honest
+statement is that **the two methods are indistinguishable on this task, with the gap moving
+between −0.001 and −0.009 depending on how the threads happened to interleave.**
+
+**The textbook counting model reaches about a third of what SGNS achieves. The same counting
+model with word2vec's hyperparameters matches it.** Tripling the baseline took no change of
+objective, no neural network and no training — only decisions that were published alongside
+word2vec and never applied to the thing it was compared against.
 
 ### Which decision did the work
 
@@ -78,10 +91,10 @@ adding the context vectors cost 0.045 from the peak. Both are standard recommend
 neither survives on this task. They are reported as measured rather than dropped from the
 ladder, because a ladder that only contains the rungs that worked is not an ablation.
 
-**SGNS at 5 epochs scores 0.088 and at 25 epochs scores 0.371.** Project 01's `Word2Vec`
+**SGNS at 5 epochs scores 0.08; at 25 epochs it scores 0.37–0.38.** Project 01's `Word2Vec`
 retriever — and many tutorials — use 5. On a corpus this size that setting is not a weak
 result, it is a broken one, and a comparison against it would have flattered the counting
-side by 0.283.
+side by about 0.29.
 
 ### Do the two spaces hold the same words together?
 
@@ -195,10 +208,12 @@ score would be a bug wearing the costume of a tuning parameter.
   value is its value *given* the ones already applied. A different order could attribute
   the gains differently; interactions are not separated here, which is the same caveat
   project 02 raises about preprocessing steps that do not compose.
-- **SGNS with four workers is not bit-reproducible.** gensim's threads interleave updates,
-  so a rerun moves the third decimal. The differences reported here are far larger than
-  that, and `workers=1` would make a 25-epoch run over six million tokens slow enough to
-  discourage rerunning it at all.
+- **SGNS with four workers is not bit-reproducible, and the drift is larger than a rounding
+  error.** gensim's threads interleave updates; two runs gave 0.3715 and 0.380 — the second
+  decimal. That is why the comparison is reported across two runs rather than one, and why
+  the claim is "indistinguishable" rather than a specific gap. `workers=1` would make a
+  25-epoch run over six million tokens slow enough to discourage rerunning it at all, which
+  is the trade being made.
 - **5.9 million tokens is a small corpus for word embeddings.** Both sides are handicapped
   by it, and neither result should be read as what either method does at scale.
 

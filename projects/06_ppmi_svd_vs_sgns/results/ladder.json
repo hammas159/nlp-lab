@@ -1,0 +1,249 @@
+{
+  "corpus": {
+    "paragraphs": 66581,
+    "tokens": 5929439,
+    "types": 160743,
+    "queries": 1000,
+    "queries_with_no_known_words": 0
+  },
+  "dim": 300,
+  "vocabulary_cap": 20000,
+  "shared_vocabulary": 20000,
+  "ladder": [
+    {
+      "label": "PPMI + SVD, as usually taught",
+      "config": {
+        "dynamic": false,
+        "do_subsample": false,
+        "alpha": 1.0,
+        "k": 1,
+        "eigenvalue_weight": 1.0,
+        "add_context": false
+      },
+      "recall_at_10": 0.1185,
+      "delta_vs_baseline": 0.0,
+      "matrix": {
+        "nnz": 8523012,
+        "sparsity": 0.97869247
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 5566937,
+        "nonzero_cells": 10237003,
+        "window": 5,
+        "dynamic_window": false,
+        "subsampled": false,
+        "min_count": 2
+      },
+      "seconds": 84.0
+    },
+    {
+      "label": "+ dynamic context window",
+      "config": {
+        "dynamic": true,
+        "do_subsample": false,
+        "alpha": 1.0,
+        "k": 1,
+        "eigenvalue_weight": 1.0,
+        "add_context": false
+      },
+      "recall_at_10": 0.107,
+      "delta_vs_baseline": -0.011499999999999996,
+      "matrix": {
+        "nnz": 8027809,
+        "sparsity": 0.9799304775
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 5566937,
+        "nonzero_cells": 10237003,
+        "window": 5,
+        "dynamic_window": true,
+        "subsampled": false,
+        "min_count": 2
+      },
+      "seconds": 45.3
+    },
+    {
+      "label": "+ subsample frequent words",
+      "config": {
+        "dynamic": true,
+        "do_subsample": true,
+        "alpha": 1.0,
+        "k": 1,
+        "eigenvalue_weight": 1.0,
+        "add_context": false
+      },
+      "recall_at_10": 0.1925,
+      "delta_vs_baseline": 0.07400000000000001,
+      "matrix": {
+        "nnz": 11014504,
+        "sparsity": 0.97246374
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 1638312,
+        "nonzero_cells": 11517891,
+        "window": 5,
+        "dynamic_window": true,
+        "subsampled": true,
+        "min_count": 2
+      },
+      "seconds": 155.4
+    },
+    {
+      "label": "+ context distribution smoothing",
+      "config": {
+        "dynamic": true,
+        "do_subsample": true,
+        "alpha": 0.75,
+        "k": 1,
+        "eigenvalue_weight": 1.0,
+        "add_context": false
+      },
+      "recall_at_10": 0.194,
+      "delta_vs_baseline": 0.07550000000000001,
+      "matrix": {
+        "nnz": 11188665,
+        "sparsity": 0.9720283375
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 1638312,
+        "nonzero_cells": 11517891,
+        "window": 5,
+        "dynamic_window": true,
+        "subsampled": true,
+        "min_count": 2
+      },
+      "seconds": 119.1
+    },
+    {
+      "label": "+ shifted PMI (k = 5)",
+      "config": {
+        "dynamic": true,
+        "do_subsample": true,
+        "alpha": 0.75,
+        "k": 5,
+        "eigenvalue_weight": 1.0,
+        "add_context": false
+      },
+      "recall_at_10": 0.3115,
+      "delta_vs_baseline": 0.193,
+      "matrix": {
+        "nnz": 8091210,
+        "sparsity": 0.979771975
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 1638312,
+        "nonzero_cells": 11517891,
+        "window": 5,
+        "dynamic_window": true,
+        "subsampled": true,
+        "min_count": 2
+      },
+      "seconds": 242.0
+    },
+    {
+      "label": "+ eigenvalue weighting p = 0.5",
+      "config": {
+        "dynamic": true,
+        "do_subsample": true,
+        "alpha": 0.75,
+        "k": 5,
+        "eigenvalue_weight": 0.5,
+        "add_context": false
+      },
+      "recall_at_10": 0.371,
+      "delta_vs_baseline": 0.2525,
+      "matrix": {
+        "nnz": 8091210,
+        "sparsity": 0.979771975
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 1638312,
+        "nonzero_cells": 11517891,
+        "window": 5,
+        "dynamic_window": true,
+        "subsampled": true,
+        "min_count": 2
+      },
+      "seconds": 213.9
+    },
+    {
+      "label": "+ add context vectors (w + c)",
+      "config": {
+        "dynamic": true,
+        "do_subsample": true,
+        "alpha": 0.75,
+        "k": 5,
+        "eigenvalue_weight": 0.5,
+        "add_context": true
+      },
+      "recall_at_10": 0.326,
+      "delta_vs_baseline": 0.20750000000000002,
+      "matrix": {
+        "nnz": 8091210,
+        "sparsity": 0.979771975
+      },
+      "corpus": {
+        "types_in_corpus": 160743,
+        "vocabulary": 20000,
+        "tokens_in_vocabulary": 5566937,
+        "tokens_after_subsampling": 1638312,
+        "nonzero_cells": 11517891,
+        "window": 5,
+        "dynamic_window": true,
+        "subsampled": true,
+        "min_count": 2
+      },
+      "seconds": 543.2
+    }
+  ],
+  "sgns": {
+    "by_epochs": {
+      "5": 0.088,
+      "25": 0.3715
+    },
+    "best_epochs": 25,
+    "recall_at_10": 0.3715,
+    "shared_vocabulary": 20000,
+    "significance_vs_best_count": {
+      "mean_difference": -0.0005,
+      "ci_low": -0.019,
+      "ci_high": 0.017,
+      "p_value": 0.969,
+      "significant": false
+    },
+    "agreement": {
+      "PPMI + SVD, as usually taught": {
+        "words_compared": 2000,
+        "k": 10,
+        "mean_jaccard": 0.39709103834761733,
+        "median_jaccard": 0.42857142857142855,
+        "share_with_no_overlap": 0.0105
+      },
+      "+ eigenvalue weighting p = 0.5": {
+        "words_compared": 2000,
+        "k": 10,
+        "mean_jaccard": 0.3213372701429977,
+        "median_jaccard": 0.3333333333333333,
+        "share_with_no_overlap": 0.0215
+      }
+    }
+  }
+}

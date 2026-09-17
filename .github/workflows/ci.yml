@@ -20,6 +20,7 @@ jobs:
           - 05_zipf_and_heaps
           - 06_ppmi_svd_vs_sgns
           - 07_smart_weighting_grid
+          - 08_gzip_knn
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

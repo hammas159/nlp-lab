@@ -55,6 +55,7 @@ variable it could not fix as a column rather than a footnote.
 | **03** | [The reranker ceiling](projects/03_reranker_ceiling) | Does a reranker rescue a weak first stage, or only reorder it? | ✅ complete |
 | **04** | [Near-duplicate detection](projects/04_near_duplicate_detection) | How much does exact-match-on-a-normal-form miss? | ✅ complete |
 | **05** | [Zipf and Heaps](projects/05_zipf_and_heaps) | Five estimators, one exponent — how far apart do they land, and is it a power law at all? | ✅ complete |
+| **06** | [PPMI-SVD vs SGNS](projects/06_ppmi_svd_vs_sgns) | Is word2vec's advantage the objective, or the hyperparameters that shipped with it? | ✅ complete |
 | **07** | [The SMART weighting grid](projects/07_smart_weighting_grid) | "TF-IDF" names forty-five schemes. How far apart are they? | ✅ complete |
 
 ### 01 · Embedding fair comparison
@@ -195,6 +196,35 @@ for C source. That plateau is a floor, not a diminishing return.
 
 The Hurwitz zeta is implemented rather than imported, and checked against π²/6, π⁴/90 and
 Apéry's constant rather than against another library.
+
+### 06 · PPMI-SVD vs SGNS
+
+Levy & Goldberg (2014) proved that skip-gram with negative sampling is implicitly
+factorising a word-context matrix of `PMI(w,c) − log k`. So factorise it explicitly, and
+transfer word2vec's hyperparameters to the counting model one at a time:
+
+| Configuration | recall@10 | Δ |
+|---|---:|---:|
+| PPMI + SVD, as usually taught | 0.118 | — |
+| + dynamic context window | 0.107 | −0.011 |
+| + subsample frequent words | 0.193 | +0.074 |
+| + context distribution smoothing | 0.194 | +0.076 |
+| + shifted PMI (k = 5) | 0.311 | +0.193 |
+| **+ eigenvalue weighting p = 0.5** | **0.371** | **+0.253** |
+| + add context vectors (w + c) | 0.326 | −0.045 |
+| **SGNS, 25 epochs** | **0.371** | **−0.001, p = 0.969** |
+
+**The counting model ends up statistically indistinguishable from the neural one.** The
+textbook version reaches 32% of SGNS; the same counting model with word2vec's
+hyperparameters reaches 100% of it, with no gradient computed anywhere.
+
+The negative-sampling shift alone is worth +0.193 — more than every other transfer
+combined, and it reads like an optimisation detail rather than a modelling choice. Two of
+the seven rungs made things *worse*, and both are standard recommendations.
+
+SGNS at 5 epochs scores 0.088 and at 25 epochs 0.371, so the comparison is run at both:
+against the 5-epoch model the counting side would have "won" by 0.283, which would have
+been a statement about epochs.
 
 ### 07 · The SMART weighting grid
 

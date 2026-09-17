@@ -1,0 +1,104 @@
+{
+  "data": {
+    "reference": 1000,
+    "evaluation": 500,
+    "reference_positive_rate": 0.419,
+    "evaluation_positive_rate": 0.472,
+    "window": {
+      "median_bytes": 983,
+      "largest_pair_bytes": 279513,
+      "median_pair_bytes": 1966,
+      "window_bytes": 32768,
+      "worst_case_exceeds_window": true,
+      "median_case_exceeds_window": false
+    }
+  },
+  "majority_baseline": 0.528,
+  "gzip_by_k": [
+    {
+      "k": 1,
+      "tie_rate": 0.0,
+      "oracle_tie": 0.574,
+      "nearest_tie": 0.574,
+      "random_tie": 0.574
+    },
+    {
+      "k": 2,
+      "tie_rate": 0.454,
+      "oracle_tie": 0.804,
+      "nearest_tie": 0.574,
+      "random_tie": 0.588
+    },
+    {
+      "k": 3,
+      "tie_rate": 0.0,
+      "oracle_tie": 0.594,
+      "nearest_tie": 0.594,
+      "random_tie": 0.594
+    },
+    {
+      "k": 5,
+      "tie_rate": 0.0,
+      "oracle_tie": 0.594,
+      "nearest_tie": 0.594,
+      "random_tie": 0.594
+    },
+    {
+      "k": 11,
+      "tie_rate": 0.0,
+      "oracle_tie": 0.584,
+      "nearest_tie": 0.584,
+      "random_tie": 0.584
+    }
+  ],
+  "compressors": [
+    {
+      "compressor": "gzip",
+      "by_k": {
+        "1": 0.6,
+        "2": 0.6,
+        "3": 0.475,
+        "5": 0.5125,
+        "11": 0.575
+      },
+      "best_k": 1,
+      "ms_per_pair": 0.23292694489161173
+    },
+    {
+      "compressor": "bz2",
+      "by_k": {
+        "1": 0.5,
+        "2": 0.5,
+        "3": 0.6,
+        "5": 0.625,
+        "11": 0.4625
+      },
+      "best_k": 5,
+      "ms_per_pair": 0.6343435446421305
+    },
+    {
+      "compressor": "lzma",
+      "by_k": {
+        "1": 0.575,
+        "2": 0.575,
+        "3": 0.525,
+        "5": 0.45,
+        "11": 0.4375
+      },
+      "best_k": 1,
+      "ms_per_pair": 20.171886920928955
+    }
+  ],
+  "baselines": [
+    {
+      "name": "multinomial Naive Bayes",
+      "accuracy": 0.56,
+      "seconds": 0.7636346817016602
+    },
+    {
+      "name": "nearest centroid (TF-IDF)",
+      "accuracy": 0.566,
+      "seconds": 0.8952076435089111
+    }
+  ]
+}

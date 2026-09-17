@@ -57,6 +57,7 @@ variable it could not fix as a column rather than a footnote.
 | **05** | [Zipf and Heaps](projects/05_zipf_and_heaps) | Five estimators, one exponent — how far apart do they land, and is it a power law at all? | ✅ complete |
 | **06** | [PPMI-SVD vs SGNS](projects/06_ppmi_svd_vs_sgns) | Is word2vec's advantage the objective, or the hyperparameters that shipped with it? | ✅ complete |
 | **07** | [The SMART weighting grid](projects/07_smart_weighting_grid) | "TF-IDF" names forty-five schemes. How far apart are they? | ✅ complete |
+| **08** | [gzip-kNN](projects/08_gzip_knn) | Is the compression result about compression, or about the scoring? | ✅ complete |
 | **09** | [Collocations](projects/09_collocations) | Five association measures, one set of counts. Do they agree on anything? | ✅ complete |
 | **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
 
@@ -252,6 +253,38 @@ And **query-side normalisation moves the ranking by exactly 0.000**: it scales e
 for a query by one constant, so it cannot reorder anything. The third letter of the query
 code is inert for every rank-based metric, and the 45 query schemes are **15 distinct
 rankings wearing 45 names**.
+
+### 08 · gzip-kNN
+
+`gzip` plus k-nearest-neighbours, reported to beat BERT on low-resource text
+classification. The distance is real; the step that turns k neighbours into a prediction is
+where the number came from. The published implementation used **k = 2** and resolved ties by
+checking whether the true label was among the two.
+
+One gzip distance matrix over 1,000 Devign functions, three ways of reading it:
+
+| k | tie rate | `oracle_tie` (published) | `nearest_tie` | `random_tie` |
+|---:|---:|---:|---:|---:|
+| 1 | 0.000 | 0.574 | 0.574 | 0.574 |
+| **2** | **0.454** | **0.804** | **0.574** | 0.588 |
+| 3 | 0.000 | 0.594 | 0.594 | 0.594 |
+| 5 | 0.000 | 0.594 | 0.594 | 0.594 |
+
+**0.804 against 0.574 — a gap of 0.230, decided entirely on the 45.4% of documents where
+the two neighbours disagree.**
+
+The tie-rate column is the sharper finding: **it is zero at every k except 2.** With two
+classes an odd k always has a majority, so the rule is inert at k = 1, 3, 5 and 11 and
+decides nearly half the test set at k = 2. The published configuration is the one choice of
+k at which the rule does anything.
+
+Against baselines that were actually configured: gzip-kNN 0.594, TF-IDF nearest centroid
+0.566, Naive Bayes 0.560, majority class 0.528. Compression wins by 2.8 points for **400×
+the compute**, and sits 6.6 points above always guessing the majority — where the
+published-style number sits 27.6 above it.
+
+And lzma costs **88× gzip per pair and is less accurate**: NCD divides by `max(C(x), C(y))`,
+so a compressor that shrinks everything also shrinks the differences it is meant to detect.
 
 ### 09 · Collocations
 

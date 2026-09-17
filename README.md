@@ -60,6 +60,7 @@ variable it could not fix as a column rather than a footnote.
 | **08** | [gzip-kNN](projects/08_gzip_knn) | Is the compression result about compression, or about the scoring? | ✅ complete |
 | **09** | [Collocations](projects/09_collocations) | Five association measures, one set of counts. Do they agree on anything? | ✅ complete |
 | **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
+| **11** | [Text clustering](projects/11_text_clustering) | Does silhouette find the number of clusters the labels say is there? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -340,6 +341,38 @@ answers 74% of queries perfectly, the bet loses.
 Even at the best setting more than twice as many queries get worse as get better (15 against
 7), with 93% untouched — so the mean of −0.013 is a few large losses, not a small uniform
 effect. At α = 0.8 it is 65 queries degraded and at least one losing every gold document.
+
+### 11 · Text clustering
+
+1,500 Devign C functions labelled by codebase — qemu 63.2%, FFmpeg 36.8%, so the true k is 2.
+
+| k | silhouette | ARI (vs labels) | purity |
+|---:|---:|---:|---:|
+| **2** *(truth)* | 0.0152 | 0.3251 | 0.7789 |
+| 3 | 0.0169 | **0.3356** | 0.8816 |
+| **10** | **0.0218** | 0.1203 | 0.8620 |
+
+**Silhouette is maximised at k = 10, agreement with the labels at k = 3, and the truth is 2.**
+Silhouette rises monotonically across the whole range, so it has not found a maximum at all.
+Purity rises monotonically too — it reaches 1.0 when every point is its own cluster, so any k
+chosen by purity is just the largest k you tried.
+
+Then: **"cosine k-means" is two algorithms.** Spherical k-means re-normalises centroids each
+update; normalising the input and running ordinary k-means does not, because the mean of a
+set of unit vectors is not a unit vector.
+
+| k | ARI spherical | ARI euclidean | agreement between them |
+|---:|---:|---:|---:|
+| **2** | **0.3251** | **0.7542** | **0.2959** |
+
+At k = 2 the two partitions **agree with each other only 0.296** — less than either agrees
+with the labels. And the variant people run by accident scores more than twice as well. (Not
+a recommendation: the classes here are 63/37, and letting centroid norms vary is what an
+uneven split needs.)
+
+Finally, at k = 2 the ARI standard deviation across three seeds is **0.156 against a mean of
+0.325**, while the silhouette standard deviation is 0.0002. **The metric used to choose k is
+stable; the clustering it chooses is not** — which looks settled and is not.
 
 ---
 

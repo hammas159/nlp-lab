@@ -23,6 +23,7 @@ jobs:
           - 08_gzip_knn
           - 09_collocations
           - 10_relevance_feedback
+          - 11_text_clustering
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

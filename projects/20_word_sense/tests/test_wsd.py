@@ -231,10 +231,24 @@ def test_accuracy_of_nothing_does_not_divide_by_zero():
     assert D.accuracy([], []) == 0.0
 
 
-@pytest.mark.parametrize("method_cls", D.METHODS)
+#: Everything except Lesk, which needs WordNet's glosses on disk. Parametrising over the
+#: full list made this suite pass on a machine with WordNet installed and fail on one
+#: without - which is the exact failure the "no dataset, no network" rule exists to prevent,
+#: and it reached CI. Lesk is covered in test_wordnet.py against a fixture database.
+CORPUS_FREE_METHODS = [m for m in D.METHODS if m is not D.Lesk]
+
+
+@pytest.mark.parametrize("method_cls", CORPUS_FREE_METHODS)
 def test_every_method_returns_a_sense_from_the_inventory(method_cls):
     model = method_cls().fit(training(), INVENTORY)
     if isinstance(model, D.OneSensePerDiscourseOracle):
         model.set_documents(training())
     target = token()
     assert model.predict(target, [target]) in {1, 2}
+
+
+def test_no_corpus_free_method_needs_a_corpus():
+    """A guard on the list above, so adding a resource-hungry method later cannot silently
+    re-introduce a suite that only passes where the data happens to be installed."""
+    assert D.Lesk not in CORPUS_FREE_METHODS
+    assert len(CORPUS_FREE_METHODS) == len(D.METHODS) - 1

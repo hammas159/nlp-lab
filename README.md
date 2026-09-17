@@ -69,6 +69,7 @@ variable it could not fix as a column rather than a footnote.
 | **17** | [Classical topic models](projects/17_topic_models) | Topic models are ranked by coherence. Does coherence agree with a task? | ✅ complete |
 | **18** | [Tokenisation](projects/18_tokenisation) | BPE vs WordPiece vs Unigram — how much is the algorithm worth, against the knob beside it? | ✅ complete |
 | **19** | [Sentiment lexicons](projects/19_sentiment_lexicons) | Which matters more — the lexicon, or the negation and intensifier rules around it? | ✅ complete |
+| **20** | [Word sense disambiguation](projects/20_word_sense) | Reported against random it looks solved. What happens against the most frequent sense? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -650,6 +651,37 @@ words are listed at all — and that cuts against the obvious reading. **VADER i
 13.4% of sentences against Opinion's 26.2%, speaks nearly twice as often, and is worse when
 it does: 0.646 against 0.697.** The lexicon with the best coverage finishes last.
 
+### 20 · Word sense disambiguation
+
+SemCor, 352 sense-tagged documents, split by document, polysemous tokens only.
+
+| Method | accuracy | vs random | vs first sense |
+|---|---:|---:|---:|
+| random | 0.277 | — | −0.350 |
+| **first sense (WordNet order)** | **0.628** | **+0.350** | — |
+| trained MFS | 0.566 | +0.289 | −0.061 |
+| context overlap (supervised) | 0.559 | +0.282 | −0.069 |
+| context overlap + discourse | 0.563 | +0.286 | −0.064 |
+| *one sense per discourse (ORACLE)* | *0.675* | *+0.397* | *+0.047* |
+
+**Against random, 4 of 4 methods win. Against the first sense, 0 of 4 win.** The same five
+numbers support "every method works" or "nothing works", depending only on which row you
+print underneath them. The most frequent sense is **+0.350 above random before any method
+has done anything at all** — larger than every improvement anything here achieved over
+anything.
+
+**The oracle row is a bug that was nearly a result.** `one sense per discourse` first scored
+0.675 — the only method to beat the baseline — by reading the *gold* senses of the lemma's
+other occurrences in the test document. Excluding the token's own vote is not enough when
+the neighbours are annotations. Reimplemented to vote over its own *predictions*, it scores
+0.563, below the baseline and 0.112 below the oracle. That gap is what the heuristic is
+worth once it has to guess the sense it propagates.
+
+And `first sense` is not quite knowledge-free: WordNet's sense ordering was derived from
+SemCor, so scoring it on SemCor is mildly circular. Estimating the most frequent sense from
+the training split instead gives 0.566 against WordNet's 0.628 — the inherited ordering is
+worth about six points.
+
 ---
 
 ## Planned
@@ -668,17 +700,19 @@ confounds something:
 ### Blocked, and why
 
 Two projects were designed and then not built, because the data was not available offline.
-**Sentiment lexicons is now [project 19](projects/19_sentiment_lexicons)** — the resources
-were fetched, and its intended finding turned out to be **wrong**, which is recorded above
-rather than quietly restated as something that worked.
+**Both are now built** — the resources were fetched, and neither came out the way the plan
+said it would:
 
-One remains:
+- **Sentiment lexicons** → [project 19](projects/19_sentiment_lexicons). The intended
+  finding was that negation and intensifier handling would outweigh the choice of lexicon.
+  **It is wrong**, and the bootstrap says so in 100% of resamples.
+- **Word sense disambiguation** → [project 20](projects/20_word_sense). The intended finding
+  — that the most-frequent-sense baseline beats the alternatives — **held**, but only after
+  a label leak was found in the one method that appeared to beat it.
 
-- **Word sense disambiguation** — the intended finding is that the *most-frequent-sense
-  baseline beats every unsupervised method*, and that papers reporting against a random
-  baseline are choosing the flattering comparison. It needs WordNet for sense inventories
-  and SemCor for sense-tagged text. Both are downloading on a badly congested link; neither
-  is blocked on design.
+Recording both is the point. A prediction that survives and a prediction that does not are
+worth the same amount, and the difference is only visible if the prediction was written down
+first.
 
 ---
 

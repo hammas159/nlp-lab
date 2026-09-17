@@ -1,0 +1,38 @@
+{
+  "corpus": {
+    "files": 352,
+    "sentences": 36298,
+    "tagged_tokens": 226005,
+    "multi_sense_tags": 703
+  },
+  "train_documents": 246,
+  "test_documents": 106,
+  "test_tokens": 74528,
+  "polysemous_test_tokens": 51242,
+  "rows": [
+    {
+      "method": "random",
+      "accuracy": 0.2773310955856524
+    },
+    {
+      "method": "first sense (WordNet order)",
+      "accuracy": 0.6275516178135123
+    },
+    {
+      "method": "trained MFS",
+      "accuracy": 0.5664298817376371
+    },
+    {
+      "method": "context overlap (supervised)",
+      "accuracy": 0.5588969985558722
+    },
+    {
+      "method": "context overlap + discourse",
+      "accuracy": 0.5634245345614926
+    },
+    {
+      "method": "one sense per discourse (ORACLE)",
+      "accuracy": 0.6745443191132274
+    }
+  ]
+}

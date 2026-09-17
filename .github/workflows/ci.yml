@@ -32,6 +32,7 @@ jobs:
           - 17_topic_models
           - 18_tokenisation
           - 19_sentiment_lexicons
+          - 20_word_sense
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

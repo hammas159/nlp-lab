@@ -1,0 +1,21 @@
+[project]
+name = "word-sense"
+version = "0.1.0"
+description = "Word sense disambiguation reported against random looks solved. Reported against the most frequent sense, nothing here beats the baseline."
+requires-python = ">=3.11"
+# SemCor is SGML parsed directly in src/semcor.py, so nltk is needed to fetch the corpus
+# and never to run this.
+dependencies = ["numpy>=1.26"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.16,<0.17"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100

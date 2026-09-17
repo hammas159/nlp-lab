@@ -55,6 +55,7 @@ variable it could not fix as a column rather than a footnote.
 | **03** | [The reranker ceiling](projects/03_reranker_ceiling) | Does a reranker rescue a weak first stage, or only reorder it? | ✅ complete |
 | **04** | [Near-duplicate detection](projects/04_near_duplicate_detection) | How much does exact-match-on-a-normal-form miss? | ✅ complete |
 | **05** | [Zipf and Heaps](projects/05_zipf_and_heaps) | Five estimators, one exponent — how far apart do they land, and is it a power law at all? | ✅ complete |
+| **07** | [The SMART weighting grid](projects/07_smart_weighting_grid) | "TF-IDF" names forty-five schemes. How far apart are they? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -194,6 +195,31 @@ for C source. That plateau is a floor, not a diminishing return.
 
 The Hurwitz zeta is implemented rather than imported, and checked against π²/6, π⁴/90 and
 Apéry's constant rather than against another library.
+
+### 07 · The SMART weighting grid
+
+Salton & Buckley named the TF-IDF family in 1988 with a three-letter code: five
+term-frequency variants, three document-frequency variants, three normalisations. **Every
+one of the forty-five is "TF-IDF".** On this lab's corpus, with the query side held fixed:
+
+| | scheme | recall@10 |
+|---|---|---:|
+| best | `atc` | **0.893** |
+| BM25 | — | 0.865 |
+| **textbook** | **`lnc`** | **0.872** (17th of 45) |
+| worst | `nnn` | 0.493 |
+
+**Spread 0.400 — five times the 0.078 gap project 01 reports between BM25 and a pretrained
+neural embedding on the same corpus.** A reported 3-point gain from replacing "TF-IDF" is
+smaller than the distance between two things both called TF-IDF.
+
+The term-frequency letter is worth three times the idf letter (spread 0.146 against 0.053),
+which inverts the usual emphasis — the family is named after its smallest component.
+
+And **query-side normalisation moves the ranking by exactly 0.000**: it scales every score
+for a query by one constant, so it cannot reorder anything. The third letter of the query
+code is inert for every rank-based metric, and the 45 query schemes are **15 distinct
+rankings wearing 45 names**.
 
 ---
 

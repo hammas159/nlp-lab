@@ -1,10 +1,11 @@
 <h1 align="center">19 · Sentiment lexicons</h1>
-<p align="center"><i>The prediction was that the rules would outweigh the lexicon. They do not.</i></p>
+<p align="center"><i>The prediction was that the rules would outweigh the lexicon. In both domains, they do not.</i></p>
 
 <p align="center">
   <a href="#the-result">Result</a> &middot;
   <a href="#a-prediction-that-did-not-survive">A prediction that did not survive</a> &middot;
   <a href="#coverage-is-not-the-advantage-it-looks-like">Coverage</a> &middot;
+  <a href="#the-best-lexicon-depends-on-the-domain">Domain</a> &middot;
   <a href="#method">Method</a> &middot;
   <a href="#limitations">Limitations</a>
 </p>
@@ -28,31 +29,39 @@ before any code existed:
 > the intended finding was that **negation and intensifier handling outweighs the choice of
 > lexicon**
 
-Three lexicons × four rule sets on one corpus, everything else held fixed. **The prediction
-is wrong**, and it is wrong by a margin that survives a bootstrap.
+Four lexicons × four rule sets × two domains, everything else held fixed. **The prediction
+is wrong**, in both domains, by a margin that survives a bootstrap in 100% of resamples.
 
 ---
 
 ## The result
 
-Movie-review sentences (Pang & Lee, ACL 2005) · 10,662 items · exactly balanced, so the
-**floor is 0.500**.
+Two corpora, both exactly balanced, so the **floor is 0.500** in each.
 
-| Lexicon | entries | bag of words | + negation | + intensifiers | + contrastive | unscored | acc. where it fired |
+**Movie-review sentences** (Pang & Lee, ACL 2005) · 10,662 items
+
+| Lexicon | entries | bag of words | + negation | + intensifiers | + contrastive | abstains | acc. where it fired |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| VADER | 7,491 | 0.621 | 0.629 | 0.630 | 0.637 | 13.4% | 0.646 |
-| **Opinion** | 6,786 | **0.652** | **0.655** | **0.657** | **0.663** | 26.2% | **0.697** |
-| AFINN | 2,477 | 0.616 | 0.623 | 0.623 | 0.628 | 26.0% | 0.659 |
-| *floor* | — | *0.500* | *0.500* | *0.500* | *0.500* | | |
+| VADER | 7,491 | 0.621 | 0.629 | 0.630 | 0.637 | 13.4% | 0.627 |
+| **Opinion** | 6,786 | **0.652** | **0.655** | **0.657** | **0.663** | 26.2% | **0.689** |
+| SentiWordNet | 21,479 | 0.600 | 0.607 | 0.609 | 0.614 | **1.2%** | 0.600 |
+| AFINN | 2,477 | 0.616 | 0.623 | 0.623 | 0.628 | 26.0% | 0.643 |
 
-**Holding the rules fixed, changing the lexicon moves accuracy by up to 0.035.
-Holding the lexicon fixed, changing the rules moves it by up to 0.016.**
+**Tweets** · 10,000 items
 
-A paired bootstrap over items, 1,000 resamples: the difference is **+0.019, 95% interval
-[+0.010, +0.031], and the lexicon axis is the larger one in 100% of resamples.** This is not
-a near-tie that happened to fall one way.
+| Lexicon | bag of words | + negation | + intensifiers | + contrastive | abstains | acc. where it fired |
+|---|---:|---:|---:|---:|---:|---:|
+| **VADER** | 0.636 | 0.645 | 0.644 | **0.646** | 29.8% | 0.679 |
+| Opinion | 0.633 | 0.639 | 0.638 | 0.638 | 49.8% | **0.740** |
+| SentiWordNet | 0.592 | 0.604 | 0.604 | 0.605 | **9.8%** | 0.606 |
+| AFINN | 0.631 | 0.637 | 0.637 | 0.638 | 37.9% | 0.692 |
 
----
+| | lexicon axis | rules axis | bootstrap difference | lexicon axis larger in |
+|---|---:|---:|---|---:|
+| movie sentences | **0.052** | 0.016 | **+0.036** [+0.024, +0.046] | **100%** of resamples |
+| tweets | **0.044** | 0.013 | **+0.031** [+0.021, +0.043] | **100%** of resamples |
+
+**Both domains agree, and neither is close.**
 
 ## A prediction that did not survive
 
@@ -68,8 +77,10 @@ The reason is not that they fail to fire:
 | + intensifiers | 21.5% | 5.1% | 58.8% |
 | + contrastive | **32.6%** | 6.1% | **63.3%** |
 
-The contrastive rule changes the score on nearly a third of all sentences. The rules are
-firing constantly.
+The contrastive rule changes the score on nearly a third of all movie sentences. The rules
+are firing constantly. (On tweets they fire about half as often — 8.9% for negation against
+17.4% — because tweets are shorter, which is itself a reason the rules axis is smaller there:
+0.013 against 0.016.)
 
 **They just cannot reach far enough.** Changing a score only matters if it changes the
 *answer*, and that happens on 5–6% of items. On those, a flip is a coin already flipped, so
@@ -79,36 +90,73 @@ of about 17% on 4.8% of items, which is +0.008. The arithmetic checks out agains
 
 So the honest statement is narrower and more useful than the prediction: **rules for
 negation, intensification and contrast are individually correct more often than not, and
-collectively worth about half of what picking a different word list is worth.** If you are
-choosing where to spend an afternoon, the word list is the better bet.
+collectively worth about a third of what picking a different word list is worth.** If you
+are choosing where to spend an afternoon, the word list is the better bet.
 
 ---
 
 ## Coverage is not the advantage it looks like
 
-The lexicons agree with each other almost completely:
+Three of the four lexicons agree with each other almost completely. SentiWordNet does not:
 
 | Pair | agree in sign | on shared words |
 |---|---:|---:|
+| Opinion vs AFINN | **98.8%** | 1,314 |
 | VADER vs Opinion | 97.8% | 2,212 |
 | VADER vs AFINN | 96.8% | 2,425 |
-| Opinion vs AFINN | 98.8% | 1,314 |
+| SentiWordNet vs AFINN | **81.7%** | 1,554 |
+| VADER vs SentiWordNet | **78.4%** | 3,072 |
+| Opinion vs SentiWordNet | **77.0%** | 4,666 |
 
-They essentially never call the same word positive and negative. So the 0.035 spread is not
-about disagreement — it is about **which words are in the list at all**, and that turns out
-to cut against the obvious reading.
+The three hand-built lexicons essentially never call the same word positive and negative.
+SentiWordNet disagrees with all of them about **one word in five** — because it is not
+hand-built. It is derived from WordNet *senses*, and collapsing a word's senses into one
+score means a word whose dominant sense is positive and whose third sense is negative can
+come out either way.
 
-**VADER is unscored on 13.4% of sentences; Opinion on 26.2%.** VADER speaks nearly twice as
-often. And it is *worse*: 0.646 correct where it fires, against Opinion's **0.697**.
+So the spread is about which words are listed and how they were scored. And that cuts
+directly against the number lexicons are usually sold on:
 
-VADER's extra reach comes from emoticons, slang and hedges carrying small valences, and on
-movie-review prose those fire on sentences where the evidence is thin. Opinion's flat
-positive/negative word lists say less and are right more often when they say it.
+| | abstains on | correct where it fired |
+|---|---:|---:|
+| **movie sentences** | | |
+| SentiWordNet | **1.2%** | **0.600** |
+| VADER | 13.4% | 0.627 |
+| AFINN | 26.0% | 0.643 |
+| Opinion | **26.2%** | **0.689** |
+| **tweets** | | |
+| SentiWordNet | **9.8%** | **0.606** |
+| VADER | 29.8% | 0.679 |
+| AFINN | 37.9% | 0.692 |
+| Opinion | **49.8%** | **0.740** |
 
-This is worth stating plainly because coverage is the number a lexicon is usually sold on.
-Here the lexicon with the best coverage finishes last.
+**In both domains, ordering the lexicons by coverage orders them exactly backwards by
+precision — at every step, all four lexicons.** SentiWordNet scores almost every sentence
+and is the least accurate on the ones it scores; Opinion abstains on half of all tweets and
+is right three quarters of the time when it speaks.
+
+The mechanism is that breadth is bought with weak entries. SentiWordNet reaches 21,479 words
+by scoring senses that are only faintly evaluative, and those fire on sentences carrying no
+real sentiment. Coverage is not free — it is traded against precision, and neither table
+above shows that trade paying off.
 
 ---
+
+## The best lexicon depends on the domain
+
+| Corpus | best lexicon | accuracy |
+|---|---|---:|
+| movie sentences | **Opinion** | 0.663 |
+| tweets | **VADER** | 0.646 |
+
+This was the point of running a second domain, and it lands the way the lexicons' origins
+predict. **VADER was built for social media**, finishes last of the three hand-built
+lexicons on movie prose, and wins on tweets. Hu & Liu's Opinion Lexicon was built from
+product reviews and wins on review-like sentences.
+
+It also means the first table's "Opinion is best" is not a fact about Opinion. It is a fact
+about Opinion *and movie reviews*, and the lexicon axis being the larger one does not imply
+there is a best lexicon to pick — only that the pick matters more than the rules do.
 
 ## Method
 
@@ -136,19 +184,18 @@ dampeners. They are treated as negators here, and the note is in the code.
 
 ## Limitations
 
-- **SentiWordNet is missing.** It was in the design and its file had not finished
-  downloading when this ran; the loader and its four tests are written and will pick it up
-  the moment the file is present. Three lexicons is enough to show a 0.035 spread, but the
-  fourth is the one with the most interesting failure mode.
-- **One corpus, one domain.** The second domain — tweets — is the arm that would test
-  whether the ranking is about the lexicon or about the match between lexicon and domain.
-  **VADER was built for social media and finishes last on movie prose**, which is exactly
-  the result that needs a second domain before it means anything. The loader and tests are
-  in place; the corpus is still downloading.
+- **SentiWordNet's word scores are a choice, not a reading.** It scores senses; this
+  averages the first three by rank. Taking only the first sense, or all of them, gives a
+  different lexicon with the same name — which is why its numbers vary between papers that
+  all say "we used SentiWordNet". Its 77–82% agreement with the hand-built lexicons is
+  partly this decision rather than the resource.
+- **Two domains, both English and both short-text.** Tweets and review sentences differ
+  enough to flip which lexicon wins, which is the point — but neither says anything about
+  long documents, where a bag of words has far more evidence to work with.
 - **Window-based negation is crude.** A negator flips everything within three tokens, so
   `not bad good` scores 0.0 — both words flip, where a reader negates only `bad`.
   Clause-based negation handles this; a fixed window cannot, and a fixed window is what
-  almost every lexicon pipeline uses. It applies identically to all three lexicons, so it
+  almost every lexicon pipeline uses. It applies identically to all four lexicons, so it
   cannot bias the comparison, but it does bound how good any `+ negation` row can be.
   `test_a_negator_flips_everything_in_its_window_not_just_its_target` pins it.
 - **VADER's full shipped implementation is not a row here.** It adds capitalisation and
@@ -161,7 +208,7 @@ dampeners. They are treated as negators here, and the note is in the code.
 ## Run it
 
 ```bash
-python src/run.py            # every lexicon and corpus present, ~30 seconds
+python src/run.py            # 4 lexicons x 4 rule sets x 2 domains, ~10 seconds
 python src/run.py --quick    # 2,000 items per corpus
 pytest -q                    # 58 tests, no corpus, no network
 ```

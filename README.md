@@ -629,27 +629,37 @@ above 2,000.
 
 This one was designed around a prediction written into the section below **before any code
 existed**: that negation and intensifier handling would outweigh the choice of lexicon.
-Three lexicons × four rule sets, 10,662 balanced movie-review sentences, floor 0.500.
+Four lexicons × four rule sets × two domains, both balanced, floor 0.500.
 
-| Lexicon | entries | bag of words | + negation | + intensifiers | + contrastive | unscored | acc. where it fired |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| VADER | 7,491 | 0.621 | 0.629 | 0.630 | 0.637 | 13.4% | 0.646 |
-| **Opinion** | 6,786 | **0.652** | **0.655** | **0.657** | **0.663** | 26.2% | **0.697** |
-| AFINN | 2,477 | 0.616 | 0.623 | 0.623 | 0.628 | 26.0% | 0.659 |
+| Lexicon | entries | abstains | movie sentences | tweets |
+|---|---:|---:|---:|---:|
+| VADER | 7,491 | 13.4% / 29.8% | 0.637 | **0.646** |
+| **Opinion** | 6,786 | 26.2% / 49.8% | **0.663** | 0.638 |
+| SentiWordNet | 21,479 | **1.2% / 9.8%** | 0.614 | 0.605 |
+| AFINN | 2,477 | 26.0% / 37.9% | 0.628 | 0.638 |
 
-**The prediction is wrong.** The lexicon axis moves accuracy by up to **0.035**, the rules
-axis by up to **0.016** — and a paired bootstrap puts the difference at **+0.019 [+0.010,
-+0.031], with the lexicon axis larger in 100% of 1,000 resamples.**
+*(best rule set shown; abstention is movie / tweets)*
 
-Not because the rules fail to fire: the contrastive rule changes the score on **32.6%** of
-sentences. They just cannot reach far enough. Changing a score only matters when it changes
-the *answer*, which happens on 5–6% of items, and there a flip helps only as far as its
-precision beats a coin — 58.5% for negation, worth +0.008.
+| | lexicon axis | rules axis | bootstrap | lexicon axis larger in |
+|---|---:|---:|---|---:|
+| movie sentences | **0.052** | 0.016 | **+0.036** [+0.024, +0.046] | **100%** of resamples |
+| tweets | **0.044** | 0.013 | **+0.031** [+0.021, +0.043] | **100%** of resamples |
 
-The lexicons agree in sign on **96.8–98.8%** of shared words, so the spread is about which
-words are listed at all — and that cuts against the obvious reading. **VADER is unscored on
-13.4% of sentences against Opinion's 26.2%, speaks nearly twice as often, and is worse when
-it does: 0.646 against 0.697.** The lexicon with the best coverage finishes last.
+**The prediction is wrong, in both domains.** Not because the rules fail to fire — the
+contrastive rule changes the score on 32.6% of movie sentences. They cannot reach: changing
+a score only matters when it changes the *answer*, which happens on 5–6% of items, and there
+a flip helps only as far as its precision beats a coin.
+
+Two things the second domain bought. **The best lexicon changes with it** — Opinion on movie
+prose, VADER on tweets — which is what the lexicons' origins predict, VADER having been
+built for social media. So "Opinion is best" was never a fact about Opinion.
+
+And the coverage column runs backwards. **Ordering the four lexicons by how often they
+abstain orders them exactly backwards by how often they are right — at every step, in both
+domains.** SentiWordNet scores almost every sentence and is least accurate on the ones it
+scores; Opinion abstains on half of all tweets and is right three quarters of the time when
+it speaks. Breadth is bought with weak entries, and neither domain shows that trade paying
+off.
 
 ### 20 · Word sense disambiguation
 
@@ -660,13 +670,18 @@ SemCor, 352 sense-tagged documents, split by document, polysemous tokens only.
 | random | 0.277 | — | −0.350 |
 | **first sense (WordNet order)** | **0.628** | **+0.350** | — |
 | trained MFS | 0.566 | +0.289 | −0.061 |
-| context overlap (supervised) | 0.559 | +0.282 | −0.069 |
 | context overlap + discourse | 0.563 | +0.286 | −0.064 |
+| context overlap (supervised) | 0.559 | +0.282 | −0.069 |
+| **Lesk (gloss overlap)** | **0.499** | **+0.222** | **−0.128** |
 | *one sense per discourse (ORACLE)* | *0.675* | *+0.397* | *+0.047* |
 
-**Against random, 4 of 4 methods win. Against the first sense, 0 of 4 win.** The same five
+**Against random, 5 of 5 methods win. Against the first sense, 0 of 5 win.** The same six
 numbers support "every method works" or "nothing works", depending only on which row you
-print underneath them. The most frequent sense is **+0.350 above random before any method
+print underneath them.
+
+**Lesk is the sharpest case** — the classic knowledge-based method, the one most often shown
+against random, where it looks like a +0.222 win and an 80% relative improvement. Against
+the most frequent sense it is 0.128 behind, the worst of the five. The most frequent sense is **+0.350 above random before any method
 has done anything at all** — larger than every improvement anything here achieved over
 anything.
 

@@ -7,6 +7,7 @@ python src/run.py --quick    # 2,000 items per corpus
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import sys
 import time
@@ -136,7 +137,7 @@ def main() -> None:
             print(
                 f"  {lex.name:14}"
                 + "".join(f"{s:>16.3f}" for s in scores)
-                + f"{silences[0]:>10.1%}{max(fired):>11.3f}",
+                + f"{silences[0]:>10.1%}{fired[0]:>11.3f}",
                 flush=True,
             )
         print(f"  {'floor':14}" + "".join(f"{floor:>16.3f}" for _ in R.RULES))
@@ -233,7 +234,33 @@ def main() -> None:
         all_rows.extend(rows)
         all_firing.extend(firing)
 
-    rule("4. Does the best lexicon stay the best across domains?")
+    rule("4. Coverage against precision")
+    print("  Sorted by how often each lexicon abstains. If wider coverage were an advantage,")
+    print("  these two columns would rise together.\n")
+    coverage_rows = []
+    for corpus_name in corpus_names:
+        baseline = next(iter(R.RULES))
+        at_corpus = {
+            r["lexicon"]: (r["unscored"], r["accuracy_when_scored"])
+            for r in all_rows
+            if r["corpus"] == corpus_name and r["rule"] == baseline
+        }
+        ordered = sorted(at_corpus.items(), key=lambda kv: kv[1][0])
+        print(f"  {corpus_name}")
+        for name, (unscored, when_fired) in ordered:
+            print(
+                f"    {name:14} abstains {unscored:>6.1%}   correct where it fired {when_fired:.3f}"
+            )
+        precisions = [p for _, (_, p) in ordered]
+        monotone = all(a < b for a, b in itertools.pairwise(precisions))
+        coverage_rows.append({"corpus": corpus_name, "monotone_inverse": monotone})
+        print(
+            f"    -> precision rises with abstention at every step: {monotone}\n"
+            if monotone
+            else "    -> not monotone\n"
+        )
+
+    rule("5. Does the best lexicon stay the best across domains?")
     for corpus_name in corpus_names:
         best = max((r for r in all_rows if r["corpus"] == corpus_name), key=lambda r: r["accuracy"])
         print(
@@ -249,6 +276,7 @@ def main() -> None:
                 "lexicon_agreement": overlaps,
                 "rows": all_rows,
                 "rule_firing": all_firing,
+                "coverage_vs_precision": coverage_rows,
             },
             indent=2,
         ),

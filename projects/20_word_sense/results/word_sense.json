@@ -31,6 +31,10 @@
       "accuracy": 0.5634245345614926
     },
     {
+      "method": "Lesk (gloss overlap)",
+      "accuracy": 0.4991413293782444
+    },
+    {
       "method": "one sense per discourse (ORACLE)",
       "accuracy": 0.6745443191132274
     }

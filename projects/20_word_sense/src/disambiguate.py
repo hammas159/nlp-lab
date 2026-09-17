@@ -203,15 +203,66 @@ class ContextOverlapWithDiscourse(ContextOverlap):
         return {id(t): votes[(t.document, *t.key)].most_common(1)[0][0] for t in tokens}
 
 
+def accuracy(predictions: list[int], truth: list[int]) -> float:
+    return sum(p == t for p, t in zip(predictions, truth)) / max(1, len(truth))
+
+
+class Lesk(Disambiguator):
+    """Lesk (1986): pick the sense whose dictionary gloss overlaps the context most.
+
+    The classic knowledge-based method, and the one most often reported against a random
+    baseline. It needs no training data at all - only a dictionary - which is exactly why it
+    is attractive and exactly why it is worth checking against the most frequent sense.
+
+    Ties and empty overlaps fall back to sense 1 rather than to an arbitrary choice, because
+    an arbitrary choice would make the score depend on dictionary ordering rather than on
+    the method.
+    """
+
+    name = "Lesk (gloss overlap)"
+
+    def fit(self, sentences, inventory) -> Lesk:
+        import wordnet as W
+
+        self.wordnet = W
+        self.inventory = inventory
+        self.fallback = TrainedMFS().fit(sentences, inventory)
+        return self
+
+    def predict(self, token, sentence) -> int:
+        context = self.wordnet.bag(" ".join(t.surface for t in sentence))
+        context.discard(token.surface.lower())
+        best, best_overlap = None, 0
+        for sense in sorted(self.inventory.get(token.key, {1})):
+            gloss = self.wordnet.gloss(token.lemma, token.pos, sense)
+            if not gloss:
+                continue
+            overlap = len(context & self.wordnet.bag(gloss))
+            if overlap > best_overlap:
+                best, best_overlap = sense, overlap
+        if best is None:
+            return self.fallback.predict(token, sentence)
+        return best
+
+
+def methods():
+    """Every method that can run here. Lesk needs WordNet's glosses; if the database is
+    absent it is left out by name rather than silently replaced by a fallback that would
+    score under its label."""
+    import wordnet as W
+
+    base = [Random, FirstSense, TrainedMFS, ContextOverlap, ContextOverlapWithDiscourse]
+    if W.available():
+        base.append(Lesk)
+    return [*base, OneSensePerDiscourseOracle]
+
+
 METHODS = [
     Random,
     FirstSense,
     TrainedMFS,
     ContextOverlap,
     ContextOverlapWithDiscourse,
+    Lesk,
     OneSensePerDiscourseOracle,
 ]
-
-
-def accuracy(predictions: list[int], truth: list[int]) -> float:
-    return sum(p == t for p, t in zip(predictions, truth)) / max(1, len(truth))

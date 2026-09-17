@@ -90,7 +90,7 @@ def main() -> None:
     print(f"  {'method':32} {'accuracy':>10} {'vs random':>11} {'vs first sense':>16}")
     rows = []
     scores = {}
-    for method_cls in D.METHODS:
+    for method_cls in D.methods():
         model = method_cls().fit(train, train_senses)
         if isinstance(model, D.OneSensePerDiscourseOracle):
             model.set_documents(test)

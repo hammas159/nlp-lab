@@ -11,6 +11,11 @@
       "note": "two flat word lists, no magnitude"
     },
     {
+      "name": "SentiWordNet",
+      "entries": 38346,
+      "note": "mean of first 3 senses"
+    },
+    {
       "name": "AFINN",
       "entries": 2477,
       "note": "one rater, -5 to +5"
@@ -23,14 +28,29 @@
       "shared": 2212
     },
     {
+      "pair": "VADER vs SentiWordNet",
+      "agreement": 0.7841796875,
+      "shared": 3072
+    },
+    {
       "pair": "VADER vs AFINN",
       "agreement": 0.9682474226804124,
       "shared": 2425
     },
     {
+      "pair": "Opinion vs SentiWordNet",
+      "agreement": 0.7698242606086584,
+      "shared": 4666
+    },
+    {
       "pair": "Opinion vs AFINN",
       "agreement": 0.9878234398782344,
       "shared": 1314
+    },
+    {
+      "pair": "SentiWordNet vs AFINN",
+      "agreement": 0.8172458172458172,
+      "shared": 1554
     }
   ],
   "rows": [
@@ -100,6 +120,38 @@
     },
     {
       "corpus": "movie sentences",
+      "lexicon": "SentiWordNet",
+      "rule": "bag of words",
+      "accuracy": 0.5995122866253986,
+      "unscored": 0.012005252297880322,
+      "accuracy_when_scored": 0.6002468198215303
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "SentiWordNet",
+      "rule": "+ negation",
+      "accuracy": 0.6072969424123054,
+      "unscored": 0.014068655036578503,
+      "accuracy_when_scored": 0.6082572298325722
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "SentiWordNet",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6088913899831176,
+      "unscored": 0.014162446070155692,
+      "accuracy_when_scored": 0.6097421748644277
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "SentiWordNet",
+      "rule": "+ contrastive",
+      "accuracy": 0.6143312699305946,
+      "unscored": 0.013412117801538174,
+      "accuracy_when_scored": 0.6151725449187185
+    },
+    {
+      "corpus": "movie sentences",
       "lexicon": "AFINN",
       "rule": "bag of words",
       "accuracy": 0.6163946726692928,
@@ -129,6 +181,134 @@
       "accuracy": 0.6282123429000187,
       "unscored": 0.25511161132995686,
       "accuracy_when_scored": 0.6592797783933518
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "VADER",
+      "rule": "bag of words",
+      "accuracy": 0.636,
+      "unscored": 0.2981,
+      "accuracy_when_scored": 0.6787291636985325
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "VADER",
+      "rule": "+ negation",
+      "accuracy": 0.6446,
+      "unscored": 0.2995,
+      "accuracy_when_scored": 0.691077801570307
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "VADER",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6445,
+      "unscored": 0.2992,
+      "accuracy_when_scored": 0.6910673515981736
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "VADER",
+      "rule": "+ contrastive",
+      "accuracy": 0.6462,
+      "unscored": 0.2984,
+      "accuracy_when_scored": 0.6934150513112884
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "Opinion",
+      "rule": "bag of words",
+      "accuracy": 0.633,
+      "unscored": 0.4982,
+      "accuracy_when_scored": 0.7401355121562375
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "Opinion",
+      "rule": "+ negation",
+      "accuracy": 0.6394,
+      "unscored": 0.4986,
+      "accuracy_when_scored": 0.7534902273633826
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "Opinion",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6378,
+      "unscored": 0.4923,
+      "accuracy_when_scored": 0.7502462083907819
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "Opinion",
+      "rule": "+ contrastive",
+      "accuracy": 0.6379,
+      "unscored": 0.4883,
+      "accuracy_when_scored": 0.7500488567520032
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "SentiWordNet",
+      "rule": "bag of words",
+      "accuracy": 0.5922,
+      "unscored": 0.0976,
+      "accuracy_when_scored": 0.6061613475177305
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "SentiWordNet",
+      "rule": "+ negation",
+      "accuracy": 0.6037,
+      "unscored": 0.0997,
+      "accuracy_when_scored": 0.6191269576807731
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "SentiWordNet",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6039,
+      "unscored": 0.0998,
+      "accuracy_when_scored": 0.6195289935569873
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "SentiWordNet",
+      "rule": "+ contrastive",
+      "accuracy": 0.6051,
+      "unscored": 0.0999,
+      "accuracy_when_scored": 0.6208199088990112
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "AFINN",
+      "rule": "bag of words",
+      "accuracy": 0.6309,
+      "unscored": 0.3794,
+      "accuracy_when_scored": 0.6923944569771189
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "AFINN",
+      "rule": "+ negation",
+      "accuracy": 0.6372,
+      "unscored": 0.3791,
+      "accuracy_when_scored": 0.7018843614108552
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "AFINN",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6369,
+      "unscored": 0.3768,
+      "accuracy_when_scored": 0.7023427471116817
+    },
+    {
+      "corpus": "tweets",
+      "lexicon": "AFINN",
+      "rule": "+ contrastive",
+      "accuracy": 0.6377,
+      "unscored": 0.3752,
+      "accuracy_when_scored": 0.7037451984635084
     }
   ],
   "rule_firing": [
@@ -152,6 +332,37 @@
       "changes_score": 0.32564246858000373,
       "flips_classification": 0.06133933595948227,
       "flip_precision": 0.6330275229357798
+    },
+    {
+      "corpus": "tweets",
+      "rule": "+ negation",
+      "changes_score": 0.0892,
+      "flips_classification": 0.038,
+      "flip_precision": 0.6131578947368421
+    },
+    {
+      "corpus": "tweets",
+      "rule": "+ intensifiers",
+      "changes_score": 0.1369,
+      "flips_classification": 0.0399,
+      "flip_precision": 0.606516290726817
+    },
+    {
+      "corpus": "tweets",
+      "rule": "+ contrastive",
+      "changes_score": 0.1759,
+      "flips_classification": 0.0434,
+      "flip_precision": 0.6175115207373272
+    }
+  ],
+  "coverage_vs_precision": [
+    {
+      "corpus": "movie sentences",
+      "monotone_inverse": true
+    },
+    {
+      "corpus": "tweets",
+      "monotone_inverse": true
     }
   ]
 }

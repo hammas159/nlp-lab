@@ -1,5 +1,5 @@
 <h1 align="center">20 · Word sense disambiguation</h1>
-<p align="center"><i>Four of four methods beat random. Zero of four beat the most frequent sense.</i></p>
+<p align="center"><i>Five of five methods beat random. Zero of five beat the most frequent sense.</i></p>
 
 <p align="center">
   <a href="#the-result">Result</a> &middot;
@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="python">
-  <img src="https://img.shields.io/badge/tests-27%20passing-brightgreen" alt="tests">
+  <img src="https://img.shields.io/badge/tests-52%20passing-brightgreen" alt="tests">
   <img src="https://img.shields.io/badge/dependencies-numpy%20only-success" alt="numpy only">
   <img src="https://img.shields.io/badge/leakage-found%20and%20fixed-orange" alt="leakage">
 </p>
@@ -37,13 +37,14 @@ Polysemous tokens only, 30% of documents held out.
 | random | 0.277 | — | −0.350 |
 | **first sense (WordNet order)** | **0.628** | **+0.350** | — |
 | trained MFS | 0.566 | +0.289 | −0.061 |
-| context overlap (supervised) | 0.559 | +0.282 | −0.069 |
 | context overlap + discourse | 0.563 | +0.286 | −0.064 |
+| context overlap (supervised) | 0.559 | +0.282 | −0.069 |
+| **Lesk (gloss overlap)** | **0.499** | **+0.222** | **−0.128** |
 | *one sense per discourse (ORACLE)* | *0.675* | *+0.397* | *+0.047* |
 
-**Against random, 4 of 4 methods win. Against the first sense, 0 of 4 win.**
+**Against random, 5 of 5 methods win. Against the first sense, 0 of 5 win.**
 
-The same five numbers support "every method works" or "nothing works", depending only on
+The same six numbers support "every method works" or "nothing works", depending only on
 which row you print underneath them.
 
 ---
@@ -58,6 +59,12 @@ So a paper reporting "our system reaches 0.56, against a random baseline of 0.28
 reporting a doubling — and the system is losing to a one-line heuristic that needed no
 training data, no sense glosses and no context window.
 
+**Lesk is the sharpest case.** It is the classic knowledge-based method and the one most
+often shown against random, where it looks like a **+0.222** win — an 80% relative
+improvement, from a method that needs only a dictionary. Against the most frequent sense it
+is **0.128 behind, the worst of the five.** The same system, the same run, two defensible
+baselines, and opposite conclusions.
+
 This is not a claim that the methods are bad. A supervised context model at 0.559 is doing
 real work: it is discriminating senses from surrounding words, which random is not. It is a
 claim about **what the number is compared against**, and the comparison is not a detail —
@@ -67,7 +74,7 @@ it is the entire content of the sentence "this method works".
 
 ## The oracle that was nearly a result
 
-The first version of this project had a fifth method, `one sense per discourse`, scoring
+The first version of this project had a method called `one sense per discourse`, scoring
 **0.675** — the only thing to beat the most frequent sense, and by a comfortable margin. It
 implemented Gale, Church & Yarowsky's (1992) observation that a word keeps one sense within
 a document: look at the lemma's other occurrences in the same document and take the majority.
@@ -136,10 +143,11 @@ tag, where the annotator allowed both readings; the count is reported rather tha
   which makes the **random baseline stronger than it should be**. The real random baseline,
   over full WordNet inventories, would be lower, and the gap this project reports would be
   *wider*. The finding is therefore conservative.
-- **No Lesk.** The classic knowledge-based method needs WordNet glosses, and WordNet was
-  still downloading on a congested link when this ran. Lesk is the method most often
-  reported against random, so its absence is the most important gap here; the published
-  literature does not have it beating MFS either, but that is a citation, not a measurement.
+- **Lesk here is simple Lesk**, overlapping a sense's own gloss with the sentence. Banerjee
+  & Pedersen's extended version also pools the glosses of related synsets — hypernyms,
+  hyponyms, meronyms — which gives it far more words to match on and scores materially
+  better in the literature. The 0.499 is a floor for the gloss-overlap family, not a ceiling,
+  and the published extended results still do not clear MFS.
 - **The supervised model is deliberately the cheapest one.** IDF-weighted context bags, no
   embeddings, no sequence model. It is here to show what clearing MFS costs, not to be a
   competitive system — a modern supervised model would clear it.
@@ -153,16 +161,22 @@ tag, where the annotator allowed both readings; the count is reported rather tha
 ```bash
 python src/run.py            # all of SemCor, ~8 seconds
 python src/run.py --quick    # 60 files
-pytest -q                    # 27 tests, no corpus, no network
+pytest -q                    # 52 tests, no corpus, no network
 ```
 
-SemCor is fetched with `python -c "import nltk; nltk.download('semcor')"`. Nothing else is
-needed — `nltk` fetches the corpus and is never imported by this project.
+```bash
+python -c "import nltk; nltk.download('semcor'); nltk.download('wordnet')"
+```
+
+`nltk` fetches the corpora and is never imported by this project. **WordNet is optional**:
+without it every row above still runs and Lesk is left out of the table by name, rather than
+degrading to its fallback and reporting that number under Lesk's label.
 
 ## Layout
 
 ```
 src/semcor.py        the SGML reader; wnsn is a sense rank
+src/wordnet.py       sense-ordered synsets and glosses, read from the database files
 src/disambiguate.py  five methods and the oracle, with what each is allowed to read
 src/run.py           the tables above
 results/             word_sense.json

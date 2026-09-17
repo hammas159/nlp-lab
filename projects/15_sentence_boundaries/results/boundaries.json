@@ -1,88 +1,113 @@
 {
-  "paragraphs": 6414,
-  "reference_boundaries": 21497,
+  "paragraphs": 61775,
+  "reference_boundaries": 203021,
   "learned_abbreviations": [
+    "boraginaceae",
     "bros",
+    "calif",
+    "capt",
     "cir",
-    "col",
-    "corp",
+    "dr",
     "etc",
-    "famine",
-    "gen",
+    "fasterlouder",
+    "garrido",
+    "geometridae",
+    "huds",
     "inc",
+    "joh",
     "jr",
-    "maj",
+    "mrjims",
+    "mrs",
+    "o'herlihy",
+    "orig",
     "pgs",
-    "pvt",
+    "ph",
+    "primulaceae",
+    "prosiebensat",
     "sgt",
+    "sherdog",
+    "sncf",
+    "spp",
+    "ssp",
+    "stat",
+    "ste",
+    "subsp",
+    "syn",
+    "thymelaeaceae",
+    "translit",
+    "tsgt",
     "u",
-    "vol"
+    "urbanism",
+    "vol",
+    "vz",
+    "www",
+    "wz"
   ],
-  "learned_count": 15,
+  "learned_count": 40,
   "supplied_count": 35,
   "agreement": [
     {
       "splitter": "naive",
-      "precision": 0.9050212255049097,
-      "recall": 0.9818114155463553,
-      "f1": 0.9418537194877058,
-      "predicted": 23321
+      "precision": 0.9051117093966649,
+      "recall": 0.9819624570857202,
+      "f1": 0.941972216972217,
+      "predicted": 220259
     },
     {
       "splitter": "abbreviation",
-      "precision": 0.9258770192350015,
-      "recall": 0.9785086291110388,
-      "f1": 0.9514655328387913,
-      "predicted": 22719
+      "precision": 0.9276705781312721,
+      "recall": 0.9789430650031278,
+      "f1": 0.9526174139571446,
+      "predicted": 214242
     },
     {
       "splitter": "trained",
-      "precision": 0.9106771735365431,
-      "recall": 0.9784155928734242,
-      "f1": 0.9433319130805283,
-      "predicted": 23096
+      "precision": 0.9129947396228149,
+      "recall": 0.9788494786253639,
+      "f1": 0.9447759136267905,
+      "predicted": 217665
     },
     {
       "splitter": "conservative",
-      "precision": 0.9374132605094686,
-      "recall": 0.9740428897055403,
-      "f1": 0.9553771045307295,
-      "predicted": 22337
+      "precision": 0.9399586511727382,
+      "recall": 0.9741455317430217,
+      "f1": 0.9567467938639562,
+      "predicted": 210405
     }
   ],
   "taxonomy": {
     "naive": {
-      "single initial": 1523,
-      "known abbreviation": 531,
-      "number before period": 8,
-      "other": 111,
-      "lowercase follows": 8,
-      "quote or bracket follows": 26,
-      "exclamation or question": 8
+      "single initial": 13892,
+      "known abbreviation": 5404,
+      "number before period": 59,
+      "other": 1088,
+      "lowercase follows": 118,
+      "quote or bracket follows": 297,
+      "exclamation or question": 42
     },
     "abbreviation": {
-      "single initial": 1523,
-      "number before period": 8,
-      "other": 111,
-      "lowercase follows": 8,
-      "quote or bracket follows": 26,
-      "exclamation or question": 8
+      "single initial": 13892,
+      "number before period": 59,
+      "other": 1088,
+      "lowercase follows": 118,
+      "quote or bracket follows": 297,
+      "exclamation or question": 42
     },
     "trained": {
-      "single initial": 1520,
-      "number before period": 8,
-      "known abbreviation": 417,
-      "other": 76,
-      "lowercase follows": 8,
-      "quote or bracket follows": 26,
-      "exclamation or question": 8
+      "single initial": 13849,
+      "number before period": 59,
+      "known abbreviation": 3571,
+      "other": 1004,
+      "lowercase follows": 118,
+      "quote or bracket follows": 295,
+      "exclamation or question": 42
     },
     "conservative": {
-      "single initial": 1254,
-      "number before period": 8,
-      "other": 108,
-      "quote or bracket follows": 26,
-      "exclamation or question": 2
+      "single initial": 11208,
+      "number before period": 59,
+      "other": 1058,
+      "quote or bracket follows": 297,
+      "exclamation or question": 11
     }
   }
 }

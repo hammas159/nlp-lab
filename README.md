@@ -68,6 +68,7 @@ variable it could not fix as a column rather than a footnote.
 | **16** | [Stylometry](projects/16_stylometry) | Authorship attribution scores 0.965. How much of that is style, and how much is topic? | ✅ complete |
 | **17** | [Classical topic models](projects/17_topic_models) | Topic models are ranked by coherence. Does coherence agree with a task? | ✅ complete |
 | **18** | [Tokenisation](projects/18_tokenisation) | BPE vs WordPiece vs Unigram — how much is the algorithm worth, against the knob beside it? | ✅ complete |
+| **19** | [Sentiment lexicons](projects/19_sentiment_lexicons) | Which matters more — the lexicon, or the negation and intensifier rules around it? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -623,6 +624,32 @@ WordPiece segment 91.5% of words identically while Unigram agrees with either on
 morphological, as Bostrom & Durrett found — and it is the worst of the three at every size
 above 2,000.
 
+### 19 · Sentiment lexicons
+
+This one was designed around a prediction written into the section below **before any code
+existed**: that negation and intensifier handling would outweigh the choice of lexicon.
+Three lexicons × four rule sets, 10,662 balanced movie-review sentences, floor 0.500.
+
+| Lexicon | entries | bag of words | + negation | + intensifiers | + contrastive | unscored | acc. where it fired |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| VADER | 7,491 | 0.621 | 0.629 | 0.630 | 0.637 | 13.4% | 0.646 |
+| **Opinion** | 6,786 | **0.652** | **0.655** | **0.657** | **0.663** | 26.2% | **0.697** |
+| AFINN | 2,477 | 0.616 | 0.623 | 0.623 | 0.628 | 26.0% | 0.659 |
+
+**The prediction is wrong.** The lexicon axis moves accuracy by up to **0.035**, the rules
+axis by up to **0.016** — and a paired bootstrap puts the difference at **+0.019 [+0.010,
++0.031], with the lexicon axis larger in 100% of 1,000 resamples.**
+
+Not because the rules fail to fire: the contrastive rule changes the score on **32.6%** of
+sentences. They just cannot reach far enough. Changing a score only matters when it changes
+the *answer*, which happens on 5–6% of items, and there a flip helps only as far as its
+precision beats a coin — 58.5% for negation, worth +0.008.
+
+The lexicons agree in sign on **96.8–98.8%** of shared words, so the spread is about which
+words are listed at all — and that cuts against the obvious reading. **VADER is unscored on
+13.4% of sentences against Opinion's 26.2%, speaks nearly twice as often, and is worse when
+it does: 0.646 against 0.697.** The lexicon with the best coverage finishes last.
+
 ---
 
 ## Planned
@@ -640,21 +667,18 @@ confounds something:
 
 ### Blocked, and why
 
-Two projects were designed and then **not built**, because the data to do them honestly is
-not available offline on this machine. They are recorded here rather than quietly dropped,
-since "we tried and could not" is information and an empty slot is not.
+Two projects were designed and then not built, because the data was not available offline.
+**Sentiment lexicons is now [project 19](projects/19_sentiment_lexicons)** — the resources
+were fetched, and its intended finding turned out to be **wrong**, which is recorded above
+rather than quietly restated as something that worked.
 
-- **Sentiment lexicons** — the intended finding was that *negation and intensifier handling
-  outweighs the choice of lexicon*, which requires VADER, AFINN, SentiWordNet or the Opinion
-  Lexicon. None is present, and inventing a lexicon to compare against other lexicons would
-  measure the invention.
-- **Word sense disambiguation** — the intended finding was that the *most-frequent-sense
-  baseline beats every unsupervised method*, and that papers reporting against random are
-  choosing the flattering comparison. That needs WordNet for sense inventories and SemCor
-  for sense-tagged text. Neither is installed, and NLTK is not either.
+One remains:
 
-Both become buildable the moment those resources are downloaded; neither is blocked on
-design.
+- **Word sense disambiguation** — the intended finding is that the *most-frequent-sense
+  baseline beats every unsupervised method*, and that papers reporting against a random
+  baseline are choosing the flattering comparison. It needs WordNet for sense inventories
+  and SemCor for sense-tagged text. Both are downloading on a badly congested link; neither
+  is blocked on design.
 
 ---
 

@@ -1,0 +1,21 @@
+[project]
+name = "sentiment-lexicons"
+version = "0.1.0"
+description = "Four sentiment lexicons and four rule sets. The lexicon is the axis everyone argues about; the rules are the axis that moves the number."
+requires-python = ">=3.11"
+# No nltk. The lexicons and corpora are plain text and TSV, parsed directly in
+# src/lexicons.py - so the library is only needed to *fetch* them, never to run this.
+dependencies = ["numpy>=1.26"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.16,<0.17"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100

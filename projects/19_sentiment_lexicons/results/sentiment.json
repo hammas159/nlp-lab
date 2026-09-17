@@ -1,0 +1,157 @@
+{
+  "lexicons": [
+    {
+      "name": "VADER",
+      "entries": 7491,
+      "note": "human-rated valence, -4 to +4"
+    },
+    {
+      "name": "Opinion",
+      "entries": 6786,
+      "note": "two flat word lists, no magnitude"
+    },
+    {
+      "name": "AFINN",
+      "entries": 2477,
+      "note": "one rater, -5 to +5"
+    }
+  ],
+  "lexicon_agreement": [
+    {
+      "pair": "VADER vs Opinion",
+      "agreement": 0.9778481012658228,
+      "shared": 2212
+    },
+    {
+      "pair": "VADER vs AFINN",
+      "agreement": 0.9682474226804124,
+      "shared": 2425
+    },
+    {
+      "pair": "Opinion vs AFINN",
+      "agreement": 0.9878234398782344,
+      "shared": 1314
+    }
+  ],
+  "rows": [
+    {
+      "corpus": "movie sentences",
+      "lexicon": "VADER",
+      "rule": "bag of words",
+      "accuracy": 0.6205214781466892,
+      "unscored": 0.1344963421496905,
+      "accuracy_when_scored": 0.6270047680970958
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "VADER",
+      "rule": "+ negation",
+      "accuracy": 0.6286812980679047,
+      "unscored": 0.1354342524854624,
+      "accuracy_when_scored": 0.6365806031677154
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "VADER",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6296192084036766,
+      "unscored": 0.1351528793847308,
+      "accuracy_when_scored": 0.6376748725734736
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "VADER",
+      "rule": "+ contrastive",
+      "accuracy": 0.6368411179891202,
+      "unscored": 0.1344025511161133,
+      "accuracy_when_scored": 0.6457904431682739
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "Opinion",
+      "rule": "bag of words",
+      "accuracy": 0.6515663102607391,
+      "unscored": 0.2621459388482461,
+      "accuracy_when_scored": 0.6885725181136393
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "Opinion",
+      "rule": "+ negation",
+      "accuracy": 0.6551303695366723,
+      "unscored": 0.26636653535921967,
+      "accuracy_when_scored": 0.694962925083099
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "Opinion",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6571937722753705,
+      "unscored": 0.2528606265241043,
+      "accuracy_when_scored": 0.6933216168717048
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "Opinion",
+      "rule": "+ contrastive",
+      "accuracy": 0.6628212342900018,
+      "unscored": 0.23419621084224349,
+      "accuracy_when_scored": 0.6974892835272505
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "AFINN",
+      "rule": "bag of words",
+      "accuracy": 0.6163946726692928,
+      "unscored": 0.2601763271431251,
+      "accuracy_when_scored": 0.6432555780933062
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "AFINN",
+      "rule": "+ negation",
+      "accuracy": 0.6233352091540049,
+      "unscored": 0.2612080285124742,
+      "accuracy_when_scored": 0.653802208962803
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "AFINN",
+      "rule": "+ intensifiers",
+      "accuracy": 0.6230538360532734,
+      "unscored": 0.2594259988745076,
+      "accuracy_when_scored": 0.6531155015197568
+    },
+    {
+      "corpus": "movie sentences",
+      "lexicon": "AFINN",
+      "rule": "+ contrastive",
+      "accuracy": 0.6282123429000187,
+      "unscored": 0.25511161132995686,
+      "accuracy_when_scored": 0.6592797783933518
+    }
+  ],
+  "rule_firing": [
+    {
+      "corpus": "movie sentences",
+      "rule": "+ negation",
+      "changes_score": 0.17435753141999624,
+      "flips_classification": 0.0479272181579441,
+      "flip_precision": 0.5851272015655578
+    },
+    {
+      "corpus": "movie sentences",
+      "rule": "+ intensifiers",
+      "changes_score": 0.21543800412680547,
+      "flips_classification": 0.05149127743387732,
+      "flip_precision": 0.5883424408014571
+    },
+    {
+      "corpus": "movie sentences",
+      "rule": "+ contrastive",
+      "changes_score": 0.32564246858000373,
+      "flips_classification": 0.06133933595948227,
+      "flip_precision": 0.6330275229357798
+    }
+  ]
+}

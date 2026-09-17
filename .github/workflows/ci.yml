@@ -31,6 +31,7 @@ jobs:
           - 16_stylometry
           - 17_topic_models
           - 18_tokenisation
+          - 19_sentiment_lexicons
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

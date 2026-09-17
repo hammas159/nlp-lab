@@ -1,0 +1,70 @@
+{
+  "candidates": 2000,
+  "trials": 600,
+  "rows": [
+    {
+      "measure": "levenshtein",
+      "typing": 0.8067226890756303,
+      "phonetic": 0.8706099815157117,
+      "gap": -0.0638872924400814
+    },
+    {
+      "measure": "damerau",
+      "typing": 0.9092436974789916,
+      "phonetic": 0.8706099815157117,
+      "gap": 0.03863371596327991
+    },
+    {
+      "measure": "keyboard",
+      "typing": 0.826890756302521,
+      "phonetic": 0.8114602587800369,
+      "gap": 0.015430497522484043
+    },
+    {
+      "measure": "jaro_winkler",
+      "typing": 0.8974789915966387,
+      "phonetic": 0.833641404805915,
+      "gap": 0.06383758679072371
+    },
+    {
+      "measure": "bigram",
+      "typing": 0.6554621848739496,
+      "phonetic": 0.6913123844731978,
+      "gap": -0.03585019959924818
+    },
+    {
+      "measure": "soundex",
+      "typing": 0.1949579831932773,
+      "phonetic": 0.23475046210720887,
+      "gap": -0.03979247891393156
+    },
+    {
+      "measure": "metaphone",
+      "typing": 0.42857142857142855,
+      "phonetic": 0.744916820702403,
+      "gap": -0.3163453921309744
+    }
+  ],
+  "best_under_typing": "damerau",
+  "best_under_phonetic": "levenshtein",
+  "ranking_typing": [
+    "damerau",
+    "jaro_winkler",
+    "keyboard",
+    "levenshtein",
+    "bigram",
+    "metaphone",
+    "soundex"
+  ],
+  "ranking_phonetic": [
+    "levenshtein",
+    "damerau",
+    "jaro_winkler",
+    "keyboard",
+    "metaphone",
+    "bigram",
+    "soundex"
+  ],
+  "positions_changed": 6,
+  "keyboard_rank_under_typing": 3
+}

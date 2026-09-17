@@ -62,6 +62,7 @@ variable it could not fix as a column rather than a footnote.
 | **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
 | **11** | [Text clustering](projects/11_text_clustering) | Does silhouette find the number of clusters the labels say is there? | ✅ complete |
 | **12** | [Gazetteer NER](projects/12_gazetteer_ner) | What bounds a dictionary tagger — its coverage, or its own ambiguity? | ✅ complete |
+| **14** | [String similarity](projects/14_string_similarity) | Seven fuzzy-matching measures. Does the ranking survive changing the noise? | ✅ complete |
 | **15** | [Sentence boundaries](projects/15_sentence_boundaries) | Four splitters a methods section would describe identically. How far apart are they? | ✅ complete |
 
 ### 01 · Embedding fair comparison
@@ -408,6 +409,36 @@ is no score to threshold. **That ceiling is a property of the gazetteer, not the
 
 Aho-Corasick is implemented rather than imported — 6.8× faster than a naive per-pattern scan
 on 200 patterns, and the gazetteer is 322× larger than that subset.
+
+### 14 · String similarity
+
+Seven measures — edit distance, phonetic codes, character overlap — all implemented rather
+than imported, against **two explicit error models**: keyboard typing noise, and
+pronunciation-preserving rewrites.
+
+| Measure | typing | phonetic | gap |
+|---|---:|---:|---:|
+| `damerau` | **0.909** | 0.871 | +0.039 |
+| `jaro_winkler` | 0.897 | 0.834 | +0.064 |
+| `keyboard` | 0.827 | 0.811 | +0.015 |
+| `levenshtein` | 0.807 | **0.871** | −0.064 |
+| `metaphone` | 0.429 | 0.745 | **−0.316** |
+| `soundex` | 0.195 | 0.235 | −0.040 |
+
+**Six of seven ranking positions hold a different measure** when the error model changes —
+only the worst one stays put. `metaphone` swings 0.316 from changing nothing but how the
+words were corrupted: a phonetic code is built to ignore spelling variation that preserves
+sound, so it is near-useless against a slipped finger and strong against a misheard name.
+
+So a table of string metrics ranked on one corrupted dataset describes that dataset. The
+useful question is never "which measure is best" but **what does my noise actually look
+like** — an empirical question about the data, not a choice from a menu.
+
+And the measure that *encodes* the typing error model — Levenshtein with keyboard-distance
+substitution costs — **ranks third on typing noise, below plain `damerau`.** Making near-key
+substitutions cheap forgives the corruption and equally forgives every wrong candidate that
+differs by a near-key substitution. Encoding the error model buys tolerance and pays in
+discrimination.
 
 ### 15 · Sentence boundaries
 

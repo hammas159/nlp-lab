@@ -22,6 +22,7 @@ jobs:
           - 07_smart_weighting_grid
           - 08_gzip_knn
           - 09_collocations
+          - 10_relevance_feedback
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

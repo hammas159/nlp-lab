@@ -58,6 +58,7 @@ variable it could not fix as a column rather than a footnote.
 | **06** | [PPMI-SVD vs SGNS](projects/06_ppmi_svd_vs_sgns) | Is word2vec's advantage the objective, or the hyperparameters that shipped with it? | ✅ complete |
 | **07** | [The SMART weighting grid](projects/07_smart_weighting_grid) | "TF-IDF" names forty-five schemes. How far apart are they? | ✅ complete |
 | **09** | [Collocations](projects/09_collocations) | Five association measures, one set of counts. Do they agree on anything? | ✅ complete |
+| **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -251,6 +252,61 @@ And **query-side normalisation moves the ranking by exactly 0.000**: it scales e
 for a query by one constant, so it cannot reorder anything. The third letter of the query
 code is inert for every rank-based metric, and the 45 query schemes are **15 distinct
 rankings wearing 45 names**.
+
+### 09 · Collocations
+
+Five association measures over one set of bigram counts from 66,581 paragraphs.
+**1,690,372 distinct bigrams, of which 73.1% occur exactly once** — the modal bigram is a
+hapax, and that is what the measures disagree about.
+
+| Measure | median frequency of its top 20 | what it picks |
+|---|---:|---|
+| `pmi` | **1** | publica ianuensis, ommegang ommegeddon |
+| `t_score` | **10,561** | of the, is a, in the |
+| `llr` | **7,589** | is a, of the, united states |
+| `chi2` | **5** | iwo jima, djimon hounsou |
+
+**Every pairwise overlap between the top-20 lists is 0.00 except `t_score` against `llr`,
+which is 0.48.** PMI and chi-squared share nothing with anything, including each other.
+
+Then the cutoff turns out to be the model. Each measure's top-20 against *its own* list at
+the previous cutoff:
+
+| min count | 2 | 5 | 10 | 25 | 50 |
+|---|---:|---:|---:|---:|---:|
+| `pmi` | **0.00** | **0.00** | **0.00** | **0.00** | 0.03 |
+| `t_score` | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+
+**PMI's top-20 is completely replaced by every change of the cutoff**, and the median
+frequency of its top 20 tracks the cutoff exactly: 1, 2, 5, 11, 29, 60. It is not ranking
+the corpus — it is returning whatever sits at the threshold it was handed.
+
+And **96.1% of bigram types have an expected cell below 5**, the condition chi-squared needs;
+still 30.5% at a minimum count of 50. At no usable cutoff is it admissible on most of its own
+input, which is why Dunning wrote the log-likelihood ratio.
+
+### 10 · Pseudo-relevance feedback
+
+RM3 over a BM25 first stage on the lab's usual corpus (2,964 paragraphs, 300 questions).
+BM25 alone scores 0.865. **Not one of seven feedback settings beats it** — six are
+significantly worse, the best is indistinguishable from doing nothing.
+
+The per-query breakdown says why. At the best setting, split by how well the first stage did:
+
+| First stage | n | mean change | hurt |
+|---|---:|---:|---:|
+| already perfect (recall 1.0) | 221 | **−0.034** | 15 |
+| partly right (0 < r < 1) | 77 | **+0.039** | **0** |
+| found nothing (recall 0.0) | 2 | **+0.250** | **0** |
+
+**The effect is perfectly monotone in how much room the first stage left.** Feedback helps
+every query it could help and harms only queries that were already right. Pseudo-relevance
+feedback is a bet on the first stage being mediocre, and on a collection where BM25 already
+answers 74% of queries perfectly, the bet loses.
+
+Even at the best setting more than twice as many queries get worse as get better (15 against
+7), with 93% untouched — so the mean of −0.013 is a few large losses, not a small uniform
+effect. At α = 0.8 it is 65 queries degraded and at least one losing every gold document.
 
 ---
 

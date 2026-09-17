@@ -25,6 +25,7 @@ jobs:
           - 10_relevance_feedback
           - 11_text_clustering
           - 12_gazetteer_ner
+          - 13_language_id
           - 14_string_similarity
           - 15_sentence_boundaries
     defaults:

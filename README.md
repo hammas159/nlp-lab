@@ -62,6 +62,7 @@ variable it could not fix as a column rather than a footnote.
 | **10** | [Pseudo-relevance feedback](projects/10_relevance_feedback) | It improves the mean. What does it do to each query? | ✅ complete |
 | **11** | [Text clustering](projects/11_text_clustering) | Does silhouette find the number of clusters the labels say is there? | ✅ complete |
 | **12** | [Gazetteer NER](projects/12_gazetteer_ner) | What bounds a dictionary tagger — its coverage, or its own ambiguity? | ✅ complete |
+| **13** | [Language identification](projects/13_language_id) | It is reported on documents and used on queries. What happens at query length? | ✅ complete |
 | **14** | [String similarity](projects/14_string_similarity) | Seven fuzzy-matching measures. Does the ranking survive changing the noise? | ✅ complete |
 | **15** | [Sentence boundaries](projects/15_sentence_boundaries) | Four splitters a methods section would describe identically. How far apart are they? | ✅ complete |
 
@@ -409,6 +410,34 @@ is no score to threshold. **That ceiling is a property of the gazetteer, not the
 
 Aho-Corasick is implemented rather than imported — 6.8× faster than a naive per-pattern scan
 on 200 patterns, and the gazetteer is 322× larger than that subset.
+
+### 13 · Language identification
+
+Three classes from the local cache — English prose, C source, Python source — and three
+standard identifiers, scored against **input length**. Chance is 0.333.
+
+| chars | `cavnar_trenkle` | `naive_bayes` | `compression` |
+|---:|---:|---:|---:|
+| **10** | **0.796** | 0.788 | 0.718 |
+| 40 | 0.936 | 0.982 | 0.930 |
+| 160 | 0.962 | 0.994 | 0.986 |
+| **640** | 0.981 | **0.997** | 0.994 |
+
+**0.997 on a paragraph, 0.788 on ten characters** — a fall of 0.209 for a 64× shorter input.
+An accuracy quoted for a language identifier is meaningless without the length it was
+measured at, and the lengths people measure at are not the lengths people use.
+
+**The ranking flips.** Naive Bayes wins at 640 characters; the 1994 rank-order method wins at
+ten. Naive Bayes charges a much heavier penalty for an unseen n-gram, which sharpens
+separation when there is evidence and becomes a count of absences when there is not. **A
+method selected on long inputs is not selected for short ones.**
+
+And the hard pair is not the one that looks hard. The expectation — written into the code
+before the run — was that C and Python would blur together. They are essentially never
+confused with each other (1.3%); both are mistaken for **English** (up to 3.0%). A
+forty-character window of source is often entirely identifiers and comments, which is
+English; what separates C from Python is punctuation and indentation, and that survives
+truncation.
 
 ### 14 · String similarity
 

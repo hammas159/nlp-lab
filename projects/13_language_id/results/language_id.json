@@ -1,0 +1,92 @@
+{
+  "corpora": {
+    "english": {
+      "documents": 17725,
+      "characters": 10309203
+    },
+    "c": {
+      "documents": 2498,
+      "characters": 5448488
+    },
+    "python": {
+      "documents": 451,
+      "characters": 198392
+    }
+  },
+  "profile_size": 400,
+  "by_length": [
+    {
+      "length": 10,
+      "n": 900,
+      "cavnar_trenkle": 0.7955555555555556,
+      "naive_bayes": 0.7877777777777778,
+      "compression": 0.7177777777777777
+    },
+    {
+      "length": 20,
+      "n": 900,
+      "cavnar_trenkle": 0.8755555555555555,
+      "naive_bayes": 0.96,
+      "compression": 0.8444444444444444
+    },
+    {
+      "length": 40,
+      "n": 900,
+      "cavnar_trenkle": 0.9355555555555556,
+      "naive_bayes": 0.9822222222222222,
+      "compression": 0.93
+    },
+    {
+      "length": 80,
+      "n": 900,
+      "cavnar_trenkle": 0.9477777777777778,
+      "naive_bayes": 0.9888888888888889,
+      "compression": 0.9655555555555555
+    },
+    {
+      "length": 160,
+      "n": 900,
+      "cavnar_trenkle": 0.9622222222222222,
+      "naive_bayes": 0.9944444444444445,
+      "compression": 0.9855555555555555
+    },
+    {
+      "length": 320,
+      "n": 900,
+      "cavnar_trenkle": 0.9733333333333334,
+      "naive_bayes": 0.9966666666666667,
+      "compression": 0.9922222222222222
+    },
+    {
+      "length": 640,
+      "n": 900,
+      "cavnar_trenkle": 0.9811111111111112,
+      "naive_bayes": 0.9966666666666667,
+      "compression": 0.9944444444444445
+    }
+  ],
+  "best_method": "naive_bayes",
+  "confusion_at_40": {
+    "c": {
+      "c": 298,
+      "english": 1,
+      "python": 1
+    },
+    "english": {
+      "c": 0,
+      "english": 299,
+      "python": 1
+    },
+    "python": {
+      "c": 4,
+      "english": 9,
+      "python": 287
+    }
+  },
+  "code_pair_confusion": 0.013333333333333334,
+  "worst_confusion": {
+    "truth": "python",
+    "predicted": "english",
+    "rate": 0.03
+  }
+}

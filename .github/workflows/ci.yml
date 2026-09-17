@@ -29,6 +29,8 @@ jobs:
           - 14_string_similarity
           - 15_sentence_boundaries
           - 16_stylometry
+          - 17_topic_models
+          - 18_tokenisation
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

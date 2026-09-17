@@ -1,0 +1,152 @@
+{
+  "documents": 2964,
+  "word_tokens": 277259,
+  "word_types": 25295,
+  "word_baseline_recall@10": 0.865,
+  "rows": [
+    {
+      "tokenizer": "BPE",
+      "requested_vocabulary": 2000,
+      "vocabulary": 2000,
+      "fertility": 1.66825,
+      "intact_rate": 0.6175,
+      "unknown_rate": 0.0,
+      "recall@10": 0.7966666666666666,
+      "train_seconds": 0.3
+    },
+    {
+      "tokenizer": "WordPiece",
+      "requested_vocabulary": 2000,
+      "vocabulary": 2000,
+      "fertility": 1.92875,
+      "intact_rate": 0.53375,
+      "unknown_rate": 0.0,
+      "recall@10": 0.7916666666666666,
+      "train_seconds": 0.3
+    },
+    {
+      "tokenizer": "Unigram",
+      "requested_vocabulary": 2000,
+      "vocabulary": 2000,
+      "fertility": 1.72075,
+      "intact_rate": 0.60325,
+      "unknown_rate": 0.0,
+      "recall@10": 0.7933333333333333,
+      "train_seconds": 1.1
+    },
+    {
+      "tokenizer": "BPE",
+      "requested_vocabulary": 4000,
+      "vocabulary": 4000,
+      "fertility": 1.37375,
+      "intact_rate": 0.76,
+      "unknown_rate": 0.0,
+      "recall@10": 0.845,
+      "train_seconds": 0.4
+    },
+    {
+      "tokenizer": "WordPiece",
+      "requested_vocabulary": 4000,
+      "vocabulary": 4000,
+      "fertility": 1.47475,
+      "intact_rate": 0.722,
+      "unknown_rate": 0.0,
+      "recall@10": 0.86,
+      "train_seconds": 0.4
+    },
+    {
+      "tokenizer": "Unigram",
+      "requested_vocabulary": 4000,
+      "vocabulary": 4000,
+      "fertility": 1.49575,
+      "intact_rate": 0.66275,
+      "unknown_rate": 0.0,
+      "recall@10": 0.83,
+      "train_seconds": 0.9
+    },
+    {
+      "tokenizer": "BPE",
+      "requested_vocabulary": 8000,
+      "vocabulary": 8000,
+      "fertility": 1.18775,
+      "intact_rate": 0.86725,
+      "unknown_rate": 0.0,
+      "recall@10": 0.8616666666666667,
+      "train_seconds": 0.5
+    },
+    {
+      "tokenizer": "WordPiece",
+      "requested_vocabulary": 8000,
+      "vocabulary": 8000,
+      "fertility": 1.2295,
+      "intact_rate": 0.8465,
+      "unknown_rate": 0.0,
+      "recall@10": 0.8616666666666667,
+      "train_seconds": 0.5
+    },
+    {
+      "tokenizer": "Unigram",
+      "requested_vocabulary": 8000,
+      "vocabulary": 8000,
+      "fertility": 1.38475,
+      "intact_rate": 0.6885,
+      "unknown_rate": 0.0,
+      "recall@10": 0.8466666666666667,
+      "train_seconds": 0.6
+    },
+    {
+      "tokenizer": "BPE",
+      "requested_vocabulary": 16000,
+      "vocabulary": 16000,
+      "fertility": 1.07975,
+      "intact_rate": 0.9385,
+      "unknown_rate": 0.0,
+      "recall@10": 0.8583333333333333,
+      "train_seconds": 0.7
+    },
+    {
+      "tokenizer": "WordPiece",
+      "requested_vocabulary": 16000,
+      "vocabulary": 16000,
+      "fertility": 1.09925,
+      "intact_rate": 0.9275,
+      "unknown_rate": 0.0,
+      "recall@10": 0.8666666666666667,
+      "train_seconds": 0.7
+    },
+    {
+      "tokenizer": "Unigram",
+      "requested_vocabulary": 16000,
+      "vocabulary": 13401,
+      "fertility": 1.36975,
+      "intact_rate": 0.6935,
+      "unknown_rate": 0.0,
+      "recall@10": 0.8516666666666667,
+      "train_seconds": 0.2
+    }
+  ],
+  "correlations": {
+    "fertility": -0.9082591472182496,
+    "intact rate": 0.8430861158465476,
+    "[UNK] rate": 0.0,
+    "vocabulary size": 0.7081595346452756
+  },
+  "winner_agreement_at_fixed_size": {
+    "fertility": 2,
+    "intact rate": 2
+  },
+  "agreement": [
+    {
+      "pair": "BPE vs WordPiece",
+      "agreement": 0.915
+    },
+    {
+      "pair": "BPE vs Unigram",
+      "agreement": 0.707
+    },
+    {
+      "pair": "WordPiece vs Unigram",
+      "agreement": 0.7035
+    }
+  ]
+}

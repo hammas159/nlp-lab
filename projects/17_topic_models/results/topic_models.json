@@ -1,0 +1,976 @@
+{
+  "documents": 2964,
+  "queries": 300,
+  "vocabulary": 10930,
+  "bm25_recall@10": 0.865,
+  "sweep": [
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 10,
+      "representation": "tfidf",
+      "coherence": 0.07760390457282287,
+      "recall@10": 0.16833333333333333,
+      "fit_seconds": 0.1,
+      "topics": [
+        [
+          "s",
+          "film",
+          "american",
+          "album",
+          "series",
+          "season",
+          "song",
+          "released",
+          "football",
+          "band"
+        ],
+        [
+          "film",
+          "album",
+          "song",
+          "released",
+          "band",
+          "directed",
+          "music",
+          "written",
+          "single",
+          "studio"
+        ],
+        [
+          "film",
+          "series",
+          "directed",
+          "television",
+          "drama",
+          "films",
+          "stars",
+          "starring",
+          "festival",
+          "director"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 10,
+      "representation": "tfidf",
+      "coherence": 0.2965122693383534,
+      "recall@10": 0.08,
+      "fit_seconds": 0.3,
+      "topics": [
+        [
+          "film",
+          "directed",
+          "films",
+          "stars",
+          "starring",
+          "american",
+          "drama",
+          "festival",
+          "best",
+          "written"
+        ],
+        [
+          "season",
+          "team",
+          "basketball",
+          "conference",
+          "university",
+          "ncaa",
+          "football",
+          "games",
+          "division",
+          "men"
+        ],
+        [
+          "album",
+          "song",
+          "released",
+          "single",
+          "country",
+          "music",
+          "studio",
+          "s",
+          "number",
+          "chart"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 10,
+      "representation": "counts",
+      "coherence": 0.11536201963578072,
+      "recall@10": 0.08333333333333333,
+      "fit_seconds": 40.5,
+      "topics": [
+        [
+          "located",
+          "south",
+          "north",
+          "s",
+          "known",
+          "city",
+          "park",
+          "east",
+          "county",
+          "area"
+        ],
+        [
+          "film",
+          "s",
+          "series",
+          "american",
+          "television",
+          "directed",
+          "best",
+          "award",
+          "written",
+          "based"
+        ],
+        [
+          "album",
+          "song",
+          "band",
+          "s",
+          "released",
+          "music",
+          "single",
+          "rock",
+          "singer",
+          "american"
+        ]
+      ]
+    },
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 20,
+      "representation": "tfidf",
+      "coherence": -0.01393129617049996,
+      "recall@10": 0.29,
+      "fit_seconds": 0.1,
+      "topics": [
+        [
+          "s",
+          "film",
+          "american",
+          "album",
+          "series",
+          "season",
+          "song",
+          "released",
+          "football",
+          "band"
+        ],
+        [
+          "film",
+          "album",
+          "song",
+          "released",
+          "band",
+          "directed",
+          "music",
+          "written",
+          "single",
+          "studio"
+        ],
+        [
+          "film",
+          "series",
+          "directed",
+          "television",
+          "drama",
+          "films",
+          "stars",
+          "starring",
+          "festival",
+          "director"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 20,
+      "representation": "tfidf",
+      "coherence": 0.2592190850271889,
+      "recall@10": 0.14833333333333334,
+      "fit_seconds": 0.8,
+      "topics": [
+        [
+          "film",
+          "directed",
+          "stars",
+          "starring",
+          "films",
+          "written",
+          "festival",
+          "produced",
+          "american",
+          "drama"
+        ],
+        [
+          "season",
+          "team",
+          "basketball",
+          "university",
+          "conference",
+          "ncaa",
+          "football",
+          "division",
+          "men",
+          "coach"
+        ],
+        [
+          "album",
+          "released",
+          "studio",
+          "records",
+          "songs",
+          "singer",
+          "music",
+          "debut",
+          "single",
+          "country"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 20,
+      "representation": "counts",
+      "coherence": -0.062401447029472215,
+      "recall@10": 0.10666666666666667,
+      "fit_seconds": 41.8,
+      "topics": [
+        [
+          "s",
+          "roman",
+          "administrative",
+          "special",
+          "kong",
+          "gospel",
+          "region",
+          "hong",
+          "lord",
+          "people"
+        ],
+        [
+          "film",
+          "series",
+          "s",
+          "american",
+          "television",
+          "directed",
+          "best",
+          "award",
+          "written",
+          "based"
+        ],
+        [
+          "album",
+          "song",
+          "band",
+          "released",
+          "s",
+          "music",
+          "rock",
+          "single",
+          "singer",
+          "american"
+        ]
+      ]
+    },
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 50,
+      "representation": "tfidf",
+      "coherence": -0.23293171084375217,
+      "recall@10": 0.44166666666666665,
+      "fit_seconds": 0.2,
+      "topics": [
+        [
+          "s",
+          "film",
+          "american",
+          "album",
+          "series",
+          "season",
+          "song",
+          "released",
+          "football",
+          "band"
+        ],
+        [
+          "film",
+          "album",
+          "song",
+          "released",
+          "band",
+          "directed",
+          "music",
+          "written",
+          "single",
+          "studio"
+        ],
+        [
+          "film",
+          "series",
+          "directed",
+          "television",
+          "drama",
+          "films",
+          "stars",
+          "starring",
+          "festival",
+          "director"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 50,
+      "representation": "tfidf",
+      "coherence": 0.3320456138372802,
+      "recall@10": 0.23333333333333334,
+      "fit_seconds": 3.5,
+      "topics": [
+        [
+          "film",
+          "directed",
+          "stars",
+          "starring",
+          "written",
+          "produced",
+          "american",
+          "drama",
+          "films",
+          "comedy"
+        ],
+        [
+          "basketball",
+          "season",
+          "men",
+          "tournament",
+          "ncaa",
+          "team",
+          "s",
+          "conference",
+          "vermont",
+          "division"
+        ],
+        [
+          "album",
+          "released",
+          "studio",
+          "records",
+          "cosby",
+          "songs",
+          "single",
+          "release",
+          "singer",
+          "debut"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 50,
+      "representation": "counts",
+      "coherence": -0.04425931689550985,
+      "recall@10": 0.205,
+      "fit_seconds": 56.8,
+      "topics": [
+        [
+          "race",
+          "island",
+          "long",
+          "grand",
+          "beach",
+          "toyota",
+          "held",
+          "childers",
+          "prix",
+          "s"
+        ],
+        [
+          "film",
+          "directed",
+          "s",
+          "american",
+          "films",
+          "written",
+          "stars",
+          "produced",
+          "starring",
+          "drama"
+        ],
+        [
+          "national",
+          "park",
+          "intelligence",
+          "s",
+          "states",
+          "known",
+          "seminole",
+          "united",
+          "cosby",
+          "community"
+        ]
+      ]
+    },
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 100,
+      "representation": "tfidf",
+      "coherence": -0.37785581693799436,
+      "recall@10": 0.575,
+      "fit_seconds": 0.7,
+      "topics": [
+        [
+          "s",
+          "film",
+          "american",
+          "album",
+          "series",
+          "season",
+          "song",
+          "released",
+          "football",
+          "band"
+        ],
+        [
+          "film",
+          "album",
+          "song",
+          "released",
+          "band",
+          "directed",
+          "music",
+          "written",
+          "single",
+          "studio"
+        ],
+        [
+          "film",
+          "series",
+          "directed",
+          "television",
+          "drama",
+          "films",
+          "stars",
+          "starring",
+          "festival",
+          "director"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 100,
+      "representation": "tfidf",
+      "coherence": 0.3243405353933085,
+      "recall@10": 0.295,
+      "fit_seconds": 17.6,
+      "topics": [
+        [
+          "film",
+          "directed",
+          "stars",
+          "starring",
+          "produced",
+          "written",
+          "drama",
+          "comedy",
+          "american",
+          "films"
+        ],
+        [
+          "basketball",
+          "men",
+          "tournament",
+          "vermont",
+          "ncaa",
+          "catamounts",
+          "s",
+          "conference",
+          "america",
+          "rams"
+        ],
+        [
+          "album",
+          "released",
+          "studio",
+          "records",
+          "cosby",
+          "debut",
+          "singer",
+          "songs",
+          "release",
+          "goulding"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 100,
+      "representation": "counts",
+      "coherence": -0.028714349643139916,
+      "recall@10": 0.18,
+      "fit_seconds": 77.3,
+      "topics": [
+        [
+          "race",
+          "500",
+          "held",
+          "mile",
+          "400",
+          "toronto",
+          "event",
+          "1997",
+          "time",
+          "1966"
+        ],
+        [
+          "film",
+          "directed",
+          "s",
+          "american",
+          "written",
+          "produced",
+          "stars",
+          "starring",
+          "films",
+          "based"
+        ],
+        [
+          "national",
+          "park",
+          "intelligence",
+          "s",
+          "rhyme",
+          "song",
+          "archives",
+          "folk",
+          "located",
+          "nursery"
+        ]
+      ]
+    },
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 200,
+      "representation": "tfidf",
+      "coherence": -0.44695402363983017,
+      "recall@10": 0.6783333333333333,
+      "fit_seconds": 8.0,
+      "topics": [
+        [
+          "s",
+          "film",
+          "american",
+          "album",
+          "series",
+          "season",
+          "song",
+          "released",
+          "football",
+          "band"
+        ],
+        [
+          "film",
+          "album",
+          "song",
+          "released",
+          "band",
+          "directed",
+          "music",
+          "written",
+          "single",
+          "studio"
+        ],
+        [
+          "film",
+          "series",
+          "directed",
+          "television",
+          "drama",
+          "films",
+          "stars",
+          "starring",
+          "festival",
+          "director"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 200,
+      "representation": "tfidf",
+      "coherence": 0.301229126944198,
+      "recall@10": 0.3383333333333333,
+      "fit_seconds": 125.7,
+      "topics": [
+        [
+          "film",
+          "directed",
+          "starring",
+          "comedy",
+          "released",
+          "romantic",
+          "story",
+          "tamil",
+          "cage",
+          "different"
+        ],
+        [
+          "wigan",
+          "athletic",
+          "f",
+          "c",
+          "stadium",
+          "league",
+          "football",
+          "borough",
+          "club",
+          "season"
+        ],
+        [
+          "album",
+          "released",
+          "studio",
+          "records",
+          "songs",
+          "goulding",
+          "debut",
+          "singer",
+          "release",
+          "features"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 200,
+      "representation": "counts",
+      "coherence": -0.07480774565081685,
+      "recall@10": 0.25666666666666665,
+      "fit_seconds": 118.4,
+      "topics": [
+        [
+          "tribe",
+          "episode",
+          "s",
+          "challenge",
+          "chimney",
+          "eliminate",
+          "place",
+          "twist",
+          "season",
+          "second"
+        ],
+        [
+          "s",
+          "19",
+          "plane",
+          "route",
+          "eminem",
+          "c",
+          "october",
+          "united",
+          "films",
+          "2013"
+        ],
+        [
+          "national",
+          "s",
+          "major",
+          "games",
+          "2",
+          "batting",
+          "5",
+          "reds",
+          "vanarama",
+          "known"
+        ]
+      ]
+    }
+  ],
+  "representation_ablation": [
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 50,
+      "representation": "tfidf",
+      "coherence": -0.23293171084375217,
+      "recall@10": 0.44166666666666665,
+      "fit_seconds": 0.2,
+      "topics": [
+        [
+          "s",
+          "film",
+          "american",
+          "album",
+          "series",
+          "season",
+          "song",
+          "released",
+          "football",
+          "band"
+        ],
+        [
+          "film",
+          "album",
+          "song",
+          "released",
+          "band",
+          "directed",
+          "music",
+          "written",
+          "single",
+          "studio"
+        ],
+        [
+          "film",
+          "series",
+          "directed",
+          "television",
+          "drama",
+          "films",
+          "stars",
+          "starring",
+          "festival",
+          "director"
+        ]
+      ]
+    },
+    {
+      "model": "LSA (truncated SVD)",
+      "k": 50,
+      "representation": "counts",
+      "coherence": -0.1011152003670664,
+      "recall@10": 0.21166666666666667,
+      "fit_seconds": 0.2,
+      "topics": [
+        [
+          "s",
+          "american",
+          "film",
+          "track",
+          "known",
+          "united",
+          "series",
+          "new",
+          "season",
+          "1"
+        ],
+        [
+          "track",
+          "2",
+          "south",
+          "1",
+          "line",
+          "trains",
+          "terminal",
+          "main",
+          "known",
+          "meets"
+        ],
+        [
+          "film",
+          "album",
+          "released",
+          "song",
+          "directed",
+          "series",
+          "american",
+          "best",
+          "award",
+          "written"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 50,
+      "representation": "tfidf",
+      "coherence": 0.3320456138372802,
+      "recall@10": 0.23333333333333334,
+      "fit_seconds": 3.2,
+      "topics": [
+        [
+          "film",
+          "directed",
+          "stars",
+          "starring",
+          "written",
+          "produced",
+          "american",
+          "drama",
+          "films",
+          "comedy"
+        ],
+        [
+          "basketball",
+          "season",
+          "men",
+          "tournament",
+          "ncaa",
+          "team",
+          "s",
+          "conference",
+          "vermont",
+          "division"
+        ],
+        [
+          "album",
+          "released",
+          "studio",
+          "records",
+          "cosby",
+          "songs",
+          "single",
+          "release",
+          "singer",
+          "debut"
+        ]
+      ]
+    },
+    {
+      "model": "NMF",
+      "k": 50,
+      "representation": "counts",
+      "coherence": 0.20942377056662756,
+      "recall@10": 0.15833333333333333,
+      "fit_seconds": 4.4,
+      "topics": [
+        [
+          "s",
+          "u",
+          "john",
+          "character",
+          "o",
+          "time",
+          "women",
+          "opera",
+          "r",
+          "tragedy"
+        ],
+        [
+          "track",
+          "2",
+          "1",
+          "line",
+          "south",
+          "main",
+          "trains",
+          "terminal",
+          "known",
+          "meets"
+        ],
+        [
+          "film",
+          "directed",
+          "films",
+          "stars",
+          "produced",
+          "written",
+          "based",
+          "starring",
+          "comedy",
+          "story"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 50,
+      "representation": "tfidf",
+      "coherence": -0.3478175503041001,
+      "recall@10": 0.11833333333333333,
+      "fit_seconds": 35.2,
+      "topics": [
+        [
+          "city",
+          "county",
+          "located",
+          "area",
+          "population",
+          "park",
+          "building",
+          "census",
+          "largest",
+          "south"
+        ],
+        [
+          "du",
+          "cerceau",
+          "androuet",
+          "french",
+          "shootout",
+          "jean",
+          "baptiste",
+          "actually",
+          "17th",
+          "bc"
+        ],
+        [
+          "film",
+          "directed",
+          "festival",
+          "films",
+          "documentary",
+          "intelligence",
+          "italian",
+          "director",
+          "composed",
+          "academy"
+        ]
+      ]
+    },
+    {
+      "model": "LDA",
+      "k": 50,
+      "representation": "counts",
+      "coherence": -0.04425931689550985,
+      "recall@10": 0.205,
+      "fit_seconds": 51.4,
+      "topics": [
+        [
+          "race",
+          "island",
+          "long",
+          "grand",
+          "beach",
+          "toyota",
+          "held",
+          "childers",
+          "prix",
+          "s"
+        ],
+        [
+          "film",
+          "directed",
+          "s",
+          "american",
+          "films",
+          "written",
+          "stars",
+          "produced",
+          "starring",
+          "drama"
+        ],
+        [
+          "national",
+          "park",
+          "intelligence",
+          "s",
+          "states",
+          "known",
+          "seminole",
+          "united",
+          "cosby",
+          "community"
+        ]
+      ]
+    }
+  ]
+}

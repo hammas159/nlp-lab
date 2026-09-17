@@ -66,6 +66,8 @@ variable it could not fix as a column rather than a footnote.
 | **14** | [String similarity](projects/14_string_similarity) | Seven fuzzy-matching measures. Does the ranking survive changing the noise? | ✅ complete |
 | **15** | [Sentence boundaries](projects/15_sentence_boundaries) | Four splitters a methods section would describe identically. How far apart are they? | ✅ complete |
 | **16** | [Stylometry](projects/16_stylometry) | Authorship attribution scores 0.965. How much of that is style, and how much is topic? | ✅ complete |
+| **17** | [Classical topic models](projects/17_topic_models) | Topic models are ranked by coherence. Does coherence agree with a task? | ✅ complete |
+| **18** | [Tokenisation](projects/18_tokenisation) | BPE vs WordPiece vs Unigram — how much is the algorithm worth, against the knob beside it? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -557,6 +559,70 @@ curated function words and fatal when there are 16,285 sparse ones: every rare i
 gets full weight and the centroids become indistinguishable. It degenerates to the floor
 silently, with no error.
 
+### 17 · Classical topic models
+
+Topic models are ranked by **coherence** — how often a topic's top words co-occur. Chang et
+al. (2009) showed held-out likelihood can run opposite to human interpretability; this asks
+the same of coherence, against a task. LSA, NMF and LDA on one corpus at matched *k*, scored
+by NPMI and by handing their document vectors to a retriever.
+
+| k | model | coherence | recall@10 |
+|---:|---|---:|---:|
+| 50 | LSA | −0.233 | **0.442** |
+| 50 | **NMF** | **0.332** | 0.233 |
+| 50 | LDA | −0.044 | 0.205 |
+| 200 | LSA | −0.447 | **0.678** |
+| 200 | **NMF** | **0.301** | 0.338 |
+| 200 | LDA | −0.075 | 0.257 |
+
+**Coherence picks NMF at 5 of 5 settings. The task picks LSA at 5 of 5. They never agree**,
+and across fifteen fits the two correlate at **r = −0.687**.
+
+Inside LSA alone, where only *k* varies, **coherence falls monotonically (0.078 → −0.447)
+while recall rises monotonically (0.168 → 0.678)**. NMF's topics really are better *as
+topics* — crisp and separable, what you would print in a paper — and LSA's are redundant,
+overlapping variations on one theme. LSA retrieves nearly twice as well. Overlap between
+orthogonal directions is not a defect; it is how a basis spans a space, and coherence
+penalises exactly the property that makes the representation work.
+
+Coherence is not broken. It faithfully measures *whether a topic looks like a list a person
+would write*, which is the goal only when a person reads the topics.
+
+Also measured: **giving LDA TF-IDF instead of counts** — the common tutorial shortcut —
+**costs 0.087 recall and 0.304 coherence**, and swapping LSA's representation moves recall
+by 0.230, about as much as the entire gap between the best and worst model.
+
+### 18 · Tokenisation
+
+BPE, WordPiece and Unigram trained on the same corpus at matched vocabulary sizes, same
+normaliser, same pre-tokenizer, each handed to BM25 — and **plain words** kept as the
+baseline a subword comparison usually omits.
+
+| Tokenizer | vocab | fertility | recall@10 |
+|---|---:|---:|---:|
+| **plain words** | 25,295 | 1.000 | **0.865** |
+| BPE | 8,000 | 1.188 | 0.862 |
+| WordPiece | 8,000 | 1.230 | 0.862 |
+| Unigram | 8,000 | 1.385 | 0.847 |
+| **WordPiece** | 16,000 | 1.099 | **0.867** |
+| Unigram | *13,401* | 1.370 | 0.852 |
+
+**At a fixed vocabulary size the three algorithms differ by at most 0.030. Changing the
+vocabulary size moves the result by 0.075** — the argument is about the smaller of two
+knobs, and the larger one is a number in a config.
+
+The best subword score, 0.867, beats plain words by 0.002 after spending a 16,000-piece
+budget to stop splitting words at all. **For a lexical retriever the whole apparatus buys
+nothing**: BM25 scores by term rarity, and splitting a rare word into common pieces is
+exactly the operation that destroys it.
+
+**Fertility and intact rate agree with the task at only 2 of 4 sizes — and both name BPE
+every single time.** They are not weak predictors but constant ones. Meanwhile BPE and
+WordPiece segment 91.5% of words identically while Unigram agrees with either only ~70%:
+`un | happi | ness` against `un | happ | iness`. Unigram's pieces are the most
+morphological, as Bostrom & Durrett found — and it is the worst of the three at every size
+above 2,000.
+
 ---
 
 ## Planned
@@ -564,13 +630,9 @@ silently, with no error.
 Ideas that fit the same shape — each one a family of techniques where the usual comparison
 confounds something:
 
-- **Tokenisation** — BPE vs WordPiece vs Unigram on the same corpus, measured by downstream
-  retrieval rather than by intrinsic vocabulary statistics
 - **Pooling** — mean vs max vs attention-weighted vs `[CLS]`, holding the encoder fixed. The
   embedding comparison above deliberately uses the crudest option; this would measure what
   that costs.
-- **Classical topic models** — LSA vs LDA vs NMF on the same corpus, scored on a task rather
-  than on coherence
 - **Retrieval depth** — project 03 fixes the reranker's window at 50. The whole finding
   is a function of that number, and sweeping it is the obvious follow-up
 - **Low-resource morphology** — where subword methods earn their keep, using Urdu, which

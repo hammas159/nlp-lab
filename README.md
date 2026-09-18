@@ -70,6 +70,7 @@ variable it could not fix as a column rather than a footnote.
 | **18** | [Tokenisation](projects/18_tokenisation) | BPE vs WordPiece vs Unigram — how much is the algorithm worth, against the knob beside it? | ✅ complete |
 | **19** | [Sentiment lexicons](projects/19_sentiment_lexicons) | Which matters more — the lexicon, or the negation and intensifier rules around it? | ✅ complete |
 | **20** | [Word sense disambiguation](projects/20_word_sense) | Reported against random it looks solved. What happens against the most frequent sense? | ✅ complete |
+| **21** | [Reranking depth](projects/21_reranking_depth) | Project 03 fixed the reranker's window at 50. What does that number decide? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -697,6 +698,40 @@ SemCor, so scoring it on SemCor is mildly circular. Estimating the most frequent
 the training split instead gives 0.566 against WordNet's 0.628 — the inherited ordering is
 worth about six points.
 
+### 21 · Reranking depth
+
+Project 03 fixed the reranker's window at 50 and concluded that **the first stage's job is
+recall@50, not ranking**. That whole finding is a function of the number 50. Sweeping it,
+over the same corpus, queries and reranker:
+
+| First stage | r@10 before | best depth | r@10 there | at depth 500 | ceiling @ 500 |
+|---|---:|---:|---:|---:|---:|
+| TF-IDF | 0.842 | **200** | 0.932 | 0.930 | 0.987 |
+| BM25 | 0.865 | **100** | 0.932 | 0.932 | 0.990 |
+| BGE-small | 0.943 | **20** | 0.947 | 0.937 | **0.998** |
+
+**Reranking at depth 10 changes nothing, provably** — the top 10 reranked is the top 10
+reordered, the same set, so recall@10 cannot move. A window must exceed the evaluation
+cutoff to do anything at all.
+
+**The bottleneck flips.** At depth 500 BGE hands the reranker a candidate set holding 99.8%
+of all gold and the answer is still 0.937 — six points of reachable gold left in the window.
+Past roughly depth 100 the first stage has stopped being the constraint and the reranker has
+become it, so "optimise the first stage for recall@K" is right at K=50 and pointless at
+K=500.
+
+**The better the first stage, the shallower the optimal window** — TF-IDF wants 200, BM25
+100, BGE 20 — and BGE is *actively harmed* beyond 20, reaching −0.007 at depth 200. Each
+extra candidate is another chance to rank a distractor above a gold document the retriever
+had already placed correctly. A reranker is a repair for a weak first stage, and the repair
+has a dose.
+
+As for project 03's "every first stage converts about 96%": **conversion falls monotonically
+with depth**, 100% → 94%, so 96% was a reading of a curve at one point. But at every depth
+the three stages agree within **0.9%** of each other — far closer than any agrees with
+itself across depths. Conversion is a function of depth alone, essentially independent of
+which retriever fed it. That is a stronger claim than the original, and it needed the sweep.
+
 ---
 
 ## Planned
@@ -707,8 +742,6 @@ confounds something:
 - **Pooling** — mean vs max vs attention-weighted vs `[CLS]`, holding the encoder fixed. The
   embedding comparison above deliberately uses the crudest option; this would measure what
   that costs.
-- **Retrieval depth** — project 03 fixes the reranker's window at 50. The whole finding
-  is a function of that number, and sweeping it is the obvious follow-up
 - **Low-resource morphology** — where subword methods earn their keep, using Urdu, which
   connects to [urdu-nlp-toolkit](https://github.com/hammas159/urdu-nlp-toolkit)
 

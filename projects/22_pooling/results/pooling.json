@@ -3,7 +3,8 @@
   "queries": 300,
   "bm25_recall@10": 0.865,
   "encoders_present": [
-    "BGE-small"
+    "BGE-small",
+    "MiniLM-L6"
   ],
   "rows": [
     {
@@ -35,6 +36,36 @@
       "trained_pooling": "cls",
       "pooling": "idf_mean",
       "recall@10": 0.9383333333333334
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "trained_pooling": "mean",
+      "pooling": "cls",
+      "recall@10": 0.7433333333333333
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "trained_pooling": "mean",
+      "pooling": "mean",
+      "recall@10": 0.8333333333333334
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "trained_pooling": "mean",
+      "pooling": "max",
+      "recall@10": 0.6666666666666666
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "trained_pooling": "mean",
+      "pooling": "last",
+      "recall@10": 0.7483333333333333
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "trained_pooling": "mean",
+      "pooling": "idf_mean",
+      "recall@10": 0.8283333333333334
     }
   ],
   "rankings": {
@@ -43,6 +74,13 @@
       "mean",
       "last",
       "idf_mean",
+      "max"
+    ],
+    "MiniLM-L6": [
+      "mean",
+      "idf_mean",
+      "last",
+      "cls",
       "max"
     ]
   },
@@ -106,6 +144,66 @@
       "a": "idf_mean",
       "b": "last",
       "cosine": 0.9175702901318125
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "cls",
+      "b": "mean",
+      "cosine": 0.49156920114396946
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "cls",
+      "b": "max",
+      "cosine": 0.30210112910717113
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "cls",
+      "b": "last",
+      "cosine": 0.46296365581169807
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "cls",
+      "b": "idf_mean",
+      "cosine": 0.45737075015715717
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "max",
+      "b": "mean",
+      "cosine": 0.2187273599137773
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "last",
+      "b": "mean",
+      "cosine": 0.8391513321784748
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "last",
+      "b": "max",
+      "cosine": 0.2273148868083405
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "idf_mean",
+      "b": "mean",
+      "cosine": 0.9702067595855608
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "idf_mean",
+      "b": "max",
+      "cosine": 0.23495002479530427
+    },
+    {
+      "encoder": "MiniLM-L6",
+      "a": "idf_mean",
+      "b": "last",
+      "cosine": 0.7364046201684202
     }
   ]
 }

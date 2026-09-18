@@ -1,10 +1,10 @@
 <h1 align="center">22 · Pooling</h1>
-<p align="center"><i>Five poolings, three distinct vectors, and one of them is another one wearing a different name.</i></p>
+<p align="center"><i>Each encoder's trained pooling wins, and the two encoders rank the five poolings differently. "Best pooling" has no answer on its own.</i></p>
 
 <p align="center">
   <a href="#the-result">Result</a> &middot;
-  <a href="#two-of-the-five-are-not-different-poolings">Not five poolings</a> &middot;
-  <a href="#what-that-leaves">What that leaves</a> &middot;
+  <a href="#the-ranking-flips">The ranking flips</a> &middot;
+  <a href="#two-of-the-five-are-not-different-poolings-on-bge">Not five poolings</a> &middot;
   <a href="#method">Method</a> &middot;
   <a href="#limitations">Limitations</a>
 </p>
@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="python">
   <img src="https://img.shields.io/badge/tests-37%20passing-brightgreen" alt="tests">
   <img src="https://img.shields.io/badge/cosine(cls%2C%20last)-1.000000-critical" alt="identical">
-  <img src="https://img.shields.io/badge/second%20encoder-pending%20download-yellow" alt="pending">
+  <img src="https://img.shields.io/badge/encoders-2%20with%20opposite%20training-informational" alt="two encoders">
 </p>
 
 ---
@@ -30,26 +30,58 @@ This is that project. The encoder is held fixed and only the pooling changes.
 
 ## The result
 
-HotpotQA · 2,964 documents · 300 queries · `bge-small-en-v1.5`, which ships
-`pooling_mode_cls_token: true`. BM25 on the same corpus scores 0.865.
+HotpotQA · 2,964 documents · 300 queries. Two encoders, both 384-dimensional so a difference
+cannot be a difference in vector width, with **opposite trained poolings**. BM25 on the same
+corpus scores 0.865.
 
-| Pooling | recall@10 | vs trained |
+| Pooling | **BGE-small** (trained CLS) | **MiniLM-L6** (trained mean) |
 |---|---:|---:|
-| **cls** *(as trained)* | **0.945** | — |
-| mean | 0.945 | +0.000 |
-| last | 0.945 | +0.000 |
-| idf_mean | 0.938 | −0.007 |
-| max | 0.908 | −0.037 |
+| cls | **0.945** *(as trained)* | 0.743 |
+| mean | 0.945 | **0.833** *(as trained)* |
+| last | 0.945 | 0.748 |
+| idf_mean | 0.938 | 0.828 |
+| max | 0.908 | 0.667 |
+| **spread** | **0.037** | **0.167** |
 
-The spread is **0.037**, and three of the five are identical to three decimals. That looks
-like "pooling barely matters" — a tidy, forgettable result.
-
-It is the wrong reading, and the way to find out is to stop looking at the scores and look
-at the vectors.
+**Each encoder's own trained pooling wins.** Both rows marked *as trained* are the top score
+for their column — which is the result the single-encoder version of this project could not
+distinguish from "CLS happens to be best".
 
 ---
 
-## Two of the five are not different poolings
+## The ranking flips
+
+```
+BGE-small    cls  >  mean  >  last  >  idf_mean  >  max
+MiniLM-L6    mean >  idf_mean >  last  >  cls   >  max
+```
+
+**The two encoders rank the five poolings differently.** `cls` is first for one and fourth
+for the other; `mean` is the reverse. The only thing they agree on is that `max` is worst.
+
+So **"which pooling is best" has no answer independent of the encoder.** It is decided by
+what the model was trained with, not by a property of the pooling operation. A paper
+reporting "mean pooling outperforms CLS" has reported a fact about its checkpoint.
+
+The cost is asymmetric, which is the practically useful part:
+
+| | reading it the other way costs |
+|---|---:|
+| BGE (trained CLS), read with mean | **0.000** |
+| MiniLM (trained mean), read with CLS | **0.090** |
+
+BGE tolerates being read as a mean; MiniLM does not tolerate being read as a CLS. That makes
+sense in one direction only — a model trained to put everything in `[CLS]` still has that
+content available in the average of its tokens, while a model trained on the average has no
+reason to have put anything in `[CLS]` at all.
+
+**And the spread itself is a fact about the encoder**: 0.037 on BGE against **0.167** on
+MiniLM. The single-encoder version of this project would have concluded "pooling barely
+matters" — a conclusion that is 4.5 times wrong on the very next model.
+
+---
+
+## Two of the five are not different poolings, on BGE
 
 Mean cosine between the document vectors each pooling produces, over all 2,964 documents:
 
@@ -81,32 +113,32 @@ with no suffix token, `last` would mean something entirely different.
 document frequency barely moves it, because the mean over a few hundred tokens is dominated
 by the bulk of them and IDF only reweights the tail.
 
-So the five-way comparison is really a **three-way** one: `{cls, last}`, `{mean, idf_mean}`,
-and `max` — and `max` is the only one that is genuinely far from the others, at cosine
-0.51–0.54 with everything.
+So on BGE the five-way comparison is really a **three-way** one: `{cls, last}`,
+`{mean, idf_mean}`, and `max`.
+
+**This does not happen on MiniLM.** There `cls` and `last` sit at cosine **0.463**, not
+1.000 — genuinely different vectors that score 0.743 and 0.748. The `[SEP]`-equals-`[CLS]`
+collapse is a property of *BGE's contrastive training*, not of the BERT architecture, and
+one encoder alone could not have told those apart:
+
+| | cls vs last | mean vs idf_mean | max vs mean |
+|---|---:|---:|---:|
+| BGE-small | **1.000** | 0.996 | 0.537 |
+| MiniLM-L6 | **0.463** | 0.970 | 0.219 |
 
 ---
 
 ## What that leaves
 
-Once the duplicates are collapsed, the actual finding is sharper than the score table
-suggested:
+Once the BGE duplicates are collapsed, the finding that survives on both encoders is about
+`max`:
 
-| Distinct vector | recall@10 | cosine to `cls` |
-|---|---:|---:|
-| `cls` / `last` *(as trained)* | **0.945** | 1.000 |
-| `mean` / `idf_mean` | 0.945 / 0.938 | 0.932 / 0.918 |
-| `max` | **0.908** | 0.513 |
+**`max` is the only pooling both encoders agree is worst**, and the only one that departs
+sharply from the trained geometry on both — cosine 0.537 to BGE's mean, 0.219 to MiniLM's. It
+loses 0.037 on one and 0.167 on the other. Taking the largest value per dimension discards
+the rest of the sequence, and no amount of training makes that a good idea for retrieval.
 
-**Mean pooling produces a measurably different vector from the one BGE was trained to
-produce — cosine 0.932, not 0.99 — and retrieves exactly as well.** That is the interesting
-part. The model was optimised end to end for `[CLS]`, and reading it a different way costs
-nothing at this task. Whatever the training put in the `[CLS]` position, it also put in the
-average of the token positions.
-
-**Max is the exception that shows the rule.** It is the one pooling that departs sharply from
-the trained geometry, and it is the one that loses — 0.037, which is about half of BM25's
-entire distance from BGE. A pooling can be swapped freely up to a point, and `max` is past it.
+Everything else is contingent on the checkpoint.
 
 ---
 
@@ -134,15 +166,13 @@ exactly when the batch happened to contain padding.
 
 ## Limitations
 
-- **One encoder, and it is the one trained for `[CLS]`.** The design calls for a second
-  encoder trained with **mean** pooling — `all-MiniLM-L6-v2`, also 384-dimensional, so the
-  comparison could not be a width comparison. Its config downloaded; its weights are still
-  at zero bytes behind a throttled connection. The run skips it **by name** rather than
-  silently, and the table grows when the file lands.
-- **That missing arm is the interesting one.** With one encoder, "the trained pooling wins"
-  and "cls happens to be best" are indistinguishable. Two encoders with opposite trained
-  poolings would separate them — and if the ranking flipped, it would show that *which
-  pooling is best* has no answer independent of the encoder.
+- **Two encoders is two.** They have opposite trained poolings, which is what the argument
+  needs, but "the trained pooling wins" is established on a sample of two checkpoints. A
+  third trained with `max` would be the sharp test, and no such sentence encoder is common
+  enough to be worth the download.
+- **Both are small English models of similar size.** A larger encoder, or a multilingual
+  one, could behave differently — in particular the `[SEP]`-equals-`[CLS]` collapse may be
+  more or less common than one example suggests.
 - **One task.** Retrieval by cosine similarity. A classification head on the same vectors
   could rank the poolings differently, and `max` in particular is a more natural fit for
   tasks that hinge on a single strong feature.
@@ -155,7 +185,7 @@ exactly when the batch happened to contain padding.
 ## Run it
 
 ```bash
-python src/run.py            # 2,964 documents, ~75 seconds on a GPU
+python src/run.py            # 2,964 documents, both encoders, ~40 seconds on a GPU
 python src/run.py --quick    # 600 documents
 pytest -q                    # 37 tests, no model, no dataset, no network
 ```

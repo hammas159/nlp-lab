@@ -72,6 +72,7 @@ variable it could not fix as a column rather than a footnote.
 | **20** | [Word sense disambiguation](projects/20_word_sense) | Reported against random it looks solved. What happens against the most frequent sense? | ✅ complete |
 | **21** | [Reranking depth](projects/21_reranking_depth) | Project 03 fixed the reranker's window at 50. What does that number decide? | ✅ complete |
 | **22** | [Pooling](projects/22_pooling) | Mean vs CLS vs max, encoder held fixed. Are they even different vectors? | 🟡 one encoder |
+| **23** | [Low-resource morphology](projects/23_urdu_morphology) | Project 18 said subwords buy nothing, for English. Does that survive Urdu? | ✅ complete |
 
 ### 01 · Embedding fair comparison
 
@@ -767,15 +768,64 @@ is the arm that would show whether "best pooling" has an answer independent of t
 Its weights are still downloading behind a throttled connection, and the run skips it by
 name rather than silently.
 
+### 23 · Low-resource morphology
+
+Project 18's limitations section named its own objection: *"One corpus, English, Wikipedia
+prose. The case for subwords is strongest in morphologically rich languages, which is exactly
+where this says nothing."* This is that corpus — **5,029 Urdu Wikipedia articles, 4.7M
+tokens**, same three algorithms, same vocabulary sizes, same BM25.
+
+| | English (project 18) | **Urdu (here)** |
+|---|---:|---:|
+| subwords vs plain words | +0.002 | **+0.039** |
+| spread between algorithms at fixed vocabulary | 0.030 | **0.172** |
+| spread across vocabulary sizes | 0.075 | **0.337** |
+
+**Subwords earn their keep, as predicted.** But the bigger result is that project 18's
+*other* headline does not travel: **the algorithm is worth nearly six times more on Urdu.**
+At a 2,000-piece vocabulary BPE scores 0.306 and WordPiece scores **0.134** — same budget,
+same corpus, same retriever, less than half the result. WordPiece's fertility there is 2.427
+against BPE's 1.625; its likelihood-based merges need a vocabulary large enough to cover
+Urdu's morphology before they produce useful pieces, and on English that budget was always
+sufficient so the failure never appeared.
+
+What *does* travel is the ranking of the two knobs: vocabulary size moves the result about
+twice as much as the algorithm in both languages. **"Tune the vocabulary before arguing about
+the algorithm" holds; "the algorithm is nearly free" was a fact about English.**
+
+One more thing this corpus exposed. The lab's shared tokenizer matches `[a-z0-9]+`, so on
+Urdu it keeps **3.1% of the tokens** — stray Latin and digits like `kh`, `mi`, `1922` — and
+returns something non-empty for 192 of 200 articles. An index built with it looks populated
+and scores non-zero while holding almost none of the text, which is worse than returning
+nothing. The project's first test pins it.
+
 ---
 
 ## Planned
 
-Ideas that fit the same shape — each one a family of techniques where the usual comparison
-confounds something:
+**Empty.** Every project on this list has been built, including the two that were blocked on
+data and the three that were blocked on a GPU. Several of them refuted the prediction they
+were designed around, which is recorded above rather than quietly rewritten.
 
-- **Low-resource morphology** — where subword methods earn their keep, using Urdu, which
-  connects to [urdu-nlp-toolkit](https://github.com/hammas159/urdu-nlp-toolkit)
+One arm is still outstanding: [project 22](projects/22_pooling) wants a second encoder
+trained with *mean* pooling, to test whether "best pooling" has an answer independent of the
+encoder. Its weights will not download on this connection. The project is marked 🟡 and skips
+that encoder by name rather than claiming a comparison it did not make.
+
+### What this lab keeps finding
+
+Ideas that fit the same shape — a family of techniques where the usual comparison confounds
+something — are what every project here started from. Six of them ended by contradicting an
+earlier project in this repo or the plan that produced them:
+
+| Project | contradicted |
+|---|---|
+| 01 | that an embedding's advantage is its method — it is the training corpus, worth 0.808 |
+| 17 | that coherence tracks usefulness — they correlate at −0.687 |
+| 19 | its own pre-registered prediction, in 100% of bootstrap resamples |
+| 20 | its own first result, which turned out to be a label leak worth 0.112 |
+| 21 | project 03's "the first stage's job is recall@50" — past depth 100 the bottleneck flips |
+| 23 | project 18's "the algorithm barely matters" — worth 6× more in Urdu than English |
 
 ### Blocked, and why
 

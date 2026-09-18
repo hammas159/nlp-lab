@@ -71,6 +71,7 @@ variable it could not fix as a column rather than a footnote.
 | **19** | [Sentiment lexicons](projects/19_sentiment_lexicons) | Which matters more — the lexicon, or the negation and intensifier rules around it? | ✅ complete |
 | **20** | [Word sense disambiguation](projects/20_word_sense) | Reported against random it looks solved. What happens against the most frequent sense? | ✅ complete |
 | **21** | [Reranking depth](projects/21_reranking_depth) | Project 03 fixed the reranker's window at 50. What does that number decide? | ✅ complete |
+| **22** | [Pooling](projects/22_pooling) | Mean vs CLS vs max, encoder held fixed. Are they even different vectors? | 🟡 one encoder |
 
 ### 01 · Embedding fair comparison
 
@@ -732,6 +733,40 @@ the three stages agree within **0.9%** of each other — far closer than any agr
 itself across depths. Conversion is a function of depth alone, essentially independent of
 which retriever fed it. That is a stronger claim than the original, and it needed the sweep.
 
+### 22 · Pooling
+
+Project 01 flagged pooling as a gap it was not measuring. Encoder held fixed
+(`bge-small-en-v1.5`, which ships CLS pooling), five poolings read off the same forward pass.
+
+| Pooling | recall@10 | cosine to `cls` |
+|---|---:|---:|
+| **cls** *(as trained)* | **0.945** | 1.000 |
+| mean | 0.945 | 0.932 |
+| last | 0.945 | **1.000** |
+| idf_mean | 0.938 | 0.918 |
+| max | 0.908 | **0.513** |
+
+The scores alone say "pooling barely matters" — a spread of 0.037 with three of five tied.
+The vectors say something else.
+
+**`cls` and `last` are the same vector**, to six decimals: cosine 1.000000, largest absolute
+difference 5e-5 across 384 dimensions. "Last-token pooling" reads the last *unmasked
+position*, which on a BERT-style encoder is `[SEP]` — and on this model `[SEP]`'s
+representation has converged onto `[CLS]`'s during contrastive training. That row of the
+table carries no information at all. `mean` and `idf_mean` are nearly duplicates too, at
+0.996. **The five-way comparison is really a three-way one.**
+
+What survives is sharper than the score table suggested. **Mean pooling produces a
+measurably different vector from the one BGE was trained to produce — cosine 0.932 — and
+retrieves exactly as well.** Whatever training put in the `[CLS]` position, it also put in
+the average of the token positions. **`max` is the exception**: the one pooling far from the
+trained geometry (cosine 0.51), and the one that loses, by 0.037.
+
+The second encoder — `all-MiniLM-L6-v2`, trained with *mean* pooling, also 384-dimensional —
+is the arm that would show whether "best pooling" has an answer independent of the encoder.
+Its weights are still downloading behind a throttled connection, and the run skips it by
+name rather than silently.
+
 ---
 
 ## Planned
@@ -739,9 +774,6 @@ which retriever fed it. That is a stronger claim than the original, and it neede
 Ideas that fit the same shape — each one a family of techniques where the usual comparison
 confounds something:
 
-- **Pooling** — mean vs max vs attention-weighted vs `[CLS]`, holding the encoder fixed. The
-  embedding comparison above deliberately uses the crudest option; this would measure what
-  that costs.
 - **Low-resource morphology** — where subword methods earn their keep, using Urdu, which
   connects to [urdu-nlp-toolkit](https://github.com/hammas159/urdu-nlp-toolkit)
 

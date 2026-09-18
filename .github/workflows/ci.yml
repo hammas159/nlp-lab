@@ -34,6 +34,7 @@ jobs:
           - 19_sentiment_lexicons
           - 20_word_sense
           - 21_reranking_depth
+          - 22_pooling
     defaults:
       run:
         working-directory: projects/${{ matrix.project }}

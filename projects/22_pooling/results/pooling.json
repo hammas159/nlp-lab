@@ -1,0 +1,111 @@
+{
+  "documents": 2964,
+  "queries": 300,
+  "bm25_recall@10": 0.865,
+  "encoders_present": [
+    "BGE-small"
+  ],
+  "rows": [
+    {
+      "encoder": "BGE-small",
+      "trained_pooling": "cls",
+      "pooling": "cls",
+      "recall@10": 0.945
+    },
+    {
+      "encoder": "BGE-small",
+      "trained_pooling": "cls",
+      "pooling": "mean",
+      "recall@10": 0.945
+    },
+    {
+      "encoder": "BGE-small",
+      "trained_pooling": "cls",
+      "pooling": "max",
+      "recall@10": 0.9083333333333333
+    },
+    {
+      "encoder": "BGE-small",
+      "trained_pooling": "cls",
+      "pooling": "last",
+      "recall@10": 0.945
+    },
+    {
+      "encoder": "BGE-small",
+      "trained_pooling": "cls",
+      "pooling": "idf_mean",
+      "recall@10": 0.9383333333333334
+    }
+  ],
+  "rankings": {
+    "BGE-small": [
+      "cls",
+      "mean",
+      "last",
+      "idf_mean",
+      "max"
+    ]
+  },
+  "pooled_vector_cosine": [
+    {
+      "encoder": "BGE-small",
+      "a": "cls",
+      "b": "mean",
+      "cosine": 0.9316423959758022
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "cls",
+      "b": "max",
+      "cosine": 0.5125656863724791
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "cls",
+      "b": "last",
+      "cosine": 0.9999999998249645
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "cls",
+      "b": "idf_mean",
+      "cosine": 0.9175701772577333
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "max",
+      "b": "mean",
+      "cosine": 0.536687854709588
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "last",
+      "b": "mean",
+      "cosine": 0.9316424812599163
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "last",
+      "b": "max",
+      "cosine": 0.5125655231551973
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "idf_mean",
+      "b": "mean",
+      "cosine": 0.995754741582818
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "idf_mean",
+      "b": "max",
+      "cosine": 0.5388811881688546
+    },
+    {
+      "encoder": "BGE-small",
+      "a": "idf_mean",
+      "b": "last",
+      "cosine": 0.9175702901318125
+    }
+  ]
+}

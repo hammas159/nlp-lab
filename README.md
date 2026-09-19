@@ -1,4 +1,4 @@
-<h1 align="center">nlp-lab</h1>
+<h1 align="center">nlp-lab (scikit-learn · sentence-transformers · gensim · NLTK)</h1>
 <p align="center"><i>Classic NLP techniques, measured against each other on the same corpus</i></p>
 
 <p align="center">
